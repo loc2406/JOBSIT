@@ -1,0 +1,1526 @@
+[
+  {
+    "id": 1,
+    "title": "Frontend Developer (ReactJS)",
+    "description": "Phát triển giao diện người dùng cho các ứng dụng web sử dụng ReactJS và TailwindCSS.",
+    "companyDTO": {
+      "id": 101,
+      "name": "TechNova Solutions",
+      "logo": "https://example.com/logos/technova.png",
+      "description": "Công ty chuyên phát triển giải pháp phần mềm doanh nghiệp."
+    },
+    "positionDTOS": [
+      { "id": 1, "name": "Frontend Developer" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" }
+    ],
+    "amount": 3,
+    "postingDate": "2025-11-01",
+    "applicationDeadline": "2025-12-01",
+    "address": "12 Nguyễn Trãi",
+    "district": "Quận 1",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1500.0,
+    "maxAllowance": 2500.0
+  },
+  {
+    "id": 2,
+    "title": "Backend Developer (Node.js)",
+    "description": "Thiết kế API RESTful, quản lý cơ sở dữ liệu và tích hợp hệ thống với Node.js, Express, MongoDB.",
+    "companyDTO": {
+      "id": 102,
+      "name": "VietTech Labs",
+      "logo": "https://example.com/logos/viettech.png",
+      "description": "Startup công nghệ tập trung vào giải pháp IoT và dữ liệu lớn."
+    },
+    "positionDTOS": [
+      { "id": 2, "name": "Backend Developer" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-28",
+    "applicationDeadline": "2025-11-25",
+    "address": "25 Lê Duẩn",
+    "district": "Quận 1",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1600.0,
+    "maxAllowance": 2800.0
+  },
+  {
+    "id": 3,
+    "title": "UI/UX Designer",
+    "description": "Thiết kế trải nghiệm người dùng và giao diện trực quan cho các sản phẩm web & mobile.",
+    "companyDTO": {
+      "id": 103,
+      "name": "CreativePixel Studio",
+      "logo": "https://example.com/logos/creativepixel.png",
+      "description": "Công ty thiết kế sáng tạo chuyên về trải nghiệm người dùng."
+    },
+    "positionDTOS": [
+      { "id": 3, "name": "UI/UX Designer" }
+    ],
+    "scheduleDTOS": [
+      { "id": 2, "name": "Part-time" }
+    ],
+    "amount": 1,
+    "postingDate": "2025-11-05",
+    "applicationDeadline": "2025-12-10",
+    "address": "98 Bà Triệu",
+    "district": "Hai Bà Trưng",
+    "city": "Hà Nội",
+    "country": "Việt Nam",
+    "minAllowance": 1000.0,
+    "maxAllowance": 1800.0
+  },
+  {
+    "id": 4,
+    "title": "Data Analyst",
+    "description": "Phân tích dữ liệu kinh doanh, trực quan hóa và tạo báo cáo hỗ trợ ra quyết định.",
+    "companyDTO": {
+      "id": 104,
+      "name": "Insight Analytics",
+      "logo": "https://example.com/logos/insight.png",
+      "description": "Cung cấp dịch vụ phân tích và tư vấn dữ liệu cho doanh nghiệp."
+    },
+    "positionDTOS": [
+      { "id": 4, "name": "Data Analyst" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-20",
+    "applicationDeadline": "2025-11-30",
+    "address": "200 Trần Hưng Đạo",
+    "district": "Quận 5",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1200.0,
+    "maxAllowance": 2200.0
+  },
+  {
+    "id": 5,
+    "title": "Mobile Developer (Flutter)",
+    "description": "Xây dựng ứng dụng di động đa nền tảng bằng Flutter.",
+    "companyDTO": {
+      "id": 105,
+      "name": "Appify Vietnam",
+      "logo": "https://example.com/logos/appify.png",
+      "description": "Công ty chuyên phát triển ứng dụng di động cho thị trường toàn cầu."
+    },
+    "positionDTOS": [
+      { "id": 5, "name": "Mobile Developer" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" }
+    ],
+    "amount": 3,
+    "postingDate": "2025-10-15",
+    "applicationDeadline": "2025-12-15",
+    "address": "88 Phan Xích Long",
+    "district": "Phú Nhuận",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1500.0,
+    "maxAllowance": 2600.0
+  },
+  {
+    "id": 6,
+    "title": "DevOps Engineer",
+    "description": "Quản lý hạ tầng CI/CD, tự động hoá triển khai hệ thống cloud AWS.",
+    "companyDTO": {
+      "id": 106,
+      "name": "CloudCore",
+      "logo": "https://example.com/logos/cloudcore.png",
+      "description": "Công ty cung cấp dịch vụ Cloud và DevOps."
+    },
+    "positionDTOS": [
+      { "id": 6, "name": "DevOps Engineer" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-30",
+    "applicationDeadline": "2025-11-25",
+    "address": "45 Nguyễn Thị Minh Khai",
+    "district": "Quận 3",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1800.0,
+    "maxAllowance": 3200.0
+  },
+  {
+    "id": 7,
+    "title": "QA/QC Tester",
+    "description": "Thực hiện kiểm thử phần mềm, đảm bảo chất lượng sản phẩm trước khi phát hành.",
+    "companyDTO": {
+      "id": 107,
+      "name": "CodeTrust",
+      "logo": "https://example.com/logos/codetrust.png",
+      "description": "Công ty chuyên về kiểm thử và bảo đảm chất lượng phần mềm."
+    },
+    "positionDTOS": [
+      { "id": 7, "name": "QA Tester" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" },
+      { "id": 2, "name": "Remote" }
+    ],
+    "amount": 4,
+    "postingDate": "2025-11-01",
+    "applicationDeadline": "2025-12-05",
+    "address": "17 Lý Thường Kiệt",
+    "district": "Hoàn Kiếm",
+    "city": "Hà Nội",
+    "country": "Việt Nam",
+    "minAllowance": 900.0,
+    "maxAllowance": 1500.0
+  },
+  {
+    "id": 8,
+    "title": "AI Engineer",
+    "description": "Nghiên cứu và triển khai các mô hình Machine Learning, Deep Learning phục vụ sản phẩm AI.",
+    "companyDTO": {
+      "id": 108,
+      "name": "AI NextGen",
+      "logo": "https://example.com/logos/ainextgen.png",
+      "description": "Công ty chuyên về trí tuệ nhân tạo và xử lý ngôn ngữ tự nhiên."
+    },
+    "positionDTOS": [
+      { "id": 8, "name": "AI Engineer" }
+    ],
+    "scheduleDTOS": [
+      { "id": 3, "name": "Hybrid" }
+    ],
+    "amount": 2,
+    "postingDate": "2025-11-02",
+    "applicationDeadline": "2025-12-10",
+    "address": "222 Hoàng Hoa Thám",
+    "district": "Tây Hồ",
+    "city": "Hà Nội",
+    "country": "Việt Nam",
+    "minAllowance": 2000.0,
+    "maxAllowance": 4000.0
+  },
+  {
+    "id": 9,
+    "title": "Project Manager (IT)",
+    "description": "Quản lý tiến độ, ngân sách và nhân sự cho các dự án phần mềm quy mô trung bình.",
+    "companyDTO": {
+      "id": 109,
+      "name": "SoftBridge Co.",
+      "logo": "https://example.com/logos/softbridge.png",
+      "description": "Công ty gia công phần mềm có khách hàng tại Nhật Bản và EU."
+    },
+    "positionDTOS": [
+      { "id": 9, "name": "Project Manager" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-18",
+    "applicationDeadline": "2025-11-20",
+    "address": "10 Nguyễn Văn Linh",
+    "district": "Hải Châu",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 2500.0,
+    "maxAllowance": 4000.0
+  },
+  {
+    "id": 10,
+    "title": "Content Creator",
+    "description": "Sáng tạo nội dung truyền thông trên các nền tảng mạng xã hội và website.",
+    "companyDTO": {
+      "id": 110,
+      "name": "BuzzMedia",
+      "logo": "https://example.com/logos/buzzmedia.png",
+      "description": "Công ty truyền thông và marketing kỹ thuật số hàng đầu Việt Nam."
+    },
+    "positionDTOS": [
+      { "id": 10, "name": "Content Creator" }
+    ],
+    "scheduleDTOS": [
+      { "id": 2, "name": "Part-time" },
+      { "id": 3, "name": "Remote" }
+    ],
+    "amount": 3,
+    "postingDate": "2025-11-03",
+    "applicationDeadline": "2025-11-30",
+    "address": "456 Hai Bà Trưng",
+    "district": "Quận 3",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 600.0,
+    "maxAllowance": 1000.0
+  },
+   {
+    "id": 11,
+    "title": "Digital Marketing Specialist",
+    "description": "Lập kế hoạch và triển khai các chiến dịch marketing trên nền tảng Google, Facebook, TikTok.",
+    "companyDTO": {
+      "id": 111,
+      "name": "AdBoost Agency",
+      "logo": "https://example.com/logos/adboost.png",
+      "description": "Công ty marketing kỹ thuật số tập trung vào tối ưu hiệu suất quảng cáo."
+    },
+    "positionDTOS": [
+      { "id": 11, "name": "Digital Marketer" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-22",
+    "applicationDeadline": "2025-11-25",
+    "address": "37 Nguyễn Huệ",
+    "district": "Quận 1",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1000.0,
+    "maxAllowance": 1800.0
+  },
+  {
+    "id": 12,
+    "title": "Sales Executive (B2B)",
+    "description": "Tìm kiếm và chăm sóc khách hàng doanh nghiệp, tư vấn và chốt hợp đồng.",
+    "companyDTO": {
+      "id": 112,
+      "name": "BizConnect",
+      "logo": "https://example.com/logos/bizconnect.png",
+      "description": "Công ty chuyên cung cấp giải pháp SaaS cho doanh nghiệp vừa và nhỏ."
+    },
+    "positionDTOS": [
+      { "id": 12, "name": "Sales Executive" }
+    ],
+    "scheduleDTOS": [
+      { "id": 3, "name": "Hybrid" }
+    ],
+    "amount": 3,
+    "postingDate": "2025-11-02",
+    "applicationDeadline": "2025-12-10",
+    "address": "88 Hoàng Văn Thụ",
+    "district": "Tân Bình",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 800.0,
+    "maxAllowance": 2000.0
+  },
+  {
+    "id": 13,
+    "title": "HR Generalist",
+    "description": "Thực hiện công tác tuyển dụng, đào tạo và chính sách phúc lợi cho nhân viên.",
+    "companyDTO": {
+      "id": 113,
+      "name": "PeopleFirst",
+      "logo": "https://example.com/logos/peoplefirst.png",
+      "description": "Công ty tư vấn nhân sự và quản trị nguồn nhân lực."
+    },
+    "positionDTOS": [
+      { "id": 13, "name": "HR Generalist" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" }
+    ],
+    "amount": 1,
+    "postingDate": "2025-11-06",
+    "applicationDeadline": "2025-12-15",
+    "address": "25 Cầu Giấy",
+    "district": "Cầu Giấy",
+    "city": "Hà Nội",
+    "country": "Việt Nam",
+    "minAllowance": 900.0,
+    "maxAllowance": 1600.0
+  },
+  {
+    "id": 14,
+    "title": "Blockchain Developer",
+    "description": "Phát triển smart contract và ứng dụng phi tập trung (DApp) sử dụng Solidity và Ethereum.",
+    "companyDTO": {
+      "id": 114,
+      "name": "BlockLabs",
+      "logo": "https://example.com/logos/blocklabs.png",
+      "description": "Công ty chuyên phát triển ứng dụng Web3 và blockchain."
+    },
+    "positionDTOS": [
+      { "id": 14, "name": "Blockchain Developer" }
+    ],
+    "scheduleDTOS": [
+      { "id": 3, "name": "Hybrid" }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-30",
+    "applicationDeadline": "2025-12-01",
+    "address": "12A Nguyễn Đình Chiểu",
+    "district": "Quận 3",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 2200.0,
+    "maxAllowance": 4500.0
+  },
+  {
+    "id": 15,
+    "title": "System Administrator",
+    "description": "Quản lý hệ thống mạng, máy chủ và bảo mật thông tin nội bộ doanh nghiệp.",
+    "companyDTO": {
+      "id": 115,
+      "name": "InfraSecure",
+      "logo": "https://example.com/logos/infrasecure.png",
+      "description": "Nhà cung cấp giải pháp hạ tầng và bảo mật CNTT."
+    },
+    "positionDTOS": [
+      { "id": 15, "name": "System Administrator" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" }
+    ],
+    "amount": 1,
+    "postingDate": "2025-11-01",
+    "applicationDeadline": "2025-12-05",
+    "address": "95 Nguyễn Công Trứ",
+    "district": "Quận 1",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1200.0,
+    "maxAllowance": 2200.0
+  },
+  {
+    "id": 16,
+    "title": "Business Analyst",
+    "description": "Thu thập yêu cầu từ khách hàng, phân tích nghiệp vụ và viết tài liệu mô tả sản phẩm.",
+    "companyDTO": {
+      "id": 116,
+      "name": "AgileSoft",
+      "logo": "https://example.com/logos/agilesoft.png",
+      "description": "Công ty phần mềm chuyên cung cấp dịch vụ outsource theo mô hình Agile."
+    },
+    "positionDTOS": [
+      { "id": 16, "name": "Business Analyst" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" }
+    ],
+    "amount": 2,
+    "postingDate": "2025-11-05",
+    "applicationDeadline": "2025-12-12",
+    "address": "24 Võ Văn Kiệt",
+    "district": "Quận 1",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1300.0,
+    "maxAllowance": 2200.0
+  },
+  {
+    "id": 17,
+    "title": "Game Developer (Unity)",
+    "description": "Phát triển game 2D/3D sử dụng Unity và C# cho nền tảng mobile.",
+    "companyDTO": {
+      "id": 117,
+      "name": "DreamArcade",
+      "logo": "https://example.com/logos/dreamarcade.png",
+      "description": "Studio phát triển game di động sáng tạo tại Việt Nam."
+    },
+    "positionDTOS": [
+      { "id": 17, "name": "Game Developer" }
+    ],
+    "scheduleDTOS": [
+      { "id": 1, "name": "Full-time" },
+      { "id": 3, "name": "Hybrid" }
+    ],
+    "amount": 3,
+    "postingDate": "2025-10-29",
+    "applicationDeadline": "2025-11-29",
+    "address": "142 Trần Quang Khải",
+    "district": "Quận 1",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1500.0,
+    "maxAllowance": 3000.0
+  },
+  {
+    "id": 18,
+    "title": "Customer Support Specialist",
+    "description": "Hỗ trợ khách hàng qua email, chat và điện thoại. Giải quyết khiếu nại, phản hồi nhanh chóng.",
+    "companyDTO": {
+      "id": 118,
+      "name": "HelpDesk Pro",
+      "logo": "https://example.com/logos/helpdesk.png",
+      "description": "Công ty cung cấp dịch vụ hỗ trợ khách hàng đa ngôn ngữ."
+    },
+    "positionDTOS": [
+      { "id": 18, "name": "Customer Support" }
+    ],
+    "scheduleDTOS": [
+      { "id": 2, "name": "Part-time" },
+      { "id": 3, "name": "Remote" }
+    ],
+    "amount": 4,
+    "postingDate": "2025-10-26",
+    "applicationDeadline": "2025-11-28",
+    "address": "68 Lê Lợi",
+    "district": "Quận 1",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 500.0,
+    "maxAllowance": 900.0
+  },
+  {
+    "id": 19,
+    "title": "Product Manager",
+    "description": "Xây dựng chiến lược sản phẩm, làm việc với đội ngũ phát triển để đưa sản phẩm ra thị trường.",
+    "companyDTO": {
+      "id": 119,
+      "name": "NextStep",
+      "logo": "https://example.com/logos/nextstep.png",
+      "description": "Startup công nghệ với các sản phẩm SaaS hướng tới thị trường quốc tế."
+    },
+    "positionDTOS": [
+      { "id": 19, "name": "Product Manager" }
+    ],
+    "scheduleDTOS": [
+      { "id": 3, "name": "Hybrid" }
+    ],
+    "amount": 1,
+    "postingDate": "2025-11-07",
+    "applicationDeadline": "2025-12-15",
+    "address": "100 Nguyễn Lương Bằng",
+    "district": "Liên Chiểu",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 2500.0,
+    "maxAllowance": 4200.0
+  },
+  {
+    "id": 20,
+    "title": "Graphic Designer",
+    "description": "Thiết kế ấn phẩm marketing, banner, và nội dung hình ảnh cho chiến dịch quảng cáo.",
+    "companyDTO": {
+      "id": 120,
+      "name": "Artify Creative",
+      "logo": "https://example.com/logos/artify.png",
+      "description": "Agency thiết kế đồ họa và thương hiệu sáng tạo."
+    },
+    "positionDTOS": [
+      { "id": 20, "name": "Graphic Designer" }
+    ],
+    "scheduleDTOS": [
+      { "id": 2, "name": "Part-time" }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-31",
+    "applicationDeadline": "2025-12-01",
+    "address": "123 Pasteur",
+    "district": "Quận 3",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 800.0,
+    "maxAllowance": 1600.0
+  },
+  {
+    "id": 21,
+    "title": "Support Engineer (L2)",
+    "description": "Giải quyết các sự cố kỹ thuật nâng cao cho khách hàng.",
+    "companyDTO": {
+      "id": 200,
+      "name": "HelpLink",
+      "logo": "https://example.com/logos/helplink.png",
+      "description": "Công ty HelpLink chuyên cung cấp giải pháp trong lĩnh vực Support."
+    },
+    "positionDTOS": [
+      {
+        "id": 21,
+        "name": "Support Engineer (L2)"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      },
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 4,
+    "postingDate": "2025-10-16",
+    "applicationDeadline": "2025-12-02",
+    "address": "18 Đường Mẫu",
+    "district": "Quận 3",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 1263.56,
+    "maxAllowance": 3636.48
+  },
+  {
+    "id": 22,
+    "title": "Support Engineer (L2)",
+    "description": "Giải quyết các sự cố kỹ thuật nâng cao cho khách hàng.",
+    "companyDTO": {
+      "id": 201,
+      "name": "HelpLink",
+      "logo": "https://example.com/logos/helplink.png",
+      "description": "Công ty HelpLink chuyên cung cấp giải pháp trong lĩnh vực Support."
+    },
+    "positionDTOS": [
+      {
+        "id": 22,
+        "name": "Support Engineer (L2)"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      },
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-22",
+    "applicationDeadline": "2025-11-17",
+    "address": "94 Đường Mẫu",
+    "district": "Cầu Giấy",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 872.8,
+    "maxAllowance": 1466.02
+  },
+  {
+    "id": 23,
+    "title": "Cybersecurity Engineer",
+    "description": "Bảo mật hệ thống và giám sát an ninh mạng.",
+    "companyDTO": {
+      "id": 202,
+      "name": "SecureNet",
+      "logo": "https://example.com/logos/securenet.png",
+      "description": "Công ty SecureNet chuyên cung cấp giải pháp trong lĩnh vực Cybersecurity."
+    },
+    "positionDTOS": [
+      {
+        "id": 23,
+        "name": "Cybersecurity Engineer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      },
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-26",
+    "applicationDeadline": "2025-11-25",
+    "address": "173 Đường Mẫu",
+    "district": "Ngũ Hành Sơn",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 1896.49,
+    "maxAllowance": 4374.67
+  },
+  {
+    "id": 24,
+    "title": "Technical Writer",
+    "description": "Viết tài liệu hướng dẫn kỹ thuật cho phần mềm.",
+    "companyDTO": {
+      "id": 203,
+      "name": "DocuTech",
+      "logo": "https://example.com/logos/docutech.png",
+      "description": "Công ty DocuTech chuyên cung cấp giải pháp trong lĩnh vực Technical."
+    },
+    "positionDTOS": [
+      {
+        "id": 24,
+        "name": "Technical Writer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      }
+    ],
+    "amount": 4,
+    "postingDate": "2025-10-24",
+    "applicationDeadline": "2025-11-22",
+    "address": "89 Đường Mẫu",
+    "district": "Tân Bình",
+    "city": "Hà Nội",
+    "country": "Việt Nam",
+    "minAllowance": 2322.94,
+    "maxAllowance": 3819.01
+  },
+  {
+    "id": 25,
+    "title": "Game Artist",
+    "description": "Thiết kế nhân vật và môi trường 3D cho trò chơi.",
+    "companyDTO": {
+      "id": 204,
+      "name": "PixelForge",
+      "logo": "https://example.com/logos/pixelforge.png",
+      "description": "Công ty PixelForge chuyên cung cấp giải pháp trong lĩnh vực Game."
+    },
+    "positionDTOS": [
+      {
+        "id": 25,
+        "name": "Game Artist"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      }
+    ],
+    "amount": 3,
+    "postingDate": "2025-10-27",
+    "applicationDeadline": "2025-12-26",
+    "address": "29 Đường Mẫu",
+    "district": "Cầu Giấy",
+    "city": "Hải Phòng",
+    "country": "Việt Nam",
+    "minAllowance": 1833.99,
+    "maxAllowance": 2596.77
+  },
+  {
+    "id": 26,
+    "title": "Cloud Engineer",
+    "description": "Triển khai và quản lý hạ tầng cloud Azure.",
+    "companyDTO": {
+      "id": 205,
+      "name": "BlueSky Cloud",
+      "logo": "https://example.com/logos/bluesky.png",
+      "description": "Công ty BlueSky Cloud chuyên cung cấp giải pháp trong lĩnh vực Cloud."
+    },
+    "positionDTOS": [
+      {
+        "id": 26,
+        "name": "Cloud Engineer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      }
+    ],
+    "amount": 3,
+    "postingDate": "2025-10-26",
+    "applicationDeadline": "2025-12-02",
+    "address": "50 Đường Mẫu",
+    "district": "Ngũ Hành Sơn",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1494.59,
+    "maxAllowance": 2137.57
+  },
+  {
+    "id": 27,
+    "title": "Technical Recruiter",
+    "description": "Tuyển dụng nhân sự kỹ thuật cho các vị trí công nghệ.",
+    "companyDTO": {
+      "id": 206,
+      "name": "HireRight",
+      "logo": "https://example.com/logos/hireright.png",
+      "description": "Công ty HireRight chuyên cung cấp giải pháp trong lĩnh vực Technical."
+    },
+    "positionDTOS": [
+      {
+        "id": 27,
+        "name": "Technical Recruiter"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      }
+    ],
+    "amount": 3,
+    "postingDate": "2025-10-14",
+    "applicationDeadline": "2025-12-13",
+    "address": "55 Đường Mẫu",
+    "district": "Tân Bình",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 885.75,
+    "maxAllowance": 2404.06
+  },
+  {
+    "id": 28,
+    "title": "Technical Recruiter",
+    "description": "Tuyển dụng nhân sự kỹ thuật cho các vị trí công nghệ.",
+    "companyDTO": {
+      "id": 207,
+      "name": "HireRight",
+      "logo": "https://example.com/logos/hireright.png",
+      "description": "Công ty HireRight chuyên cung cấp giải pháp trong lĩnh vực Technical."
+    },
+    "positionDTOS": [
+      {
+        "id": 28,
+        "name": "Technical Recruiter"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 4,
+    "postingDate": "2025-10-31",
+    "applicationDeadline": "2025-12-11",
+    "address": "153 Đường Mẫu",
+    "district": "Quận 3",
+    "city": "Cần Thơ",
+    "country": "Việt Nam",
+    "minAllowance": 1196.42,
+    "maxAllowance": 1912.95
+  },
+  {
+    "id": 29,
+    "title": "AI Research Scientist",
+    "description": "Nghiên cứu mô hình học sâu và thuật toán AI mới.",
+    "companyDTO": {
+      "id": 208,
+      "name": "MindLab",
+      "logo": "https://example.com/logos/mindlab.png",
+      "description": "Công ty MindLab chuyên cung cấp giải pháp trong lĩnh vực AI."
+    },
+    "positionDTOS": [
+      {
+        "id": 29,
+        "name": "AI Research Scientist"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 2,
+        "name": "Part-time"
+      }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-30",
+    "applicationDeadline": "2025-11-20",
+    "address": "83 Đường Mẫu",
+    "district": "Quận 3",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 1724.98,
+    "maxAllowance": 3732.94
+  },
+  {
+    "id": 30,
+    "title": "Technical Recruiter",
+    "description": "Tuyển dụng nhân sự kỹ thuật cho các vị trí công nghệ.",
+    "companyDTO": {
+      "id": 209,
+      "name": "HireRight",
+      "logo": "https://example.com/logos/hireright.png",
+      "description": "Công ty HireRight chuyên cung cấp giải pháp trong lĩnh vực Technical."
+    },
+    "positionDTOS": [
+      {
+        "id": 30,
+        "name": "Technical Recruiter"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      },
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-17",
+    "applicationDeadline": "2025-12-01",
+    "address": "11 Đường Mẫu",
+    "district": "Cầu Giấy",
+    "city": "Hải Phòng",
+    "country": "Việt Nam",
+    "minAllowance": 1003.99,
+    "maxAllowance": 3473.01
+  },
+  {
+    "id": 31,
+    "title": "Data Engineer",
+    "description": "Xây dựng pipeline dữ liệu và hệ thống ETL.",
+    "companyDTO": {
+      "id": 210,
+      "name": "DataFlow",
+      "logo": "https://example.com/logos/dataflow.png",
+      "description": "Công ty DataFlow chuyên cung cấp giải pháp trong lĩnh vực Data."
+    },
+    "positionDTOS": [
+      {
+        "id": 31,
+        "name": "Data Engineer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 2,
+        "name": "Part-time"
+      }
+    ],
+    "amount": 3,
+    "postingDate": "2025-10-29",
+    "applicationDeadline": "2025-12-23",
+    "address": "126 Đường Mẫu",
+    "district": "Ngũ Hành Sơn",
+    "city": "Cần Thơ",
+    "country": "Việt Nam",
+    "minAllowance": 2298.61,
+    "maxAllowance": 4240.1
+  },
+  {
+    "id": 32,
+    "title": "Technical Writer",
+    "description": "Viết tài liệu hướng dẫn kỹ thuật cho phần mềm.",
+    "companyDTO": {
+      "id": 211,
+      "name": "DocuTech",
+      "logo": "https://example.com/logos/docutech.png",
+      "description": "Công ty DocuTech chuyên cung cấp giải pháp trong lĩnh vực Technical."
+    },
+    "positionDTOS": [
+      {
+        "id": 32,
+        "name": "Technical Writer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-22",
+    "applicationDeadline": "2025-12-06",
+    "address": "175 Đường Mẫu",
+    "district": "Quận 3",
+    "city": "Hải Phòng",
+    "country": "Việt Nam",
+    "minAllowance": 1629.41,
+    "maxAllowance": 3339.72
+  },
+  {
+    "id": 33,
+    "title": "Cybersecurity Engineer",
+    "description": "Bảo mật hệ thống và giám sát an ninh mạng.",
+    "companyDTO": {
+      "id": 212,
+      "name": "SecureNet",
+      "logo": "https://example.com/logos/securenet.png",
+      "description": "Công ty SecureNet chuyên cung cấp giải pháp trong lĩnh vực Cybersecurity."
+    },
+    "positionDTOS": [
+      {
+        "id": 33,
+        "name": "Cybersecurity Engineer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 2,
+        "name": "Part-time"
+      }
+    ],
+    "amount": 4,
+    "postingDate": "2025-10-27",
+    "applicationDeadline": "2025-12-18",
+    "address": "109 Đường Mẫu",
+    "district": "Ngũ Hành Sơn",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 2880.21,
+    "maxAllowance": 4248.76
+  },
+  {
+    "id": 34,
+    "title": "Game Artist",
+    "description": "Thiết kế nhân vật và môi trường 3D cho trò chơi.",
+    "companyDTO": {
+      "id": 213,
+      "name": "PixelForge",
+      "logo": "https://example.com/logos/pixelforge.png",
+      "description": "Công ty PixelForge chuyên cung cấp giải pháp trong lĩnh vực Game."
+    },
+    "positionDTOS": [
+      {
+        "id": 34,
+        "name": "Game Artist"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-11",
+    "applicationDeadline": "2025-12-03",
+    "address": "14 Đường Mẫu",
+    "district": "Ngũ Hành Sơn",
+    "city": "Cần Thơ",
+    "country": "Việt Nam",
+    "minAllowance": 1252.33,
+    "maxAllowance": 1919.1
+  },
+  {
+    "id": 35,
+    "title": "AR/VR Developer",
+    "description": "Xây dựng ứng dụng thực tế ảo và tăng cường.",
+    "companyDTO": {
+      "id": 214,
+      "name": "ImmersiTech",
+      "logo": "https://example.com/logos/immersitech.png",
+      "description": "Công ty ImmersiTech chuyên cung cấp giải pháp trong lĩnh vực AR/VR."
+    },
+    "positionDTOS": [
+      {
+        "id": 35,
+        "name": "AR/VR Developer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      },
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-20",
+    "applicationDeadline": "2025-12-08",
+    "address": "104 Đường Mẫu",
+    "district": "Tân Bình",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 2816.28,
+    "maxAllowance": 5195.86
+  },
+  {
+    "id": 36,
+    "title": "Support Engineer (L2)",
+    "description": "Giải quyết các sự cố kỹ thuật nâng cao cho khách hàng.",
+    "companyDTO": {
+      "id": 215,
+      "name": "HelpLink",
+      "logo": "https://example.com/logos/helplink.png",
+      "description": "Công ty HelpLink chuyên cung cấp giải pháp trong lĩnh vực Support."
+    },
+    "positionDTOS": [
+      {
+        "id": 36,
+        "name": "Support Engineer (L2)"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 2,
+        "name": "Part-time"
+      }
+    ],
+    "amount": 3,
+    "postingDate": "2025-10-30",
+    "applicationDeadline": "2025-12-17",
+    "address": "171 Đường Mẫu",
+    "district": "Quận 1",
+    "city": "Cần Thơ",
+    "country": "Việt Nam",
+    "minAllowance": 1135.02,
+    "maxAllowance": 2412.83
+  },
+  {
+    "id": 37,
+    "title": "IT Trainer",
+    "description": "Đào tạo kỹ năng công nghệ thông tin cho nhân viên.",
+    "companyDTO": {
+      "id": 216,
+      "name": "SkillBoost",
+      "logo": "https://example.com/logos/skillboost.png",
+      "description": "Công ty SkillBoost chuyên cung cấp giải pháp trong lĩnh vực IT."
+    },
+    "positionDTOS": [
+      {
+        "id": 37,
+        "name": "IT Trainer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-30",
+    "applicationDeadline": "2025-12-15",
+    "address": "191 Đường Mẫu",
+    "district": "Tân Bình",
+    "city": "Hà Nội",
+    "country": "Việt Nam",
+    "minAllowance": 1187.6,
+    "maxAllowance": 1946.95
+  },
+  {
+    "id": 38,
+    "title": "QA Automation Engineer",
+    "description": "Tạo và duy trì kịch bản kiểm thử tự động.",
+    "companyDTO": {
+      "id": 217,
+      "name": "AutoTest",
+      "logo": "https://example.com/logos/autotest.png",
+      "description": "Công ty AutoTest chuyên cung cấp giải pháp trong lĩnh vực QA."
+    },
+    "positionDTOS": [
+      {
+        "id": 38,
+        "name": "QA Automation Engineer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 3,
+    "postingDate": "2025-10-30",
+    "applicationDeadline": "2025-12-13",
+    "address": "179 Đường Mẫu",
+    "district": "Quận 3",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 2625.68,
+    "maxAllowance": 3472.1
+  },
+  {
+    "id": 39,
+    "title": "SEO Specialist",
+    "description": "Tối ưu hóa website để cải thiện thứ hạng trên Google.",
+    "companyDTO": {
+      "id": 218,
+      "name": "OptiRank",
+      "logo": "https://example.com/logos/optirank.png",
+      "description": "Công ty OptiRank chuyên cung cấp giải pháp trong lĩnh vực SEO."
+    },
+    "positionDTOS": [
+      {
+        "id": 39,
+        "name": "SEO Specialist"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      },
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-18",
+    "applicationDeadline": "2025-12-15",
+    "address": "41 Đường Mẫu",
+    "district": "Quận 3",
+    "city": "Cần Thơ",
+    "country": "Việt Nam",
+    "minAllowance": 2214.76,
+    "maxAllowance": 3089.48
+  },
+  {
+    "id": 40,
+    "title": "Embedded Software Engineer",
+    "description": "Phát triển phần mềm nhúng cho thiết bị IoT.",
+    "companyDTO": {
+      "id": 219,
+      "name": "EmbedPro",
+      "logo": "https://example.com/logos/embedpro.png",
+      "description": "Công ty EmbedPro chuyên cung cấp giải pháp trong lĩnh vực Embedded."
+    },
+    "positionDTOS": [
+      {
+        "id": 40,
+        "name": "Embedded Software Engineer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      },
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-13",
+    "applicationDeadline": "2025-12-12",
+    "address": "26 Đường Mẫu",
+    "district": "Cầu Giấy",
+    "city": "Hà Nội",
+    "country": "Việt Nam",
+    "minAllowance": 1005.02,
+    "maxAllowance": 1977.62
+  },
+  {
+    "id": 41,
+    "title": "AI Research Scientist",
+    "description": "Nghiên cứu mô hình học sâu và thuật toán AI mới.",
+    "companyDTO": {
+      "id": 220,
+      "name": "MindLab",
+      "logo": "https://example.com/logos/mindlab.png",
+      "description": "Công ty MindLab chuyên cung cấp giải pháp trong lĩnh vực AI."
+    },
+    "positionDTOS": [
+      {
+        "id": 41,
+        "name": "AI Research Scientist"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-16",
+    "applicationDeadline": "2025-11-23",
+    "address": "182 Đường Mẫu",
+    "district": "Ngũ Hành Sơn",
+    "city": "Hà Nội",
+    "country": "Việt Nam",
+    "minAllowance": 2569.19,
+    "maxAllowance": 4670.34
+  },
+  {
+    "id": 42,
+    "title": "Customer Success Manager",
+    "description": "Theo dõi và hỗ trợ khách hàng doanh nghiệp sau bán hàng.",
+    "companyDTO": {
+      "id": 221,
+      "name": "ClientFirst",
+      "logo": "https://example.com/logos/clientfirst.png",
+      "description": "Công ty ClientFirst chuyên cung cấp giải pháp trong lĩnh vực Customer."
+    },
+    "positionDTOS": [
+      {
+        "id": 42,
+        "name": "Customer Success Manager"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 2,
+        "name": "Part-time"
+      }
+    ],
+    "amount": 3,
+    "postingDate": "2025-10-17",
+    "applicationDeadline": "2025-11-25",
+    "address": "142 Đường Mẫu",
+    "district": "Tân Bình",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 1365.27,
+    "maxAllowance": 3277.69
+  },
+  {
+    "id": 43,
+    "title": "IT Support",
+    "description": "Hỗ trợ kỹ thuật nội bộ, xử lý sự cố phần mềm và phần cứng.",
+    "companyDTO": {
+      "id": 222,
+      "name": "SysCare",
+      "logo": "https://example.com/logos/syscare.png",
+      "description": "Công ty SysCare chuyên cung cấp giải pháp trong lĩnh vực IT."
+    },
+    "positionDTOS": [
+      {
+        "id": 43,
+        "name": "IT Support"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-10",
+    "applicationDeadline": "2025-11-21",
+    "address": "129 Đường Mẫu",
+    "district": "Tân Bình",
+    "city": "Hà Nội",
+    "country": "Việt Nam",
+    "minAllowance": 2728.77,
+    "maxAllowance": 4400.78
+  },
+  {
+    "id": 44,
+    "title": "IT Support",
+    "description": "Hỗ trợ kỹ thuật nội bộ, xử lý sự cố phần mềm và phần cứng.",
+    "companyDTO": {
+      "id": 223,
+      "name": "SysCare",
+      "logo": "https://example.com/logos/syscare.png",
+      "description": "Công ty SysCare chuyên cung cấp giải pháp trong lĩnh vực IT."
+    },
+    "positionDTOS": [
+      {
+        "id": 44,
+        "name": "IT Support"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      },
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-21",
+    "applicationDeadline": "2025-12-14",
+    "address": "108 Đường Mẫu",
+    "district": "Tân Bình",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 860.84,
+    "maxAllowance": 2269.74
+  },
+  {
+    "id": 45,
+    "title": "Scrum Master",
+    "description": "Dẫn dắt nhóm Agile, đảm bảo tiến độ sprint.",
+    "companyDTO": {
+      "id": 224,
+      "name": "AgileHub",
+      "logo": "https://example.com/logos/agilehub.png",
+      "description": "Công ty AgileHub chuyên cung cấp giải pháp trong lĩnh vực Scrum."
+    },
+    "positionDTOS": [
+      {
+        "id": 45,
+        "name": "Scrum Master"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      },
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 4,
+    "postingDate": "2025-10-25",
+    "applicationDeadline": "2025-12-14",
+    "address": "161 Đường Mẫu",
+    "district": "Tân Bình",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 2395.23,
+    "maxAllowance": 4131.54
+  },
+  {
+    "id": 46,
+    "title": "IT Compliance Officer",
+    "description": "Đảm bảo tuân thủ quy định bảo mật và CNTT.",
+    "companyDTO": {
+      "id": 225,
+      "name": "ReguTech",
+      "logo": "https://example.com/logos/regutech.png",
+      "description": "Công ty ReguTech chuyên cung cấp giải pháp trong lĩnh vực IT."
+    },
+    "positionDTOS": [
+      {
+        "id": 46,
+        "name": "IT Compliance Officer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      },
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 4,
+    "postingDate": "2025-10-10",
+    "applicationDeadline": "2025-12-08",
+    "address": "192 Đường Mẫu",
+    "district": "Quận 1",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 1828.69,
+    "maxAllowance": 2948.77
+  },
+  {
+    "id": 47,
+    "title": "IT Compliance Officer",
+    "description": "Đảm bảo tuân thủ quy định bảo mật và CNTT.",
+    "companyDTO": {
+      "id": 226,
+      "name": "ReguTech",
+      "logo": "https://example.com/logos/regutech.png",
+      "description": "Công ty ReguTech chuyên cung cấp giải pháp trong lĩnh vực IT."
+    },
+    "positionDTOS": [
+      {
+        "id": 47,
+        "name": "IT Compliance Officer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 2,
+        "name": "Part-time"
+      }
+    ],
+    "amount": 2,
+    "postingDate": "2025-10-18",
+    "applicationDeadline": "2025-11-29",
+    "address": "171 Đường Mẫu",
+    "district": "Quận 1",
+    "city": "Hải Phòng",
+    "country": "Việt Nam",
+    "minAllowance": 2365.98,
+    "maxAllowance": 2911.15
+  },
+  {
+    "id": 48,
+    "title": "Embedded Software Engineer",
+    "description": "Phát triển phần mềm nhúng cho thiết bị IoT.",
+    "companyDTO": {
+      "id": 227,
+      "name": "EmbedPro",
+      "logo": "https://example.com/logos/embedpro.png",
+      "description": "Công ty EmbedPro chuyên cung cấp giải pháp trong lĩnh vực Embedded."
+    },
+    "positionDTOS": [
+      {
+        "id": 48,
+        "name": "Embedded Software Engineer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      }
+    ],
+    "amount": 4,
+    "postingDate": "2025-10-23",
+    "applicationDeadline": "2025-11-12",
+    "address": "193 Đường Mẫu",
+    "district": "Quận 1",
+    "city": "Hải Phòng",
+    "country": "Việt Nam",
+    "minAllowance": 2277.11,
+    "maxAllowance": 4616.81
+  },
+  {
+    "id": 49,
+    "title": "AR/VR Developer",
+    "description": "Xây dựng ứng dụng thực tế ảo và tăng cường.",
+    "companyDTO": {
+      "id": 228,
+      "name": "ImmersiTech",
+      "logo": "https://example.com/logos/immersitech.png",
+      "description": "Công ty ImmersiTech chuyên cung cấp giải pháp trong lĩnh vực AR/VR."
+    },
+    "positionDTOS": [
+      {
+        "id": 49,
+        "name": "AR/VR Developer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 3,
+        "name": "Hybrid"
+      }
+    ],
+    "amount": 4,
+    "postingDate": "2025-10-15",
+    "applicationDeadline": "2025-11-29",
+    "address": "47 Đường Mẫu",
+    "district": "Tân Bình",
+    "city": "Hồ Chí Minh",
+    "country": "Việt Nam",
+    "minAllowance": 1077.69,
+    "maxAllowance": 2116.94
+  },
+  {
+    "id": 50,
+    "title": "Embedded Software Engineer",
+    "description": "Phát triển phần mềm nhúng cho thiết bị IoT.",
+    "companyDTO": {
+      "id": 229,
+      "name": "EmbedPro",
+      "logo": "https://example.com/logos/embedpro.png",
+      "description": "Công ty EmbedPro chuyên cung cấp giải pháp trong lĩnh vực Embedded."
+    },
+    "positionDTOS": [
+      {
+        "id": 50,
+        "name": "Embedded Software Engineer"
+      }
+    ],
+    "scheduleDTOS": [
+      {
+        "id": 1,
+        "name": "Full-time"
+      }
+    ],
+    "amount": 1,
+    "postingDate": "2025-10-30",
+    "applicationDeadline": "2025-12-05",
+    "address": "131 Đường Mẫu",
+    "district": "Cầu Giấy",
+    "city": "Đà Nẵng",
+    "country": "Việt Nam",
+    "minAllowance": 1172.35,
+    "maxAllowance": 2602.15
+  }
+]
