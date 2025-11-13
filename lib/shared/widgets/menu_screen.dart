@@ -1,14 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jobsit_mobile/app/theme.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/applied_jobs/screens/applied_job_screen.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/features/jobs/screens/home_screen.dart';
 import 'package:jobsit_mobile/features/saved_jobs/screens/saved_job_screen.dart';
-import 'package:jobsit_mobile/core/constants/asset_constants.dart';
-import 'package:jobsit_mobile/core/constants/color_constants.dart';
-import 'package:jobsit_mobile/core/constants/text_constants.dart';
+import 'package:jobsit_mobile/shared/widgets/bottom_nav_item.dart';
 
 import '../../features/auth/screens/account_screen.dart';
 import '../../features/auth/screens/login_screen.dart';
@@ -21,19 +20,26 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  int _currentIndex = 0;
   late final CandidateCubit _cubit;
 
-  List<Widget> screens = [
+  final List<Widget> _screens = [
     const HomeScreen(),
     const AppliedJobScreen(),
     const SavedJobScreen(),
     const AccountScreen()
   ];
 
+  final int _jobIndex = 0;
+  final int _appliedIndex = 1;
+  final int _savedIndex = 2;
+  final int _accountIndex = 3;
+
+  late final int _currentIndex;
+
   @override
   void initState() {
     super.initState();
+    _currentIndex = _jobIndex;
     _cubit = context.read<CandidateCubit>();
   }
 
@@ -41,44 +47,60 @@ class _MenuScreenState extends State<MenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: ColorConstants.grayBackground,
+        color: AppTheme.backgroundLight,
         child: IndexedStack(
           index: _currentIndex,
-          children: screens,
+          children: _screens,
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        showUnselectedLabels: true,
-        items: [
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined), label: TextConstants.home),
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.home_repair_service_outlined),
-              label: TextConstants.applied),
-          BottomNavigationBarItem(
-              icon: SvgPicture.asset(AssetConstants.iconBookmark, width: 24, height: 24, colorFilter: ColorFilter.mode(_currentIndex == 2 ? ColorConstants.main : Colors.black, BlendMode.srcIn),),
-              label: TextConstants.saved),
-          BottomNavigationBarItem(
-              icon: SvgPicture.asset(AssetConstants.iconProfile, width: 24, height: 24, colorFilter: ColorFilter.mode(_currentIndex == 3 ? ColorConstants.main : Colors.black, BlendMode.srcIn),),
-              label: TextConstants.profile),
-        ],
-        currentIndex: _currentIndex,
-        onTap: (index) {
-
-          if(_cubit.state is AuthNoLoggedInState){
-            if (index >0 && _currentIndex != index){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> const LoginScreen()));
-            }
-          }
-
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        selectedItemColor: ColorConstants.main,
-        unselectedItemColor: Colors.black,
-      ),
+      bottomNavigationBar: Container(
+          margin: const EdgeInsets.all(10),
+          height: MediaQuery.of(context).size.height * 0.07,
+          decoration: BoxDecoration(
+              color: AppTheme.primaryColor,
+              borderRadius: BorderRadius.circular(50)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              BottomNavItem(
+                  index: _jobIndex,
+                  icon: Icons.business_center,
+                  label: 'bottom_nav.job'.tr(),
+                  isSelected: _currentIndex == _jobIndex,
+                  onTap: _handleBottomNavItemClick),
+              BottomNavItem(
+                  index: _appliedIndex,
+                  icon: Icons.task_rounded,
+                  label: 'bottom_nav.applied_job'.tr(),
+                  isSelected: _currentIndex == _appliedIndex,
+                  onTap: _handleBottomNavItemClick),
+              BottomNavItem(
+                  index: _savedIndex,
+                  icon: Icons.bookmark_added_rounded,
+                  label: 'bottom_nav.saved_job'.tr(),
+                  isSelected: _currentIndex == _savedIndex,
+                  onTap: _handleBottomNavItemClick),
+              BottomNavItem(
+                  index: _accountIndex,
+                  icon: Icons.account_circle,
+                  label: 'bottom_nav.account'.tr(),
+                  isSelected: _currentIndex == _accountIndex,
+                  onTap: _handleBottomNavItemClick),
+            ],
+          )),
     );
+  }
+
+  void _handleBottomNavItemClick(int index) {
+    if (index > 0 && _currentIndex != index) {
+      if (_cubit.state is AuthNoLoggedInState) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()));
+      }
+    }
+
+    setState(() {
+      _currentIndex = index;
+    });
   }
 }
