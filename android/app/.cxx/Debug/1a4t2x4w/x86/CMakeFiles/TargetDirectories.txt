@@ -1,0 +1,2 @@
+C:/Users/ADMIN/AndroidStudioProjects/jobsit_mobile/android/app/.cxx/Debug/1a4t2x4w/x86/CMakeFiles/edit_cache.dir
+C:/Users/ADMIN/AndroidStudioProjects/jobsit_mobile/android/app/.cxx/Debug/1a4t2x4w/x86/CMakeFiles/rebuild_cache.dir

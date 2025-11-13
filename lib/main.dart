@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jobsit_mobile/cubits/candidate/candidate_cubit.dart';
-import 'package:jobsit_mobile/cubits/job/job_cubit.dart';
-import 'package:jobsit_mobile/cubits/saved_jobs/saved_job_cubit.dart';
-import 'package:jobsit_mobile/screens/login_screen.dart';
-import 'package:jobsit_mobile/screens/menu_screen.dart';
-import 'package:jobsit_mobile/screens/splash_screen.dart';
-import 'package:jobsit_mobile/services/candidate_services.dart';
-import 'package:jobsit_mobile/utils/color_constants.dart';
-import 'package:jobsit_mobile/utils/preferences/shared_prefs.dart';
-import 'package:jobsit_mobile/utils/value_constants.dart';
+import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
+import 'package:jobsit_mobile/features/jobs/cubit/job_cubit.dart';
+import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_cubit.dart';
+import 'package:jobsit_mobile/features/auth/screens/login_screen.dart';
+import 'package:jobsit_mobile/shared/widgets/menu_screen.dart';
+import 'package:jobsit_mobile/splash_screen.dart';
+import 'package:jobsit_mobile/core/services/candidate_services.dart';
+import 'package:jobsit_mobile/core/constants/color_constants.dart';
+import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
+import 'package:jobsit_mobile/core/constants/value_constants.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-import 'cubits/applied_jobs/applied_job_cubit.dart';
-import 'models/candidate.dart';
+import 'features/applied_jobs/cubit/applied_job_cubit.dart';
+import 'data/models/candidate.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
