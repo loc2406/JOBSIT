@@ -1,0 +1,9 @@
+{
+    "app_name": "JOBSIT",
+    "bottom_nav": {
+        "job": "Việc làm",
+        "applied_job": "Đã ứng tuyển",
+        "saved_job": "Đã lưu",
+        "account": "Tài khoản"
+    }
+}

@@ -1,11 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jobsit_mobile/app/theme.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/jobs/cubit/job_cubit.dart';
 import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_cubit.dart';
-import 'package:jobsit_mobile/features/auth/screens/login_screen.dart';
 import 'package:jobsit_mobile/shared/widgets/menu_screen.dart';
-import 'package:jobsit_mobile/splash_screen.dart';
 import 'package:jobsit_mobile/core/services/candidate_services.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
@@ -17,8 +17,16 @@ import 'data/models/candidate.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await SharedPrefs.initSharedPrefs();
-  runApp(const MyApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('vi')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('vi'),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,24 +36,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     ValueConstants.initScreenSize(context);
 
-    return MultiBlocProvider(providers: [
-      BlocProvider(create: (context) => CandidateCubit()),
-      BlocProvider(create: (context) => JobCubit()),
-      BlocProvider(create: (context) => SavedJobCubit()),
-      BlocProvider(create: (context) => AppliedJobCubit()),
-    ], child: MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: ColorConstants.grayBackground),
-        useMaterial3: true,
-      ),
-      home: const MainScreen(),
-    ));
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => CandidateCubit()),
+          BlocProvider(create: (context) => JobCubit()),
+          BlocProvider(create: (context) => SavedJobCubit()),
+          BlocProvider(create: (context) => AppliedJobCubit()),
+        ],
+        child: MaterialApp(
+          title: 'app_name'.tr(),
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: ThemeMode.system,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          home: const MainScreen(),
+        ));
   }
 }
 
 class MainScreen extends StatefulWidget {
-   const MainScreen({super.key});
+  const MainScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => MainStateScreen();
@@ -90,4 +102,3 @@ class MainStateScreen extends State<MainScreen> {
         : const MenuScreen();
   }
 }
-
