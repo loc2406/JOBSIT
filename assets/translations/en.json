@@ -1,0 +1,18 @@
+{
+    "app_name": "JOBSIT",
+    "bottom_nav": {
+        "job": "Job",
+        "applied_job": "Applied",
+        "saved_job": "Saved",
+        "account": "Account"
+    },
+    "language":{
+        "vi": "Vietnamese",
+        "en": "English"
+    },
+    "screen":{
+      "job":{
+        "search_job": "Search job..."
+      }
+    }
+}

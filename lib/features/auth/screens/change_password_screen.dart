@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/asset_constants.dart';
-import '../../../core/constants/text_constants.dart';
-import '../../../core/constants/value_constants.dart';
 
 
 
@@ -73,7 +71,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 children: [
                   CircleAvatar(
                     radius: 18,
-                    backgroundImage: AssetImage(AssetConstants.iconVN),
+                    backgroundImage: AssetImage(AssetConstants.viFlag),
                   ),
                   Icon(Icons.arrow_drop_down, color: Colors.black),
                 ],

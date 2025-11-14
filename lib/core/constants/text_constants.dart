@@ -137,10 +137,10 @@ class TextConstants {
   static const youAreAppliedThisJobMessage = 'Bạn đã ứng tuyển công việc này!';
 
 // Bottom navigation bar
-  static const home = 'Trang chủ';
+  static const job = 'Việc làm';
   static const applied = 'Đã ứng tuyển';
   static const saved = 'Đã lưu';
-  static const profile = 'Cá nhân';
+  static const account = 'Tài khoản';
 
   // Home Screen
   static const searchJob = 'Search Job';

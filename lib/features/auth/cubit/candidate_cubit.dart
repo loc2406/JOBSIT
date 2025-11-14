@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
-import 'package:http/http.dart' as http;
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
@@ -12,7 +10,6 @@ import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import '../../../data/models/candidate.dart';
 import '../../../data/models/province.dart';
 import '../../../data/models/university.dart';
-import '../../../core/services/base_services.dart';
 import '../../../core/services/candidate_services.dart';
 import '../../../core/services/province_services.dart';
 

@@ -48,7 +48,7 @@ class _AccountScreenState extends State<AccountScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         title: const Text(
-          TextConstants.profile,
+          TextConstants.account,
           style: WidgetConstants.mainBold16Style,
         ),
         centerTitle: true,

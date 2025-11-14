@@ -48,7 +48,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             const Spacer(),
             Row(
               children: [
-                Image.asset(AssetConstants.iconVN, width: 14),
+                Image.asset(AssetConstants.viFlag, width: 14),
                 const Icon(Icons.arrow_drop_down, color: Colors.black),
               ],
             ),

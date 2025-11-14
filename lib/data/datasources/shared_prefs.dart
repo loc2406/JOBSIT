@@ -4,6 +4,7 @@ class SharedPrefs{
 
   static const candidateIdKey = 'candidateId';
   static const candidateTokenKey = 'candidateToken';
+  static const languageKey = 'languageKey';
 
   static late SharedPreferences _instance;
 
@@ -15,15 +16,23 @@ class SharedPrefs{
     await _instance.setInt(candidateIdKey, id);
   }
 
-  static Future<int?> getCandidateId() async {
-    return await _instance.getInt(candidateIdKey);
+  static int? getCandidateId() {
+    return _instance.getInt(candidateIdKey);
   }
 
   static saveCandidateToken(String token) async {
     await _instance.setString(candidateTokenKey, token);
   }
 
-  static Future<String?> getCandidateToken() async {
-    return await _instance.getString(candidateTokenKey);
+  static String? getCandidateToken() {
+    return _instance.getString(candidateTokenKey);
+  }
+
+  static setLanguageCode(String code) async {
+    await _instance.setString(languageKey, code);
+  }
+
+  static String getLanguageCode() {
+    return _instance.getString(languageKey) ?? 'vi';
   }
 }

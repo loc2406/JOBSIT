@@ -1,19 +1,16 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsit_mobile/features/applied_jobs/cubit/applied_job_cubit.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
-import 'package:jobsit_mobile/features/auth/cubit/login_success_state.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
 import 'package:jobsit_mobile/core/utils/widget_constants.dart';
-import 'package:open_file/open_file.dart';
+import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
 import 'package:path/path.dart' as path;
 
-import '../../features/jobs/cubit/job_cubit.dart';
 import '../../features/jobs/screens/cv_viewer_screen.dart';
 
 class ApplyBottomSheet extends StatefulWidget {
@@ -150,7 +147,7 @@ class _ApplyBottomSheetState extends State<ApplyBottomSheet> {
     if (isValidate()) {
       await context.read<AppliedJobCubit>().applyJob(
           token:
-              (context.read<CandidateCubit>().state as LoginSuccessState).token,
+              (context.read<CandidateCubit>().state as AuthLoginSuccessState).token,
           cvFile: _selectedCV!,
           letter: _controller.text,
           idJob: _jobId);

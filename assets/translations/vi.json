@@ -5,5 +5,14 @@
         "applied_job": "Đã ứng tuyển",
         "saved_job": "Đã lưu",
         "account": "Tài khoản"
+    },
+    "language":{
+        "vi": "Tiếng Việt",
+        "en": "Tiếng Anh"
+    },
+    "screen":{
+      "job":{
+        "search_job": "Tìm việc làm..."
+      }
     }
 }

@@ -1,10 +1,11 @@
-class AssetConstants{
+class AssetConstants {
   static const logoSplash = 'assets/images/logo_splash_screen.png';
   static const logo = 'assets/images/logo_login_screen.png';
   static const logoHome = 'assets/images/logo_home_screen.png';
   static const iconGgLogin = 'assets/images/icon_google.svg';
   static const iconFbLogin = 'assets/images/icon_fb.svg';
-  static const iconVN = 'assets/images/viet_nam.png';
+  static const viFlag = 'assets/images/vi_flag.png';
+  static const enFlag = 'assets/images/en_flag.png';
   static const iconPerson = 'assets/images/ic_person.png';
   static const iconFilter = 'assets/images/ic_filter.svg';
   static const iconEdit = 'assets/images/ic_edit.svg';

@@ -1,33 +1,33 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:jobsit_mobile/app/router.dart';
 import 'package:jobsit_mobile/app/theme.dart';
+import 'package:jobsit_mobile/core/services/candidate_services.dart';
+import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
+import 'package:jobsit_mobile/data/models/candidate.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/applied_jobs/screens/applied_job_screen.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
-import 'package:jobsit_mobile/features/jobs/screens/home_screen.dart';
+import 'package:jobsit_mobile/features/jobs/screens/jobs_screen.dart';
 import 'package:jobsit_mobile/features/saved_jobs/screens/saved_job_screen.dart';
 import 'package:jobsit_mobile/shared/widgets/bottom_nav_item.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../features/auth/screens/account_screen.dart';
-import '../../features/auth/screens/login_screen.dart';
 
-class MenuScreen extends StatefulWidget {
-  const MenuScreen({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<MenuScreen> createState() => _MenuScreenState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen> {
+class _MainScreenState extends State<MainScreen> {
   late final CandidateCubit _cubit;
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    const AppliedJobScreen(),
-    const SavedJobScreen(),
-    const AccountScreen()
-  ];
+  List<Widget> _screens = [];
 
   final int _jobIndex = 0;
   final int _appliedIndex = 1;
@@ -41,10 +41,37 @@ class _MenuScreenState extends State<MenuScreen> {
     super.initState();
     _currentIndex = _jobIndex;
     _cubit = context.read<CandidateCubit>();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    String? token = SharedPrefs.getCandidateToken();
+    if (token != null && token.isNotEmpty) {
+      bool isExpired = JwtDecoder.isExpired(token);
+      int? id = SharedPrefs.getCandidateId();
+
+      if (!isExpired && id != null) {
+        Candidate candidate = await CandidateServices.getCandidateById(id);
+        _cubit.setLoginStatus(status: true, token: token, candidate: candidate);
+      } else {
+        _cubit.setLoginStatus(status: false);
+      }
+    } else {
+      _cubit.setLoginStatus(status: false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    context.locale; // Để MainScreen() rebuild theo ngôn ngữ mới
+
+    _screens = [
+      const JobsScreen(),
+      const AppliedJobScreen(),
+      const SavedJobScreen(),
+      const AccountScreen()
+    ];
+
     return Scaffold(
       body: Container(
         color: AppTheme.backgroundLight,
@@ -94,8 +121,7 @@ class _MenuScreenState extends State<MenuScreen> {
   void _handleBottomNavItemClick(int index) {
     if (index > 0 && _currentIndex != index) {
       if (_cubit.state is AuthNoLoggedInState) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
+        context.goNamed(AppRouter.loginName);
       }
     }
 

@@ -1,8 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_debouncer/flutter_debouncer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
+import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/features/jobs/cubit/job_cubit.dart';
 import 'package:jobsit_mobile/features/jobs/cubit/job_state.dart';
@@ -22,36 +25,41 @@ import '../../../data/models/job.dart';
 import '../../../data/models/province.dart';
 import '../../../core/constants/asset_constants.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class JobsScreen extends StatefulWidget {
+  const JobsScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<JobsScreen> createState() => _JobsScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _JobsScreenState extends State<JobsScreen> {
   late final JobCubit _jobCubit;
   late final CandidateCubit _candidateCubit;
   late final SavedJobCubit _savedJobCubit;
+
   List<Province> _provinces = [];
   final _searchController = TextEditingController();
   final PagingController<int, Job> _pagingController =
-  PagingController(firstPageKey: 0);
+      PagingController(firstPageKey: 0);
   String _selectedLocation = '';
   String _selectedSchedule = '';
   String _selectedPosition = '';
   String _selectedMajor = '';
   final Debouncer _debouncer = Debouncer();
 
+  ThemeData get _theme => Theme.of(context);
+
   @override
   void initState() {
     super.initState();
+
     _jobCubit = context.read<JobCubit>();
     _candidateCubit = context.read<CandidateCubit>();
     _savedJobCubit = context.read<SavedJobCubit>();
+
     _getProvinces();
     _pagingController.addPageRequestListener((pageKey) async {
-      await _getJobs(pageKey+1);
+      await _getJobs(pageKey + 1);
     });
   }
 
@@ -63,13 +71,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _getJobs(int no) async {
-    debugPrint('_getJobs: $no $_selectedLocation $_selectedSchedule $_selectedPosition $_selectedMajor');
+    debugPrint(
+        '_getJobs: $no $_selectedLocation $_selectedSchedule $_selectedPosition $_selectedMajor');
     await _jobCubit.getJobs(
         name: _searchController.text,
         address: _selectedLocation,
-        scheduleId: _selectedSchedule.isNotEmpty ? ConvertConstants.getIdByName(ValueConstants.schedules, _selectedSchedule) : -1,
-        positionId: _selectedPosition.isNotEmpty ? ConvertConstants.getIdByName(ValueConstants.positions, _selectedPosition) : -1,
-        majorId: _selectedMajor.isNotEmpty ? ConvertConstants.getIdByName(ValueConstants.majors, _selectedMajor) : -1,
+        scheduleId: _selectedSchedule.isNotEmpty
+            ? ConvertConstants.getIdByName(
+                ValueConstants.schedules, _selectedSchedule)
+            : -1,
+        positionId: _selectedPosition.isNotEmpty
+            ? ConvertConstants.getIdByName(
+                ValueConstants.positions, _selectedPosition)
+            : -1,
+        majorId: _selectedMajor.isNotEmpty
+            ? ConvertConstants.getIdByName(
+                ValueConstants.majors, _selectedMajor)
+            : -1,
         no: no);
   }
 
@@ -90,27 +108,35 @@ class _HomeScreenState extends State<HomeScreen> {
           leadingWidth: ValueConstants.deviceWidthValue(uiValue: 143),
           actions: [
             GestureDetector(
+              onTapDown: showLanguages,
               child: Container(
                 width: 24,
                 height: 24,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.fromBorderSide(
-                      BorderSide(color: ColorConstants.main, width: 2)),),
-                child: ClipOval(child: Image.asset(
-                  AssetConstants.iconVN, fit: BoxFit.cover,),),
+                      BorderSide(color: _theme.primaryColor, width: 2)),
+                ),
+                child: ClipOval(
+                  child: Image.asset(
+                    context.locale.languageCode == 'vi'
+                        ? AssetConstants.viFlag
+                        : AssetConstants.enFlag,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
-            SizedBox(
-              width: ValueConstants.deviceWidthValue(uiValue: 25),
+            const SizedBox(
+              width: 20,
             )
           ],
         ),
         body: Container(
-          margin: EdgeInsets.only(
-            left: ValueConstants.deviceWidthValue(uiValue: 25),
-            top: ValueConstants.deviceHeightValue(uiValue: 25),
-            right: ValueConstants.deviceWidthValue(uiValue: 25),
+          margin: const EdgeInsets.only(
+            left: 20,
+            top: 20,
+            right: 20,
           ),
           child: Column(
             children: [
@@ -118,23 +144,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Expanded(
                       child: TextField(
-                        controller: _searchController,
-                        onChanged: (keyword) => handleFilterJobs(),
-                        decoration: const InputDecoration(
-                            hintText: TextConstants.searchJob,
-                            hintStyle: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 13),
-                            fillColor: Colors.white,
-                            filled: true,
-                            suffixIcon: Icon(
-                              Icons.search,
-                              color: ColorConstants.main,
-                            ),
-                            focusedBorder: WidgetConstants.searchBorder,
-                            enabledBorder: WidgetConstants.searchBorder),
-                      )),
+                    controller: _searchController,
+                    onChanged: (keyword) => handleFilterJobs(),
+                    decoration: InputDecoration(
+                        hintText: 'screen.job.search_job'.tr(),
+                        hintStyle: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 13),
+                        fillColor: Colors.white,
+                        filled: true,
+                        suffixIcon: const Icon(
+                          Icons.search,
+                          color: ColorConstants.main,
+                        ),
+                        focusedBorder: WidgetConstants.searchBorder,
+                        enabledBorder: WidgetConstants.searchBorder),
+                  )),
                   SizedBox(width: ValueConstants.deviceWidthValue(uiValue: 8)),
                   GestureDetector(
                     onTap: showFilter,
@@ -177,16 +203,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   BlocListener<SavedJobCubit, SavedJobState>(
                       listener: (context, state) {
-                        if (state is SavedJobSaveSuccessState) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(duration: Duration(seconds: 2), content: Text(
-                                  TextConstants.saveJobSuccessful)));
-                        } else if (state is SavedJobDeleteSuccessState) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(duration: Duration(seconds: 2),content: Text(
-                                  TextConstants.deleteJobSuccessful)));
-                        }
-                      })
+                    if (state is SavedJobSaveSuccessState) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          duration: Duration(seconds: 2),
+                          content: Text(TextConstants.saveJobSuccessful)));
+                    } else if (state is SavedJobDeleteSuccessState) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          duration: Duration(seconds: 2),
+                          content: Text(TextConstants.deleteJobSuccessful)));
+                    }
+                  })
                 ], child: _buildJobList()),
               ),
             ],
@@ -194,25 +220,93 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
 
+  void showLanguages(TapDownDetails details) {
+    final position = details.globalPosition;
+
+    showMenu(
+      context: context,
+      items: [
+        PopupMenuItem(
+          value: 'vi',
+          child: Row(
+            children: [
+              ClipOval(
+                  child: Image.asset(
+                AssetConstants.viFlag,
+                height: 20,
+                width: 20,
+                fit: BoxFit.cover,
+              )),
+              const SizedBox(
+                width: 3,
+              ),
+              Text(
+                'language.vi'.tr(),
+                style: const TextStyle(color: Colors.black, fontSize: 10),
+              )
+            ],
+          ),
+          onTap: () async => await _changeLanguage('vi'),
+        ),
+        PopupMenuItem(
+          value: 'en',
+          child: Row(
+            children: [
+              ClipOval(
+                  child: Image.asset(
+                AssetConstants.enFlag,
+                height: 20,
+                width: 20,
+                fit: BoxFit.cover,
+              )),
+              const SizedBox(
+                width: 3,
+              ),
+              Text(
+                'language.en'.tr(),
+                style: const TextStyle(color: Colors.black, fontSize: 10),
+              )
+            ],
+          ),
+          onTap: () async => await _changeLanguage('en'),
+        ),
+      ],
+      position: RelativeRect.fromLTRB(
+        position.dx,
+        position.dy + 28, // Đẩy menu xuống dưới Container
+        position.dx,
+        position.dy + 28, // Đẩy menu xuống dưới Container
+      ),
+    );
+  }
+
+  Future<void> _changeLanguage(String selectedLanguageCode) async {
+    if (selectedLanguageCode != context.locale.languageCode) {
+      await context.setLocale(Locale(selectedLanguageCode));
+      await SharedPrefs.setLanguageCode(selectedLanguageCode);
+    }
+  }
+
   Widget _buildJobList() {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: ValueConstants.deviceWidthValue(uiValue: 15)),
+          vertical: ValueConstants.deviceWidthValue(uiValue: 5)),
       child: PagedListView<int, Job>(
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<Job>(
             itemBuilder: (context, job, index) {
-              return JobItem(job: job,
+              return JobItem(
+                job: job,
                 onIconBookmarkClicked: () async =>
-                await handleIcBookmarkClicked(job),);
+                    await handleIcBookmarkClicked(job),
+              );
             },
-            newPageProgressIndicatorBuilder: (_) =>
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: WidgetConstants.circularProgress,
-              ),
-            ),
+            newPageProgressIndicatorBuilder: (_) => const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: WidgetConstants.circularProgress,
+                  ),
+                ),
             noItemsFoundIndicatorBuilder: (context) {
               if (_searchController.text.isEmpty || _selectedLocation.isEmpty) {
                 return const Center(
@@ -237,8 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void showFilter() {
     showModalBottomSheet(
         context: context,
-        builder: (context) =>
-            Wrap(
+        builder: (context) => Wrap(
               children: [
                 FilterBottomSheet(
                   provinces: _provinces,
@@ -277,19 +370,21 @@ class _HomeScreenState extends State<HomeScreen> {
       return;
     }
 
-    _debouncer.debounce(duration: const Duration(seconds: 3), onDebounce: () async {
-      if (_candidateCubit.state is AuthLoginSuccessState) {
-        final candidateToken = (_candidateCubit.state as AuthLoginSuccessState)
-            .token;
-        final isSaved = _savedJobCubit.allSavedJobs().any((j) =>
-        j.jobId == job.jobId);
+    _debouncer.debounce(
+        duration: const Duration(seconds: 3),
+        onDebounce: () async {
+          if (_candidateCubit.state is AuthLoginSuccessState) {
+            final candidateToken =
+                (_candidateCubit.state as AuthLoginSuccessState).token;
+            final isSaved =
+                _savedJobCubit.allSavedJobs().any((j) => j.jobId == job.jobId);
 
-        if (!isSaved) {
-          await _savedJobCubit.saveJob(job.jobId, candidateToken);
-        } else {
-          await _savedJobCubit.deleteJob(job.jobId, candidateToken);
-        }
-      }
-    });
+            if (!isSaved) {
+              await _savedJobCubit.saveJob(job.jobId, candidateToken);
+            } else {
+              await _savedJobCubit.deleteJob(job.jobId, candidateToken);
+            }
+          }
+        });
   }
 }
