@@ -5,12 +5,15 @@ class NumberPaginator extends StatefulWidget {
   final int currentPage;
   final int totalPages;
   final Future<void> Function(int newPage) onPageChange;
+  final bool isLoading;
 
   const NumberPaginator(
       {super.key,
       required this.currentPage,
       required this.totalPages,
-      required this.onPageChange});
+      required this.onPageChange,
+      this.isLoading = false
+      });
 
   @override
   State<NumberPaginator> createState() => _NumberPaginatorState();
@@ -69,6 +72,7 @@ class _NumberPaginatorState extends State<NumberPaginator> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final bool isLoading = widget.isLoading;
 
     return Container(
       margin: const EdgeInsets.only(top: 10),
@@ -77,12 +81,12 @@ class _NumberPaginatorState extends State<NumberPaginator> {
         children: [
           // Nút Previous
           GestureDetector(
-              onTap: (widget.currentPage > 1)
+              onTap: (widget.currentPage > 1 && !isLoading)
                   ? () async => await widget.onPageChange(widget.currentPage - 1)
                   : null,
               child: Icon(
                 Icons.navigate_before,
-                color: (widget.currentPage > 1)
+                color: (widget.currentPage > 1 && !isLoading)
                     ? theme.primaryColor
                     : Colors.grey,
               )),
@@ -99,7 +103,7 @@ class _NumberPaginatorState extends State<NumberPaginator> {
                 final isSelectedPage = widget.currentPage == actualPage;
 
                 return GestureDetector(
-                  onTap: isSelectedPage
+                  onTap: (isSelectedPage || isLoading)
                       ? null
                       : () => widget.onPageChange(actualPage),
                   child: Container(
@@ -131,12 +135,12 @@ class _NumberPaginatorState extends State<NumberPaginator> {
           ),
           // Nút Next
           GestureDetector(
-              onTap: (widget.currentPage < widget.totalPages)
+              onTap: (widget.currentPage < widget.totalPages && !isLoading)
                   ? () async => await widget.onPageChange(widget.currentPage + 1)
                   : null,
               child: Icon(
                 Icons.navigate_next,
-                color: (widget.currentPage < widget.totalPages)
+                color: (widget.currentPage < widget.totalPages && !isLoading)
                     ? theme.primaryColor
                     : Colors.grey,
               )),

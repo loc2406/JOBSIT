@@ -40,6 +40,7 @@ class _JobsScreenState extends State<JobsScreen> {
   String _selectedPosition = '';
   String _selectedMajor = '';
   final Debouncer _debouncer = Debouncer();
+  bool _isPaginating = false;
 
   ThemeData get _theme => Theme.of(context);
 
@@ -55,6 +56,12 @@ class _JobsScreenState extends State<JobsScreen> {
   }
 
   Future<void> _getJobs({required int page}) async {
+    if (_isPaginating) return;
+
+    setState(() {
+      _isPaginating = true;
+    });
+
     await _jobCubit.getJobs(
         page: page,
         searchKeyword: _searchController.text,
@@ -71,6 +78,12 @@ class _JobsScreenState extends State<JobsScreen> {
             ? ConvertConstants.getIdByName(
                 ValueConstants.majors, _selectedMajor)
             : -1);
+
+    if (mounted) {
+      setState(() {
+        _isPaginating = false;
+      });
+    }
   }
 
   @override
@@ -124,7 +137,7 @@ class _JobsScreenState extends State<JobsScreen> {
                   Expanded(
                       child: TextField(
                     controller: _searchController,
-                    onChanged: (keyword) => handleFilterJobs(),
+                    onChanged: (keyword) async => await handleFilterJobs(),
                     decoration: InputDecoration(
                         hintText: 'screen.job.search_job'.tr(),
                         suffixIcon: const Icon(
@@ -135,7 +148,7 @@ class _JobsScreenState extends State<JobsScreen> {
                   )),
                   const SizedBox(width: 10),
                   GestureDetector(
-                    onTap: showFilter,
+                    onTap: _showFilter,
                     child: Container(
                       padding: const EdgeInsets.all(11),
                       decoration: const BoxDecoration(
@@ -279,6 +292,7 @@ class _JobsScreenState extends State<JobsScreen> {
                   currentPage: state.page,
                   totalPages: state.totalPages,
                   onPageChange: (newPage) async => await _navigatePage(newPage),
+                  isLoading: _isPaginating,
                 ),
                 Expanded(
                   child: Container(
@@ -307,20 +321,16 @@ class _JobsScreenState extends State<JobsScreen> {
   }
 
   Future<void> _navigatePage(int newPage) async {
-    if (_jobCubit.state is JobLoadingState) {
-    return;
-  }
-  
     await _getJobs(page: newPage);
   }
 
-  void showFilter() {
+  void _showFilter() {
     showModalBottomSheet(
         context: context,
         builder: (context) => Wrap(
               children: [
                 FilterBottomSheet(
-                  provinces: [],
+                  provinces: _jobCubit.getProvinces(),
                   selectedLocation: _selectedLocation,
                   selectedSchedule: _selectedSchedule,
                   selectedPosition: _selectedPosition,
@@ -339,8 +349,10 @@ class _JobsScreenState extends State<JobsScreen> {
   }
 
   Future<void> handleFilterJobs() async {
-    // _pagingController.itemList = [];
-    // _getJobs(0);
+    if (_jobCubit.state is JobLoadingState) {
+      return;
+    }
+    await _getJobs(page: 1);
   }
 
   @override

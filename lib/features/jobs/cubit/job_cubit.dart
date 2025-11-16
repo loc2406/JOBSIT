@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
-import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
 import 'package:jobsit_mobile/data/models/province.dart';
 
 import '../../../data/models/job.dart';
@@ -15,6 +14,8 @@ class JobCubit extends Cubit<JobState> {
   final _limit = 5;
   List<Province> _provinces = [];
   bool _isLoadedProvinces = false;
+
+  List<Province> getProvinces() => _provinces;
 
   Future<void> getJobs(
       {required String searchKeyword,
@@ -52,7 +53,6 @@ class JobCubit extends Cubit<JobState> {
       } else {
         emit(JobState.loaded(
           jobs: jobs,
-          provinces: _provinces,
           page: currentPage,
           searchKeyword: searchKeyword,
           totalPages: totalPages,

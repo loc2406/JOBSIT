@@ -7,7 +7,6 @@ import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
 import 'package:jobsit_mobile/core/error/AppliedJobBeforeException.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 
-
 class JobServices {
   static const getJobsUrl = '${BaseServices.url}/jobs?';
   static const displayJobLogoUrl = '${BaseServices.url}/file/display/';
@@ -58,13 +57,16 @@ class JobServices {
     required int page,
     required int limit,
   }) async {
+    AppLogger.i(
+        '${searchKeyword} --- ${location} --- ${scheduleId} --- ${positionId} --- ${majorId}');
+
     String api = '${getJobsUrl}page=$page&limit=$limit';
 
-    if (searchKeyword.isNotEmpty) api += '&title=$searchKeyword';
-    if (location.isNotEmpty) api += '&address=$location';
-    if (scheduleId != -1) api += '&jobScheduleIds=$scheduleId';
-    if (positionId != -1) api += '&jobPositionIds=$positionId}';
-    if (majorId != -1) api += '&jobMajorIds=$majorId';
+    if (searchKeyword.isNotEmpty) api += '&keyword=$searchKeyword';
+    if (location.isNotEmpty) api += '&location=$location';
+    if (scheduleId != -1) api += '&scheduleId=$scheduleId';
+    if (positionId != -1) api += '&positionId=$positionId';
+    if (majorId != -1) api += '&majorId=$majorId';
 
     final uri = Uri.parse(api);
 
@@ -83,11 +85,7 @@ class JobServices {
     final int currentPage = jobsResponse[pageKey];
     final int totalPages = jobsResponse[totalPageKey];
 
-    return {
-      jobsKey: jobs,
-      pageKey: currentPage,
-      totalPageKey: totalPages
-    };
+    return {jobsKey: jobs, pageKey: currentPage, totalPageKey: totalPages};
   }
 
   static Future<Map<String, dynamic>> getSavedJobs(

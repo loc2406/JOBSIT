@@ -11,7 +11,6 @@ class JobState {
 
   factory JobState.loaded(
           {required List<Job> jobs,
-          List<Province> provinces = const [],
           required int page,
           required int totalPages,
           required String searchKeyword,
@@ -21,7 +20,6 @@ class JobState {
           required String major}) =>
       JobLoadedState(
           jobs: jobs,
-          provinces: provinces,
           page: page,
           totalPages: totalPages,
           searchKeyword: searchKeyword,
@@ -39,7 +37,6 @@ class JobLoadingState extends JobState {}
 
 class JobLoadedState extends JobState {
   final List<Job> jobs;
-  final List<Province> provinces;
   final int page;
   final int totalPages;
   final String searchKeyword;
@@ -50,7 +47,6 @@ class JobLoadedState extends JobState {
 
   JobLoadedState(
       {required this.jobs,
-      this.provinces = const [],
       required this.page,
       required this.totalPages,
       required this.searchKeyword,
@@ -73,7 +69,6 @@ class JobLoadedState extends JobState {
   }) {
     return JobLoadedState(
       jobs: jobs ?? this.jobs,
-      provinces: provinces ?? this.provinces,
       page: page ?? this.page,
       totalPages: totalPages ?? this.totalPages,
       searchKeyword: searchKeyword ?? this.searchKeyword,

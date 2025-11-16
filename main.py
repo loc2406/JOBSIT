@@ -5,13 +5,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import json
-from typing import List
+from typing import List, Optional  # <-- THÊM OPTIONAL
 
 app = FastAPI(title="Job API", version="1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Cho phép mọi nguồn (bạn có thể thay bằng domain Flutter)
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -19,16 +19,17 @@ app.add_middleware(
 
 @app.get("/favicon.ico")
 def ignore_favicon():
-    return Response(status_code=204)  # Không log lỗi, không trả nội dung
+    return Response(status_code=204)
 
-# Model định nghĩa job (nếu muốn validate chi tiết)
+# Model định nghĩa job (cập nhật thêm majorDTOS)
 class Job(BaseModel):
     id: int
     title: str
     description: str
     companyDTO: dict
-    positionDTOS: List[dict]
-    scheduleDTOS: List[dict]
+    positionDTOS: Optional[List[dict]] = None
+    scheduleDTOS: Optional[List[dict]] = None
+    majorDTOS: Optional[List[dict]] = None 
     amount: int
     postingDate: str
     applicationDeadline: str
@@ -54,22 +55,84 @@ def root():
     return {"message": "Job API is running!"}
 
 
-# Lấy danh sách công việc với phân trang, "ge"= 1 là giá trị tối thiểu, "le"= 50 là giá trị tối đa
-# Giá trị mặc định: page=1, size=5
+# Lấy danh sách công việc với phân trang VÀ LỌC
 @app.get("/jobs")
-def get_jobs(page: int = Query(1, ge=1), limit: int = Query(5, ge=1, le=50)):
-    total_jobs = len(jobs_data)
-    total_pages = math.ceil(total_jobs / limit)
+def get_jobs(
+    # Tham số phân trang
+    page: int = Query(1, ge=1),
+    limit: int = Query(5, ge=1, le=50),
+    # Tham số lọc (mới)
+    keyword: Optional[str] = Query(None),
+    location: Optional[str] = Query(None),
+    scheduleId: Optional[int] = Query(None),
+    positionId: Optional[int] = Query(None),
+    majorId: Optional[int] = Query(None)
+):
+    
+    # Bắt đầu với toàn bộ danh sách
+    filtered_jobs = jobs_data
 
+    # 1. Lọc theo keyword (title hoặc company name)
+    if keyword:
+        keyword_lower = keyword.lower()
+        filtered_jobs = [
+            job for job in filtered_jobs
+            if keyword_lower in job["title"].lower() or
+               keyword_lower in job["companyDTO"]["name"].lower()
+        ]
+
+    # 2. Lọc theo location (address, district, city, country)
+    if location:
+        location_lower = location.lower()
+        filtered_jobs = [
+            job for job in filtered_jobs
+            if location_lower in job["address"].lower() or
+               location_lower in job["district"].lower() or
+               location_lower in job["city"].lower() or
+               location_lower in job["country"].lower()
+        ]
+
+    # 3. Lọc theo scheduleId
+    if scheduleId:
+        filtered_jobs = [
+            job for job in filtered_jobs
+            # Dùng any() để kiểm tra xem có bất kỳ dict nào trong list có id khớp không
+            # Dùng .get() để tránh lỗi nếu 'scheduleDTOS' không tồn tại
+            if any(s.get("id") == scheduleId for s in job.get("scheduleDTOS", []))
+        ]
+
+    # 4. Lọc theo positionId
+    if positionId:
+        filtered_jobs = [
+            job for job in filtered_jobs
+            if any(p.get("id") == positionId for p in job.get("positionDTOS", []))
+        ]
+
+    # 5. Lọc theo majorId
+    if majorId:
+        filtered_jobs = [
+            job for job in filtered_jobs
+            # .get("majorDTOS", []) đảm bảo nó chạy ngay cả khi job cũ thiếu trường này
+            if any(m.get("id") == majorId for m in job.get("majorDTOS", []))
+        ]
+
+    # --- PHÂN TRANG (trên danh sách ĐÃ LỌC) ---
+    
+    # Tính toán dựa trên danh sách đã lọc
+    total_jobs = len(filtered_jobs)
+    total_pages = math.ceil(total_jobs / limit) if total_jobs > 0 else 1
+
+    # Kiểm tra trang hợp lệ
     if page > total_pages:
         return JSONResponse(
             status_code=404,
             content={"error": "Trang không tồn tại"}
         )
 
+    # Cắt danh sách đã lọc theo trang
     start = (page - 1) * limit
     end = start + limit
-    data = jobs_data[start:end]
+    data = filtered_jobs[start:end]
 
     return {
         "page": page,
