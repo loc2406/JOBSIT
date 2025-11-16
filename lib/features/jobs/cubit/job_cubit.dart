@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
+import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
+import 'package:jobsit_mobile/data/models/province.dart';
 
 import '../../../data/models/job.dart';
-import '../../../data/models/province.dart';
 import '../../../core/services/job_services.dart';
 import '../../../core/services/province_services.dart';
 import 'job_state.dart';
@@ -13,51 +13,55 @@ class JobCubit extends Cubit<JobState> {
   JobCubit() : super(JobState.loading());
 
   final _limit = 5;
-
-  Future<List<Province>> getProvinces() async {
-    try {
-      final provinces = await ProvinceServices.getProvinces();
-      return provinces;
-    } catch (e) {
-      debugPrint(e.toString());
-      return [];
-    }
-  }
+  List<Province> _provinces = [];
+  bool _isLoadedProvinces = false;
 
   Future<void> getJobs(
-      {required String name,
-      required String address,
+      {required String searchKeyword,
+      required String location,
       required int scheduleId,
       required int positionId,
-      required int  majorId,
-      required int no}) async {
+      required int majorId,
+      required int page}) async {
     emit(JobState.loading());
 
     try {
-      final response = await JobServices.getJobs(
-          name: name,
-          address: address,
+      final result = await JobServices.getJobs(
+          searchKeyword: searchKeyword,
+          location: location,
           scheduleId: scheduleId,
           positionId: positionId,
           majorId: majorId,
-          no: no,
+          page: page,
           limit: _limit);
 
-      final jobs = ConvertConstants.convertToListJobs(response[JobServices.jobsKey]);
-      final isLastPage = response[JobServices.lastKey] == true;
+      if (!_isLoadedProvinces) {
+        _provinces = await ProvinceServices.getProvinces();
+        _isLoadedProvinces = true;
+      }
+
+      final jobs =
+          ConvertConstants.convertToListJobs(result[JobServices.jobsKey]);
+      final currentPage =
+          int.tryParse(result[JobServices.pageKey].toString()) ?? 1;
+      final totalPages =
+          int.tryParse(result[JobServices.totalPageKey].toString()) ?? 1;
 
       if (jobs.isEmpty) {
         emit(JobState.empty());
       } else {
         emit(JobState.loaded(
           jobs: jobs,
-          page: no,
-          name: name,
-          isLastPage: isLastPage,
-          location: address,
-          schedule: ConvertConstants.getNameById(ValueConstants.schedules, scheduleId),
-          position:  ConvertConstants.getNameById(ValueConstants.positions, positionId),
-          major:  ConvertConstants.getNameById(ValueConstants.majors, majorId),
+          provinces: _provinces,
+          page: currentPage,
+          searchKeyword: searchKeyword,
+          totalPages: totalPages,
+          location: location,
+          schedule: ConvertConstants.getNameById(
+              ValueConstants.schedules, scheduleId),
+          position: ConvertConstants.getNameById(
+              ValueConstants.positions, positionId),
+          major: ConvertConstants.getNameById(ValueConstants.majors, majorId),
         ));
       }
     } catch (e) {

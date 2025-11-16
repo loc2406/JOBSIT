@@ -14,5 +14,11 @@
       "job":{
         "search_job": "Tìm việc làm..."
       }
+    },
+    "notification":{
+      "no_job_to_show": "Không tìm thấy việc làm!"
+    },
+    "error":{
+      "something_wrong_please_restart_app": "Có lỗi xảy ra! Vui lòng khởi động lại ứng dụng!"
     }
 }

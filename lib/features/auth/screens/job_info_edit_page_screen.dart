@@ -13,7 +13,6 @@ import '../../../core/constants/text_constants.dart';
 import '../../../core/constants/validate_constants.dart';
 import '../../../core/constants/value_constants.dart';
 import '../../../shared/widgets/input_field.dart';
-import 'account_screen.dart';
 
 import '../../jobs/screens/cv_viewer_screen.dart';
 import '../../../shared/widgets/multi_select_drop_down_screen1.dart';
@@ -38,7 +37,6 @@ class _JobInfoEditPageState extends State<JobInfoEditPage> {
   final _formKey = GlobalKey<FormState>();
   late Candidate _candidate;
   late String _token;
-  late String _avatarPath;
   File? selectedFileCV;
   String? selectedFileNameCV;
   late String email;
@@ -81,10 +79,10 @@ class _JobInfoEditPageState extends State<JobInfoEditPage> {
   }
 
   Future<void> _getProvinces() async {
-    final provinces = await _cubit.getProvinces();
-    setState(() {
-      _provinces = provinces;
-    });
+    // final provinces = await _cubit.getProvinces();
+    // setState(() {
+    //   _provinces = provinces;
+    // });
   }
 
   void _viewFileCV() {

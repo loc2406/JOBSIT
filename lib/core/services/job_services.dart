@@ -9,7 +9,7 @@ import 'package:jobsit_mobile/core/constants/text_constants.dart';
 
 
 class JobServices {
-  static const searchJobUrl = '${BaseServices.url}/jobs?';
+  static const getJobsUrl = '${BaseServices.url}/jobs?';
   static const displayJobLogoUrl = '${BaseServices.url}/file/display/';
   static const getSavedJobUrl = '${BaseServices.url}/candidate-job-care?';
   static const saveJobUrl = '${BaseServices.url}/candidate-job-care?idJob=';
@@ -50,18 +50,18 @@ class JobServices {
   static const dataExistingValue = 'DATA EXISTING';
 
   static Future<Map<String, dynamic>> getJobs({
-    required String name,
-    required String address,
+    required String searchKeyword,
+    required String location,
     required int scheduleId,
     required int positionId,
     required int majorId,
-    required int no,
+    required int page,
     required int limit,
   }) async {
-    String api = '${searchJobUrl}page=$no&size=$limit';
+    String api = '${getJobsUrl}page=$page&limit=$limit';
 
-    if (name.isNotEmpty) api += '&title=$name';
-    if (address.isNotEmpty) api += '&address=$address';
+    if (searchKeyword.isNotEmpty) api += '&title=$searchKeyword';
+    if (location.isNotEmpty) api += '&address=$location';
     if (scheduleId != -1) api += '&jobScheduleIds=$scheduleId';
     if (positionId != -1) api += '&jobPositionIds=$positionId}';
     if (majorId != -1) api += '&jobMajorIds=$majorId';
@@ -71,6 +71,7 @@ class JobServices {
     final response = await http.get(uri, headers: BaseServices.headers);
 
     if (response.statusCode != 200) {
+      AppLogger.e("${response.statusCode} --- ${response.reasonPhrase}");
       throw Exception(TextConstants.getJobError);
     }
 
@@ -81,11 +82,11 @@ class JobServices {
 
     final int currentPage = jobsResponse[pageKey];
     final int totalPages = jobsResponse[totalPageKey];
-    final bool isLastPage = (currentPage > 0 && currentPage == totalPages);
 
     return {
       jobsKey: jobs,
-      lastKey: isLastPage,
+      pageKey: currentPage,
+      totalPageKey: totalPages
     };
   }
 

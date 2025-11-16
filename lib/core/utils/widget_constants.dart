@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
 
 import '../constants/color_constants.dart';
@@ -7,7 +6,6 @@ import '../constants/color_constants.dart';
 class WidgetConstants {
   static const inputFieldBorder = OutlineInputBorder(borderSide: BorderSide(color: ColorConstants.main), borderRadius: BorderRadius.all(Radius.circular(10)));
   static const circularProgress = CircularProgressIndicator(color: ColorConstants.main,);
-  static const searchBorder = OutlineInputBorder(borderSide: BorderSide(color: ColorConstants.main), borderRadius: BorderRadius.all(Radius.circular(10)));
 
   // Text style - Normal
   static const main11Style = TextStyle(color: ColorConstants.main, fontSize: 11, fontWeight: FontWeight.w500);

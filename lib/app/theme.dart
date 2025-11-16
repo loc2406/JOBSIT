@@ -19,40 +19,38 @@ class AppTheme {
     ),
     appBarTheme: const AppBarTheme(
       elevation: 0,
+      scrolledUnderElevation: 0,
+      backgroundColor: Colors.transparent,
       centerTitle: true,
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black87,
       titleTextStyle: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w600,
-        color: Colors.black87,
+        color: primaryColor,
       ),
     ),
     textTheme: const TextTheme(
-      headlineLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      bodyLarge: TextStyle(fontSize: 16),
-      bodyMedium: TextStyle(fontSize: 14),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: primaryColor,
-        foregroundColor: Colors.white,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-      ),
+      displayMedium: TextStyle(
+        color: primaryColor,
+        fontSize: 16
+      )
     ),
     inputDecorationTheme: InputDecorationTheme(
+      isDense: true, // Giảm khoảng cách từ nội dung đến viền top và bottom
       filled: true,
       fillColor: Colors.white,
+      hintStyle: const TextStyle(
+          color: Colors.grey, fontWeight: FontWeight.w400, fontSize: 13),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: Colors.black12),
+        borderSide: const BorderSide(color: primaryColor),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: const BorderSide(color: primaryColor, width: 1.5),
+        borderSide: const BorderSide(color: primaryColor),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(color: primaryColor),
       ),
     ),
   );
@@ -75,7 +73,8 @@ class AppTheme {
       foregroundColor: Colors.white,
     ),
     textTheme: const TextTheme(
-      headlineLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+      headlineLarge: TextStyle(
+          fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
       bodyLarge: TextStyle(fontSize: 16, color: Colors.white70),
       bodyMedium: TextStyle(fontSize: 14, color: Colors.white60),
     ),

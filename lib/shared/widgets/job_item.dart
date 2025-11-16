@@ -51,8 +51,6 @@ class JobItemState extends State<JobItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        margin:
-            EdgeInsets.only(top: ValueConstants.deviceHeightValue(uiValue: 17)),
         padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),

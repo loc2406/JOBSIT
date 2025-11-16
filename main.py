@@ -57,9 +57,9 @@ def root():
 # Lấy danh sách công việc với phân trang, "ge"= 1 là giá trị tối thiểu, "le"= 50 là giá trị tối đa
 # Giá trị mặc định: page=1, size=5
 @app.get("/jobs")
-def get_jobs(page: int = Query(1, ge=1), size: int = Query(5, ge=1, le=50)):
+def get_jobs(page: int = Query(1, ge=1), limit: int = Query(5, ge=1, le=50)):
     total_jobs = len(jobs_data)
-    total_pages = math.ceil(total_jobs / size)
+    total_pages = math.ceil(total_jobs / limit)
 
     if page > total_pages:
         return JSONResponse(
@@ -67,13 +67,13 @@ def get_jobs(page: int = Query(1, ge=1), size: int = Query(5, ge=1, le=50)):
             content={"error": "Trang không tồn tại"}
         )
 
-    start = (page - 1) * size
-    end = start + size
+    start = (page - 1) * limit
+    end = start + limit
     data = jobs_data[start:end]
 
     return {
         "page": page,
-        "size": size,
+        "limit": limit,
         "total_jobs": total_jobs,
         "total_pages": total_pages,
         "jobs": data

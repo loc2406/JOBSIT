@@ -2,9 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_debouncer/flutter_debouncer.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/features/jobs/cubit/job_cubit.dart';
@@ -15,14 +12,13 @@ import 'package:jobsit_mobile/core/constants/color_constants.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
-import 'package:jobsit_mobile/core/utils/widget_constants.dart';
 import 'package:jobsit_mobile/shared/widgets/filter_bottom_sheet.dart';
 import 'package:jobsit_mobile/shared/widgets/job_item.dart';
+import 'package:jobsit_mobile/shared/widgets/number_paginator.dart';
 
 import '../../auth/cubit/candidate_cubit.dart';
 import '../../saved_jobs/cubit/saved_job_cubit.dart';
 import '../../../data/models/job.dart';
-import '../../../data/models/province.dart';
 import '../../../core/constants/asset_constants.dart';
 
 class JobsScreen extends StatefulWidget {
@@ -37,10 +33,8 @@ class _JobsScreenState extends State<JobsScreen> {
   late final CandidateCubit _candidateCubit;
   late final SavedJobCubit _savedJobCubit;
 
-  List<Province> _provinces = [];
   final _searchController = TextEditingController();
-  final PagingController<int, Job> _pagingController =
-      PagingController(firstPageKey: 0);
+
   String _selectedLocation = '';
   String _selectedSchedule = '';
   String _selectedPosition = '';
@@ -57,25 +51,14 @@ class _JobsScreenState extends State<JobsScreen> {
     _candidateCubit = context.read<CandidateCubit>();
     _savedJobCubit = context.read<SavedJobCubit>();
 
-    _getProvinces();
-    _pagingController.addPageRequestListener((pageKey) async {
-      await _getJobs(pageKey + 1);
-    });
+    _getJobs(page: 1);
   }
 
-  Future<void> _getProvinces() async {
-    final provinces = await _jobCubit.getProvinces();
-    setState(() {
-      _provinces = provinces;
-    });
-  }
-
-  Future<void> _getJobs(int no) async {
-    debugPrint(
-        '_getJobs: $no $_selectedLocation $_selectedSchedule $_selectedPosition $_selectedMajor');
+  Future<void> _getJobs({required int page}) async {
     await _jobCubit.getJobs(
-        name: _searchController.text,
-        address: _selectedLocation,
+        page: page,
+        searchKeyword: _searchController.text,
+        location: _selectedLocation,
         scheduleId: _selectedSchedule.isNotEmpty
             ? ConvertConstants.getIdByName(
                 ValueConstants.schedules, _selectedSchedule)
@@ -87,17 +70,13 @@ class _JobsScreenState extends State<JobsScreen> {
         majorId: _selectedMajor.isNotEmpty
             ? ConvertConstants.getIdByName(
                 ValueConstants.majors, _selectedMajor)
-            : -1,
-        no: no);
+            : -1);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          scrolledUnderElevation: 0,
           leading: Container(
             margin: EdgeInsets.only(
                 left: ValueConstants.deviceWidthValue(uiValue: 25)),
@@ -108,7 +87,7 @@ class _JobsScreenState extends State<JobsScreen> {
           leadingWidth: ValueConstants.deviceWidthValue(uiValue: 143),
           actions: [
             GestureDetector(
-              onTapDown: showLanguages,
+              onTapDown: _showLanguages,
               child: Container(
                 width: 24,
                 height: 24,
@@ -134,9 +113,9 @@ class _JobsScreenState extends State<JobsScreen> {
         ),
         body: Container(
           margin: const EdgeInsets.only(
-            left: 20,
+            left: 15,
             top: 20,
-            right: 20,
+            right: 15,
           ),
           child: Column(
             children: [
@@ -148,31 +127,28 @@ class _JobsScreenState extends State<JobsScreen> {
                     onChanged: (keyword) => handleFilterJobs(),
                     decoration: InputDecoration(
                         hintText: 'screen.job.search_job'.tr(),
-                        hintStyle: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13),
-                        fillColor: Colors.white,
-                        filled: true,
                         suffixIcon: const Icon(
                           Icons.search,
+                          size: 24,
                           color: ColorConstants.main,
-                        ),
-                        focusedBorder: WidgetConstants.searchBorder,
-                        enabledBorder: WidgetConstants.searchBorder),
+                        )),
                   )),
-                  SizedBox(width: ValueConstants.deviceWidthValue(uiValue: 8)),
+                  const SizedBox(width: 10),
                   GestureDetector(
                     onTap: showFilter,
                     child: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(11),
                       decoration: const BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
                           border: Border.fromBorderSide(BorderSide(
                             color: ColorConstants.main,
                           ))),
-                      child: SvgPicture.asset(AssetConstants.iconFilter),
+                      child: Icon(
+                        Icons.filter_alt,
+                        color: _theme.primaryColor,
+                        size: 24,
+                      ),
                     ),
                   )
                 ],
@@ -182,21 +158,10 @@ class _JobsScreenState extends State<JobsScreen> {
                   BlocListener<JobCubit, JobState>(
                     listener: (context, state) {
                       if (state is JobLoadedState) {
-                        _selectedLocation = state.location;
-                        _selectedSchedule = state.schedule;
-                        _selectedPosition = state.position;
-                        _selectedMajor = state.major;
-
-                        if (state.isLastPage) {
-                          _pagingController.appendLastPage(state.jobs);
-                        } else {
-                          _pagingController.appendPage(
-                              state.jobs, state.page + 1);
-                        }
-                      } else if (state is JobErrorState) {
-                        _pagingController.error = state.errMessage;
-                      } else if (state is JobEmptyState) {
-                        _pagingController.itemList = [];
+                        // _selectedLocation = state.location;
+                        // _selectedSchedule = state.schedule;
+                        // _selectedPosition = state.position;
+                        // _selectedMajor = state.major;
                       }
                     },
                     child: const SizedBox(),
@@ -220,7 +185,7 @@ class _JobsScreenState extends State<JobsScreen> {
         ));
   }
 
-  void showLanguages(TapDownDetails details) {
+  void _showLanguages(TapDownDetails details) {
     final position = details.globalPosition;
 
     showMenu(
@@ -288,44 +253,65 @@ class _JobsScreenState extends State<JobsScreen> {
   }
 
   Widget _buildJobList() {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          vertical: ValueConstants.deviceWidthValue(uiValue: 5)),
-      child: PagedListView<int, Job>(
-        pagingController: _pagingController,
-        builderDelegate: PagedChildBuilderDelegate<Job>(
-            itemBuilder: (context, job, index) {
-              return JobItem(
-                job: job,
-                onIconBookmarkClicked: () async =>
-                    await handleIcBookmarkClicked(job),
-              );
-            },
-            newPageProgressIndicatorBuilder: (_) => const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: WidgetConstants.circularProgress,
-                  ),
+    return BlocBuilder<JobCubit, JobState>(
+      builder: (context, state) {
+        switch (state) {
+          case JobEmptyState():
+            return Center(
+                child: Text('notification.no_job_to_show'.tr(),
+                    style: _theme.textTheme.displayMedium));
+          case JobLoadingState():
+            return Center(
+                child: CircularProgressIndicator(
+              color: _theme.primaryColor,
+            ));
+          case JobErrorState():
+            return Center(
+                child: Text(
+              'error.something_wrong_please_restart_app'.tr(),
+              style: _theme.textTheme.displayMedium,
+              textAlign: TextAlign.center,
+            ));
+          case JobLoadedState():
+            return Column(
+              children: [
+                NumberPaginator(
+                  currentPage: state.page,
+                  totalPages: state.totalPages,
+                  onPageChange: (newPage) async => await _navigatePage(newPage),
                 ),
-            noItemsFoundIndicatorBuilder: (context) {
-              if (_searchController.text.isEmpty || _selectedLocation.isEmpty) {
-                return const Center(
-                  child: Text(
-                    TextConstants.notFindJobMess,
-                    style: WidgetConstants.mainBold16Style,
-                  ),
-                );
-              } else {
-                return const Center(
-                  child: Text(
-                    TextConstants.noMatchingJobAtThisTimeMess,
-                    style: WidgetConstants.mainBold16Style,
-                  ),
-                );
-              }
-            }),
-      ),
+                Expanded(
+                  child: Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: ListView.separated(
+                        itemCount: state.jobs.length,
+                        itemBuilder: (context, index) {
+                          final job = state.jobs[index];
+
+                          return JobItem(
+                            job: job,
+                            onIconBookmarkClicked: () async =>
+                                await handleIcBookmarkClicked(job),
+                          );
+                        },
+                        separatorBuilder: (_, __) => const SizedBox(height: 15),
+                      )),
+                ),
+              ],
+            );
+          default:
+            return const SizedBox();
+        }
+      },
     );
+  }
+
+  Future<void> _navigatePage(int newPage) async {
+    if (_jobCubit.state is JobLoadingState) {
+    return;
+  }
+  
+    await _getJobs(page: newPage);
   }
 
   void showFilter() {
@@ -334,7 +320,7 @@ class _JobsScreenState extends State<JobsScreen> {
         builder: (context) => Wrap(
               children: [
                 FilterBottomSheet(
-                  provinces: _provinces,
+                  provinces: [],
                   selectedLocation: _selectedLocation,
                   selectedSchedule: _selectedSchedule,
                   selectedPosition: _selectedPosition,
@@ -353,13 +339,12 @@ class _JobsScreenState extends State<JobsScreen> {
   }
 
   Future<void> handleFilterJobs() async {
-    _pagingController.itemList = [];
-    _getJobs(0);
+    // _pagingController.itemList = [];
+    // _getJobs(0);
   }
 
   @override
   void dispose() {
-    _pagingController.dispose();
     super.dispose();
   }
 
