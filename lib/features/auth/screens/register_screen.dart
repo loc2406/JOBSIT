@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:jobsit_mobile/core/constants/asset_constants.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/auth/screens/active_account_screen.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
@@ -197,7 +198,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.circular(200),
                             border: const Border.fromBorderSide(
                                 BorderSide(color: ColorConstants.main))),
-                        child: SvgPicture.asset(TextConstants.iconGgLoginAsset),
+                        child: SvgPicture.asset(AssetConstants.iconGgLogin),
                       ),
                       SizedBox(
                         width: ValueConstants.deviceHeightValue(uiValue: 26),
@@ -211,7 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             borderRadius: BorderRadius.circular(200),
                             border: const Border.fromBorderSide(
                                 BorderSide(color: ColorConstants.main))),
-                        child: SvgPicture.asset(TextConstants.iconFbLoginAsset),
+                        child: SvgPicture.asset(AssetConstants.iconFbLogin),
                       )
                     ],
                   ),

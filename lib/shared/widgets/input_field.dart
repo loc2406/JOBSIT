@@ -12,30 +12,47 @@ class InputField extends StatelessWidget {
   final bool isObscure;
   final String? Function(String?) validateMethod;
 
-  const InputField({super.key,
-    this.label,
-    required this.controller,
-    required this.keyboardType,
-    required this.validateMethod,
-    this.isObscure = false,
-    this.suffixIcon,
-    this.suffixIconClicked});
+  const InputField(
+      {super.key,
+      this.label,
+      required this.controller,
+      required this.keyboardType,
+      required this.validateMethod,
+      this.isObscure = false,
+      this.suffixIcon,
+      this.suffixIconClicked});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
         hintText: label,
         hintStyle: const TextStyle(color: Colors.grey),
-        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        suffixIcon: suffixIcon != null ? GestureDetector(onTap: suffixIconClicked,child:  Icon(suffixIcon,
-          color: ColorConstants.main,),) : null,
-        enabledBorder: WidgetConstants.inputFieldBorder,
-        focusedBorder: WidgetConstants.inputFieldBorder,
-        errorStyle: const TextStyle(color: Colors.grey, fontSize: 13, fontStyle: FontStyle.italic),
-        errorBorder: WidgetConstants.inputFieldBorder,
-        focusedErrorBorder: WidgetConstants.inputFieldBorder,
+        suffixIconConstraints: const BoxConstraints(
+          minWidth: 40,
+          minHeight: 20,
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        suffixIcon: suffixIcon != null
+            ? GestureDetector(
+                onTap: suffixIconClicked,
+                child: Icon(
+                  suffixIcon,
+                  color: ColorConstants.main,
+                  size: 20,
+                ),
+              )
+            : null,
+        enabledBorder: theme.inputDecorationTheme.enabledBorder,
+        focusedBorder: theme.inputDecorationTheme.focusedBorder,
+        errorStyle: const TextStyle(
+            color: Colors.red, fontSize: 13, fontStyle: FontStyle.italic),
+        errorBorder: theme.inputDecorationTheme.border,
+        focusedErrorBorder: theme.inputDecorationTheme.border,
       ),
       validator: validateMethod,
       keyboardType: keyboardType,

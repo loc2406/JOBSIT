@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../../data/models/candidate.dart';
 import '../../../data/models/province.dart';
@@ -52,30 +54,32 @@ class CandidateCubit extends Cubit<CandidateState> {
       await CandidateServices.sendOtpToActiveAccount(otp);
       emit(CandidateState.activeSuccess());
     } catch (e) {
-      emit(CandidateState.error(ConvertConstants.getMessageFromException(e.toString())));
+      emit(CandidateState.error(
+          ConvertConstants.getMessageFromException(e.toString())));
     }
   }
 
   loginAccount({required String email, required String password}) async {
     try {
       emit(CandidateState.loading());
-      final responseBody =
-          await CandidateServices.loginAccount(email, password);
+      final result = await CandidateServices.loginAccount(email, password);
 
-      final token = responseBody[CandidateServices.tokenKey].toString();
+      final String? token = (result[CandidateServices.tokenKey])?.toString();
       final candidateId =
-          int.tryParse(responseBody[CandidateServices.idUserKey].toString());
+          int.tryParse(result[CandidateServices.idCandidateKey].toString());
 
-      if (token.isNotEmpty && candidateId != null) {
+      if (token != null && token.isNotEmpty && candidateId != null) {
         final candidate = await CandidateServices.getCandidateById(candidateId);
+
         await SharedPrefs.saveCandidateToken(token);
         await SharedPrefs.saveCandidateId(candidateId);
         emit(CandidateState.loginSuccess(token, candidate));
-      } else {
-        emit(CandidateState.error(TextConstants.tokenOrCandidateIdError));
       }
+    } on SocketException {
+      emit(CandidateState.error(CandidateServices.unexpectedError));
     } catch (e) {
-      emit(CandidateState.error(ConvertConstants.getMessageFromException(e.toString())));
+      emit(CandidateState.error(
+          ConvertConstants.getMessageFromException(e.toString())));
     }
   }
 
@@ -118,29 +122,29 @@ class CandidateCubit extends Cubit<CandidateState> {
     }
   }
 
-  handleUpdate(
-      {required Candidate user,
-      required String token,
-      required List<int> position,
-      required List<int> major,
-      required List<int> jobType,
-      required String wantJob,
-      required String desiredWorkingProvince,
-      required String coverLetter,
-      required File cv,
-      }) async {
+  handleUpdate({
+    required Candidate user,
+    required String token,
+    required List<int> position,
+    required List<int> major,
+    required List<int> jobType,
+    required String wantJob,
+    required String desiredWorkingProvince,
+    required String coverLetter,
+    required File cv,
+  }) async {
     try {
       emit(CandidateState.loading());
       final responseBody = await CandidateServices.updateCandidateJob(
-          user: user,
-          token: token,
-          position: position,
-          major: major,
-          jobType: jobType,
-          wantJob: wantJob,
-          desiredWorkingProvince: desiredWorkingProvince,
-          coverLetter: coverLetter,
-          cv: cv,
+        user: user,
+        token: token,
+        position: position,
+        major: major,
+        jobType: jobType,
+        wantJob: wantJob,
+        desiredWorkingProvince: desiredWorkingProvince,
+        coverLetter: coverLetter,
+        cv: cv,
       );
       final candidate = await CandidateServices.getCandidateById(user.id);
       emit(CandidateState.loginSuccess(token, candidate));
@@ -234,6 +238,23 @@ class CandidateCubit extends Cubit<CandidateState> {
     } catch (e) {
       debugPrint(e.toString());
       return false;
+    }
+  }
+
+  Future<void> checkLoginStatus() async {
+    String? token = SharedPrefs.getCandidateToken();
+    if (token != null && token.isNotEmpty) {
+      bool isExpired = JwtDecoder.isExpired(token);
+      int? id = SharedPrefs.getCandidateId();
+
+      if (!isExpired && id != null) {
+        Candidate candidate = await CandidateServices.getCandidateById(id);
+        setLoginStatus(status: true, token: token, candidate: candidate);
+      } else {
+        setLoginStatus(status: false);
+      }
+    } else {
+      setLoginStatus(status: false);
     }
   }
 

@@ -1,23 +1,15 @@
 # main.py
 import math
-from fastapi import FastAPI, HTTPException, Query, Response
-from fastapi.middleware.cors import CORSMiddleware
+import os
+from fastapi import APIRouter, HTTPException, Query, Response
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import json
 from typing import List, Optional  # <-- THÊM OPTIONAL
 
-app = FastAPI(title="Job API", version="1.0")
+router = APIRouter()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-@app.get("/favicon.ico")
+@router.get("/favicon.ico")
 def ignore_favicon():
     return Response(status_code=204)
 
@@ -43,20 +35,17 @@ class Job(BaseModel):
 
 # Load data từ file JSON
 try:
-    with open("data.json", "r", encoding="utf-8") as f:
+    file_path = os.path.join("server", "job", "jobs.json")
+
+    with open(file_path, "r", encoding="utf-8") as f:
         jobs_data = json.load(f)
 except FileNotFoundError:
     jobs_data = []
     print("⚠️ Không tìm thấy file data.json — danh sách rỗng.")
 
 
-@app.get("/")
-def root():
-    return {"message": "Job API is running!"}
-
-
 # Lấy danh sách công việc với phân trang VÀ LỌC
-@app.get("/jobs")
+@router.get("/jobs")
 def get_jobs(
     # Tham số phân trang
     page: int = Query(1, ge=1),
@@ -143,7 +132,7 @@ def get_jobs(
     }
 
 
-@app.get("/jobs/{job_id}", response_model=Job)
+@router.get("/jobs/{job_id}", response_model=Job)
 def get_job(job_id: int):
     """Lấy thông tin chi tiết 1 công việc theo id."""
     for job in jobs_data:
@@ -152,7 +141,7 @@ def get_job(job_id: int):
     raise HTTPException(status_code=404, detail="Job not found")
 
 
-@app.post("/jobs", response_model=Job)
+@router.post("/jobs", response_model=Job)
 def add_job(job: Job):
     """Thêm một công việc mới vào danh sách."""
     jobs_data.append(job.dict())

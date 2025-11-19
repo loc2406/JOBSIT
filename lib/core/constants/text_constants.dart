@@ -6,9 +6,6 @@ class TextConstants {
       'Discover the world of endless povsibilities with ExploreApp. Whether you\'re looking to find the best local spots, connect with fellow adventurers, or track your travels, we\'ve got you covered.';
 
   // Login
-  static const logoLoginAsset = 'assets/images/logo_login_screen.png';
-  static const iconGgLoginAsset = 'assets/images/icon_google.svg';
-  static const iconFbLoginAsset = 'assets/images/icon_fb.svg';
   static const login = 'Đăng nhập';
   static const saveLoginState = 'Lưu mật khẩu';
   static const forgotPassword = 'Quên mật khẩu?';

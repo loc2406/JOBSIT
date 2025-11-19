@@ -32,6 +32,10 @@ class AppTheme {
       displayMedium: TextStyle(
         color: primaryColor,
         fontSize: 16
+      ),
+      displaySmall: TextStyle(
+        color: primaryColor,
+        fontSize: 14
       )
     ),
     inputDecorationTheme: InputDecorationTheme(

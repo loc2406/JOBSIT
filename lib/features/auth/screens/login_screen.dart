@@ -1,6 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jobsit_mobile/core/constants/asset_constants.dart';
+import 'package:jobsit_mobile/data/datasources/auth_storage.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/features/auth/screens/register_screen.dart';
@@ -23,14 +26,29 @@ class _LoginScreenState extends State<LoginScreen> {
   late final CandidateCubit _cubit;
   final _formKey = GlobalKey<FormState>();
   bool _isShowPass = false;
-  bool _isSaveLoginState = false;
+  final _authStorage = AuthStorage();
+  bool _rememberMe = false;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  ThemeData get _theme => Theme.of(context);
 
   @override
   void initState() {
     super.initState();
     _cubit = context.read<CandidateCubit>();
+    _loadSavedCredentials();
+  }
+
+  Future<void> _loadSavedCredentials() async {
+    final credentials = await _authStorage.getCredentials();
+    if (credentials['email'] != null) {
+      setState(() {
+        _emailController.text = credentials['email']!;
+        _passwordController.text = credentials['password'] ?? '';
+        _rememberMe = true;
+      });
+    }
   }
 
   @override
@@ -38,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Container(
-          padding: const EdgeInsets.all(24),
+          margin: const EdgeInsets.all(20),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -48,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Image.asset(
                   color: ColorConstants.main,
-                  TextConstants.logoLoginAsset,
+                  AssetConstants.logoHome,
                   width: ValueConstants.deviceWidthValue(uiValue: 100),
                 ),
                 SizedBox(
@@ -100,10 +118,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Checkbox(
-                              value: _isSaveLoginState,
+                              value: _rememberMe,
                               onChanged: (value) {
                                 setState(() {
-                                  _isSaveLoginState = !_isSaveLoginState;
+                                  _rememberMe = value!;
                                 });
                               },
                               checkColor: Colors.white,
@@ -120,18 +138,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             )
                           ],
                         ),
-                        const Text(
-                          TextConstants.forgotPassword,
-                          style: TextStyle(
-                              color: ColorConstants.main,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              decorationColor: ColorConstants.main),
+                        Text(
+                          'screen.login.forgot_password'.tr(),
+                          style: _theme.textTheme.displaySmall,
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: ValueConstants.deviceHeightValue(uiValue: 30),
+                    const SizedBox(
+                      height: 20,
                     ),
                     BlocConsumer<CandidateCubit, CandidateState>(
                         builder: (context, state) {
@@ -139,27 +153,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         return WidgetConstants.circularProgress;
                       }
 
-                      return SizedBox(
-                          width: double.infinity,
-                          child: TextButton(
-                              style: const ButtonStyle(
-                                  padding: WidgetStatePropertyAll(
-                                      EdgeInsets.symmetric(
-                                          vertical: 12, horizontal: 32)),
-                                  backgroundColor: WidgetStatePropertyAll(
-                                      ColorConstants.main),
-                                  shape: WidgetStatePropertyAll(
-                                      RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(16))))),
-                              onPressed: handleLogin,
-                              child: const Text(
-                                TextConstants.login,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700),
-                              )));
+                      return GestureDetector(
+                          onTap: () async => await _handleLogin(),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            alignment: Alignment.center,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: _theme.primaryColor,
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Text(
+                              'screen.login.title'.tr(),
+                              style: _theme.textTheme.displaySmall?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ));
                     }, listener: (context, state) {
                       if (state is AuthLoginSuccessState) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -168,8 +177,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         Navigator.pop(context);
                       } else if (state is AuthErrorState) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(ConvertConstants.getMessageFromException(state.errMessage))));
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                                ConvertConstants.getMessageFromException(
+                                    state.errMessage))));
                       }
                     }),
                     SizedBox(
@@ -197,8 +208,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(200),
                               border: const Border.fromBorderSide(
                                   BorderSide(color: ColorConstants.main))),
-                          child:
-                              SvgPicture.asset(TextConstants.iconGgLoginAsset),
+                          child: SvgPicture.asset(AssetConstants.iconGgLogin),
                         ),
                         SizedBox(
                           width: ValueConstants.deviceHeightValue(uiValue: 26),
@@ -212,8 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(200),
                               border: const Border.fromBorderSide(
                                   BorderSide(color: ColorConstants.main))),
-                          child:
-                              SvgPicture.asset(TextConstants.iconFbLoginAsset),
+                          child: SvgPicture.asset(AssetConstants.iconFbLogin),
                         )
                       ],
                     ),
@@ -232,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: ValueConstants.deviceHeightValue(uiValue: 8),
                         ),
                         GestureDetector(
-                          onTap: navigateRegisterScreen,
+                          onTap: _navigateRegisterScreen,
                           child: const Text(
                             TextConstants.register,
                             style: TextStyle(
@@ -251,14 +260,14 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 
-  Future<void> handleLogin() async {
+  Future<void> _handleLogin() async {
     if ((_formKey.currentState as FormState).validate()) {
       await _cubit.loginAccount(
           email: _emailController.text, password: _passwordController.text);
     }
   }
 
-  void navigateRegisterScreen() {
+  void _navigateRegisterScreen() {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => const RegisterScreen()));
   }

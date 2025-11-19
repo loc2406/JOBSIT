@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:jobsit_mobile/features/auth/screens/login_screen.dart';
-import 'package:jobsit_mobile/shared/widgets/main_screen.dart';
+import 'package:jobsit_mobile/features/jobs/screens/main_screen.dart';
 
 class AppRouter {
   static const mainPath = '/';

@@ -57,8 +57,6 @@ class JobServices {
     required int page,
     required int limit,
   }) async {
-    AppLogger.i(
-        '${searchKeyword} --- ${location} --- ${scheduleId} --- ${positionId} --- ${majorId}');
 
     String api = '${getJobsUrl}page=$page&limit=$limit';
 

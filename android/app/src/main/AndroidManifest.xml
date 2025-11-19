@@ -3,7 +3,8 @@
         android:requestLegacyExternalStorage="true"
         android:label="jobsit_mobile"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        >
 
         <activity
             android:name=".MainActivity"

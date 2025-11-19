@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "email": "test1@gmail.com",
+    "password": "123456",
+    "firstName": "Admin",
+    "lastName": "System",
+    "gender": true,
+    "birthDay": "1990-01-01",
+    "phone": "0909123456",
+    "avatar": null,
+    "location": "Ho Chi Minh",
+    "mailReceive": true,
+    "searchable": true,
+    "university": {
+      "id": 1,
+      "name": "Trường Đại học Công nghệ TPHCM"
+    },
+    "cv": null,
+    "positionDTOs": [],
+    "majorDTOs": [],
+    "scheduleDTOs": [],
+    "desiredJob": null,
+    "referenceLetter": "",
+    "desiredWorkingProvince": ""
+  },
+  {
+    "id": 2,
+    "email": "test2@gmail.com",
+    "password": "456789",
+    "firstName": "Admin",
+    "lastName": "System",
+    "gender": true,
+    "birthDay": "1990-12-31",
+    "phone": "0909456789",
+    "avatar": null,
+    "location": "Ha Noi",
+    "mailReceive": false,
+    "searchable": false,
+    "university": {
+      "id": 2,
+      "name": "Trường Đại học Ngoại thương"
+    },
+    "cv": null,
+    "positionDTOs": [],
+    "majorDTOs": [],
+    "scheduleDTOs": [],
+    "desiredJob": null,
+    "referenceLetter": "",
+    "desiredWorkingProvince": ""
+  }
+]

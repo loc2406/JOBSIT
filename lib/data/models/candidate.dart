@@ -21,55 +21,56 @@ class Candidate {
   final String? desiredJob;
   final String? referenceLetter;
   final String? desiredWorkingProvince;
-  const Candidate({required this.id,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-    this.gender,
-    this.birthdate,
-    required this.phone,
-    this.avatar,
-    this.location,
-    required this.mailReceive,
-    required this.searchable,
-    this.university,
-    this.cv,
-    this.majorDTOs,
-    this.positionDTOs,
-    this.scheduleDTOs,
-    this.desiredJob,
-    this.referenceLetter,
-    this.desiredWorkingProvince
-  });
+  const Candidate(
+      {required this.id,
+      required this.email,
+      required this.firstName,
+      required this.lastName,
+      this.gender,
+      this.birthdate,
+      required this.phone,
+      this.avatar,
+      this.location,
+      required this.mailReceive,
+      required this.searchable,
+      this.university,
+      this.cv,
+      this.majorDTOs,
+      this.positionDTOs,
+      this.scheduleDTOs,
+      this.desiredJob,
+      this.referenceLetter,
+      this.desiredWorkingProvince});
 
   factory Candidate.fromMap(Map<String, dynamic> map) {
     return Candidate(
-      id: int.parse(map[CandidateServices.userDTOKey][idField].toString()),
-      email: map[CandidateServices.userDTOKey][emailField] ?? '',
-      firstName: map[CandidateServices.userDTOKey][firstNameField] ?? "",
-      lastName: map[CandidateServices.userDTOKey][lastNameField] ?? "",
-      gender: map[CandidateServices.userDTOKey][genderField] ?? false,
-      birthdate: map[CandidateServices.userDTOKey][birthDayField] ?? "",
-      phone: map[CandidateServices.userDTOKey][phoneField] ?? "",
-      avatar: map[CandidateServices.userDTOKey][avatarField] ?? "",
-      location: map[CandidateServices.userDTOKey][locationField] ?? "",
-      mailReceive: map[CandidateServices.userDTOKey][mailReceiveField] ?? false,
-      searchable: map[CandidateServices.candidateOtherInfoDTOKey][searchableField] ?? false,
-      university: map[CandidateServices.candidateOtherInfoDTOKey][universityDTOField] != null ?University.fromMap(map[CandidateServices.candidateOtherInfoDTOKey][universityDTOField]) : null,
-      cv: map[CandidateServices.candidateOtherInfoDTOKey][cvField],
-        positionDTOs: map[CandidateServices.candidateOtherInfoDTOKey][positionDTOsField] != null
-            ? List<Map<String, dynamic>>.from(map[CandidateServices.candidateOtherInfoDTOKey]['positionDTOs'])
+        id: int.parse(map[idField].toString()),
+        email: map[emailField] ?? '',
+        firstName: map[firstNameField] ?? "",
+        lastName: map[lastNameField] ?? "",
+        gender: map[genderField],
+        birthdate: map[birthDayField],
+        phone: map[phoneField],
+        avatar: map[avatarField],
+        location: map[locationField],
+        mailReceive: map[mailReceiveField] ?? false,
+        searchable: map[searchableField] ?? false,
+        university: map[universityField] != null
+            ? University.fromMap(map[universityField])
             : null,
-        majorDTOs: map[CandidateServices.candidateOtherInfoDTOKey][majorDTOsField] != null
-            ? List<Map<String, dynamic>>.from(map[CandidateServices.candidateOtherInfoDTOKey]['majorDTOs'])
+        cv: map[cvField],
+        positionDTOs: map[positionDTOsField] != null
+            ? List<Map<String, dynamic>>.from(map[positionDTOsField])
             : null,
-        scheduleDTOs: map[CandidateServices.candidateOtherInfoDTOKey][scheduleDTOsField] != null
-            ? List<Map<String, dynamic>>.from(map[CandidateServices.candidateOtherInfoDTOKey]['scheduleDTOs'])
+        majorDTOs: map[majorDTOsField] != null
+            ? List<Map<String, dynamic>>.from(map[majorDTOsField])
             : null,
-        desiredJob: map[CandidateServices.candidateOtherInfoDTOKey]?[desiredJobField]?? '',
-        referenceLetter: map[CandidateServices.candidateOtherInfoDTOKey]?[referenceLetterField] ?? '',
-        desiredWorkingProvince: map[CandidateServices.candidateOtherInfoDTOKey]?[desiredWorkingProvinceField] ?? ''
-    );
+        scheduleDTOs: map[scheduleDTOsField] != null
+            ? List<Map<String, dynamic>>.from(map[scheduleDTOsField])
+            : null,
+        desiredJob: map[desiredJobField],
+        referenceLetter: map[referenceLetterField],
+        desiredWorkingProvince: map[desiredWorkingProvinceField]);
   }
 
   // Model
@@ -84,12 +85,12 @@ class Candidate {
   static const locationField = 'location';
   static const mailReceiveField = 'mailReceive';
   static const searchableField = 'searchable';
-  static const universityDTOField = 'universityDTO';
+  static const universityField = 'university';
   static const cvField = 'cv';
   static const positionDTOsField = 'positionDTOs';
   static const majorDTOsField = 'majorDTOs';
   static const scheduleDTOsField = 'scheduleDTOs';
   static const desiredJobField = 'desiredJob';
   static const referenceLetterField = 'referenceLetter';
-  static const desiredWorkingProvinceField ='desiredWorkingProvince';
+  static const desiredWorkingProvinceField = 'desiredWorkingProvince';
 }

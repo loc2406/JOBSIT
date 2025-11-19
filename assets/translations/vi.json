@@ -13,12 +13,27 @@
     "screen":{
       "job":{
         "search_job": "Tìm việc làm..."
+      },
+      "login":{
+        "title": "Đăng nhập",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "remember_password": "Nhớ mật khẩu",
+        "forgot_password": "Quên mật khẩu?",
+        "or_login_by": "Hoặc đăng nhập bằng",
+        "dont_have_account": "Bạn chưa có tài khoản?"
+      },
+      "register":{
+        "title": "Đăng ký"
       }
     },
     "notification":{
       "no_job_to_show": "Không tìm thấy việc làm!"
     },
     "error":{
-      "something_wrong_please_restart_app": "Có lỗi xảy ra! Vui lòng khởi động lại ứng dụng!"
+      "something_wrong_please_restart_app": "Có lỗi xảy ra! Vui lòng khởi động lại ứng dụng!",
+      "auth":{
+        "account_not_found": "Tài khoản không tồn tại!"
+      }
     }
 }
