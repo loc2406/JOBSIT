@@ -29,29 +29,29 @@
         "title": "Account",
         "applied": "Applied",
         "saved": "Saved",
-        "allow_searchable": "Allow recruiter search your",
-        "email_notification": "Thông báo email",
-        "personal_info": "Thông tin cá nhân",
-        "job_info": "Thông tin công việc",
-        "desired_job": "Công việc mong muốn",
-        "job_position": "Vị trí công việc",
-        "job_schedule": "Hình thức công việc",
-        "job_major": "Chuyên ngành công việc",
-        "working_place": "Nơi làm việc",
+        "allow_searchable": "Allow recruiter search your information",
+        "email_notification": "Email notification",
+        "personal_info": "Personal information",
+        "job_info": "Job information",
+        "desired_job": "Desired job",
+        "job_position": "Job positions",
+        "job_schedule": "Job schedules",
+        "job_major": "Job majors",
+        "working_place": "Working place",
         "cv": "CV",
-        "reference_letter": "Thư giới thiệu",
-        "change_password": "Thay đổi mật khẩu",
-        "logout": "Đăng xuất",
-        "no_data": "Không có dữ liệu"
+        "reference_letter": "Reference letter",
+        "change_password": "Change password",
+        "logout": "Logout",
+        "no_data": "No data"
       }
     },
     "notification":{
-      "no_job_to_show": "Không tìm thấy việc làm!"
+      "no_job_to_show": "Can not find any jobs!"
     },
     "error":{
-      "something_wrong_please_restart_app": "Có lỗi xảy ra! Vui lòng khởi động lại ứng dụng!",
+      "something_wrong_please_restart_app": "Something went wrong! Please restart app again!",
       "auth":{
-        "account_not_found": "Tài khoản không tồn tại!"
+        "account_not_found": "Can not find account!"
       }
     }
 }
