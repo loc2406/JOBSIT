@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
+import 'package:jobsit_mobile/data/datasources/auth_storage.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
@@ -70,7 +71,13 @@ class CandidateCubit extends Cubit<CandidateState> {
 
       if (token != null && token.isNotEmpty && candidateId != null) {
         final candidate = await CandidateServices.getCandidateById(candidateId);
+        final tokenRemaining = JwtDecoder.getRemainingTime(token);
 
+        AppLogger.i('loginAccount() ----- timeRemainToken: $tokenRemaining');
+
+        final authStorage = AuthStorage();
+        await authStorage.saveCredentials(email, password);
+        
         await SharedPrefs.saveCandidateToken(token);
         await SharedPrefs.saveCandidateId(candidateId);
         emit(CandidateState.loginSuccess(token, candidate));
@@ -243,9 +250,16 @@ class CandidateCubit extends Cubit<CandidateState> {
 
   Future<void> checkLoginStatus() async {
     String? token = SharedPrefs.getCandidateToken();
+
+    AppLogger.i('checkLoginStatus() ----- Token: $token');
+
     if (token != null && token.isNotEmpty) {
+      Duration tokenRemaining = JwtDecoder.getRemainingTime(token);
       bool isExpired = JwtDecoder.isExpired(token);
       int? id = SharedPrefs.getCandidateId();
+
+      AppLogger.i(
+          'checkLoginStatus() ----- Time remaining: $tokenRemaining --- isExpired: $isExpired ----- id: $id');
 
       if (!isExpired && id != null) {
         Candidate candidate = await CandidateServices.getCandidateById(id);
