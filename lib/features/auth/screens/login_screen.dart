@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jobsit_mobile/core/constants/asset_constants.dart';
+import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
 import 'package:jobsit_mobile/data/datasources/auth_storage.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
@@ -27,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isShowPass = false;
   final _authStorage = AuthStorage();
-  bool _rememberMe = false;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -42,11 +42,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _loadSavedCredentials() async {
     final credentials = await _authStorage.getCredentials();
+
+    AppLogger.i('_loadSavedCredentials() ----- credentials: $credentials');
+
     if (credentials['email'] != null) {
       setState(() {
         _emailController.text = credentials['email']!;
         _passwordController.text = credentials['password'] ?? '';
-        _rememberMe = true;
       });
     }
   }
@@ -111,38 +113,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(
                       height: ValueConstants.deviceHeightValue(uiValue: 20),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Checkbox(
-                              value: _rememberMe,
-                              onChanged: (value) {
-                                setState(() {
-                                  _rememberMe = value!;
-                                });
-                              },
-                              checkColor: Colors.white,
-                              activeColor: ColorConstants.main,
-                              side: const BorderSide(
-                                  color: ColorConstants.main, width: 2),
-                            ),
-                            const Text(
-                              TextConstants.saveLoginState,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400),
-                            )
-                          ],
-                        ),
-                        Text(
-                          'screen.login.forgot_password'.tr(),
-                          style: _theme.textTheme.displaySmall,
-                        )
-                      ],
+                    Center(
+                      child: Text(
+                        'screen.login.forgot_password'.tr(),
+                        style: _theme.textTheme.displaySmall,
+                      ),
                     ),
                     const SizedBox(
                       height: 20,
