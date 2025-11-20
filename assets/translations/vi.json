@@ -18,13 +18,31 @@
         "title": "Đăng nhập",
         "email": "Email",
         "password": "Mật khẩu",
-        "remember_password": "Nhớ mật khẩu",
         "forgot_password": "Quên mật khẩu?",
         "or_login_by": "Hoặc đăng nhập bằng",
         "dont_have_account": "Bạn chưa có tài khoản?"
       },
       "register":{
         "title": "Đăng ký"
+      },
+      "account":{
+        "title": "Tài khoản",
+        "applied": "Đã ứng tuyển",
+        "saved": "Đã lưu",
+        "allow_searchable": "Cho phép nhà tuyển dụng tìm kiếm thông tin của bạn",
+        "email_notification": "Thông báo email",
+        "personal_info": "Thông tin cá nhân",
+        "job_info": "Thông tin công việc",
+        "desired_job": "Công việc mong muốn",
+        "job_position": "Vị trí công việc",
+        "job_schedule": "Hình thức công việc",
+        "job_major": "Chuyên ngành công việc",
+        "working_place": "Nơi làm việc",
+        "cv": "CV",
+        "reference_letter": "Thư giới thiệu",
+        "change_password": "Thay đổi mật khẩu",
+        "logout": "Đăng xuất",
+        "no_data": "Không có dữ liệu"
       }
     },
     "notification":{

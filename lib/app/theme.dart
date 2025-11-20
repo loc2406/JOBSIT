@@ -29,6 +29,10 @@ class AppTheme {
       ),
     ),
     textTheme: const TextTheme(
+      displayLarge: TextStyle(
+        color: primaryColor,
+        fontSize: 20
+      ),
       displayMedium: TextStyle(
         color: primaryColor,
         fontSize: 16
@@ -36,6 +40,18 @@ class AppTheme {
       displaySmall: TextStyle(
         color: primaryColor,
         fontSize: 14
+      ),
+      labelLarge: TextStyle(
+        color: primaryColor,
+        fontSize: 13
+      ),
+      labelMedium: TextStyle(
+        color: primaryColor,
+        fontSize: 12
+      ),
+      labelSmall: TextStyle(
+        color: primaryColor,
+        fontSize: 11
       )
     ),
     inputDecorationTheme: InputDecorationTheme(

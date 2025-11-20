@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,7 +8,6 @@ import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_cubit.dart';
 import 'package:jobsit_mobile/features/auth/screens/edit_account_screen.dart';
 import 'package:jobsit_mobile/features/auth/screens/login_screen.dart';
-import 'package:jobsit_mobile/core/services/base_services.dart';
 import 'package:jobsit_mobile/core/services/candidate_services.dart';
 import 'package:jobsit_mobile/core/constants/asset_constants.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
@@ -34,6 +33,8 @@ class _AccountScreenState extends State<AccountScreen> {
   late Candidate _candidate;
   late String _token;
 
+  ThemeData get _theme => Theme.of(context);
+
   @override
   void initState() {
     super.initState();
@@ -44,12 +45,11 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        title: const Text(
-          TextConstants.account,
-          style: WidgetConstants.mainBold16Style,
+        backgroundColor: _theme.primaryColor,
+        title: Text(
+          'screen.account.title'.tr(),
+          style: _theme.textTheme.displayMedium
+              ?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -120,7 +120,7 @@ class _AccountScreenState extends State<AccountScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 10),
+              height: ValueConstants.deviceHeightValue(uiValue: 15),
             ),
             Container(
               width: ValueConstants.screenWidth * 0.25,
@@ -128,7 +128,7 @@ class _AccountScreenState extends State<AccountScreen> {
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.circle,
-                border: Border.all(color: ColorConstants.main, width: 2),
+                border: Border.all(color: _theme.primaryColor, width: 2),
               ),
               child: ClipOval(
                 child: _candidate.avatar != null
@@ -138,9 +138,9 @@ class _AccountScreenState extends State<AccountScreen> {
                         width: ValueConstants.screenWidth * 0.25,
                         height: ValueConstants.screenWidth * 0.25,
                         errorBuilder: (context, object, stacktrace) =>
-                            WidgetConstants.buildDefaultCandidateAvatar(),
+                            _buildDefaultCandidateAvatar(),
                       )
-                    : WidgetConstants.buildDefaultCandidateAvatar(),
+                    : _buildDefaultCandidateAvatar(),
               ),
             ),
             SizedBox(
@@ -148,7 +148,8 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             Text(
               '${_candidate.firstName} ${_candidate.lastName}',
-              style: WidgetConstants.userNameStyle,
+              style: _theme.textTheme.displayLarge
+                  ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 15),
@@ -172,16 +173,17 @@ class _AccountScreenState extends State<AccountScreen> {
                     SizedBox(
                       height: ValueConstants.deviceHeightValue(uiValue: 5),
                     ),
-                    const Text(
-                      TextConstants.applied,
-                      style: WidgetConstants.main11Style,
+                    Text(
+                      'screen.account.applied'.tr(),
+                      style: _theme.textTheme.labelSmall,
                     ),
                     SizedBox(
                       height: ValueConstants.deviceHeightValue(uiValue: 5),
                     ),
-                    const Text(
+                    Text(
                       '0',
-                      style: WidgetConstants.blackBold12Style,
+                      style: _theme.textTheme.labelSmall?.copyWith(
+                          color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -204,17 +206,16 @@ class _AccountScreenState extends State<AccountScreen> {
                     SizedBox(
                       height: ValueConstants.deviceHeightValue(uiValue: 5),
                     ),
-                    const Text(
-                      TextConstants.saved,
-                      style: WidgetConstants.main11Style,
+                    Text(
+                      'screen.account.saved'.tr(),
+                      style: _theme.textTheme.labelSmall,
                     ),
                     SizedBox(
                       height: ValueConstants.deviceHeightValue(uiValue: 5),
                     ),
-                    const Text(
-                      '0',
-                      style: WidgetConstants.blackBold12Style,
-                    ),
+                    Text('0',
+                        style: _theme.textTheme.labelSmall?.copyWith(
+                            color: Colors.black, fontWeight: FontWeight.bold)),
                   ],
                 )
               ],
@@ -227,9 +228,10 @@ class _AccountScreenState extends State<AccountScreen> {
               onChanged: (value) async {
                 await _cubit.updateSearchable(_candidate.id, _token);
               },
-              title: const Text(
-                TextConstants.allowToSearch,
-                style: WidgetConstants.black12Style,
+              title: Text(
+                'screen.account.allow_searchable'.tr(),
+                style: _theme.textTheme.labelMedium?.copyWith(
+                    color: Colors.black, fontWeight: FontWeight.bold),
               ),
               controlAffinity: ListTileControlAffinity.leading,
               thumbColor: const WidgetStatePropertyAll(Colors.white),
@@ -242,9 +244,10 @@ class _AccountScreenState extends State<AccountScreen> {
               onChanged: (value) async {
                 await _cubit.updateMailReceive(_candidate.id, _token);
               },
-              title: const Text(
-                TextConstants.emailNotification,
-                style: WidgetConstants.black12Style,
+              title: Text(
+                'screen.account.email_notification'.tr(),
+                style: _theme.textTheme.labelMedium?.copyWith(
+                    color: Colors.black, fontWeight: FontWeight.bold),
               ),
               controlAffinity: ListTileControlAffinity.leading,
               thumbColor: const WidgetStatePropertyAll(Colors.white),
@@ -272,12 +275,12 @@ class _AccountScreenState extends State<AccountScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
-                  border: const Border.fromBorderSide(
-                      BorderSide(color: ColorConstants.main)),
+                  border: Border.all(color: _theme.primaryColor),
                 ),
-                child: const Text(
-                  TextConstants.changePassword,
-                  style: WidgetConstants.mainBold16Style,
+                child: Text(
+                  'screen.account.change_password'.tr(),
+                  style: _theme.textTheme.displayMedium
+                      ?.copyWith(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -295,25 +298,27 @@ class _AccountScreenState extends State<AccountScreen> {
                   color: ColorConstants.main,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: const Text(
-                  TextConstants.logout,
-                  style: WidgetConstants.whiteBold16Style,
+                child: Text(
+                  'screen.account.logout'.tr(),
+                  style: _theme.textTheme.displayMedium?.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ),
               onTap: () async {
                 final isLogout = await _cubit.logout(_token);
 
-                if (mounted && isLogout){
+                if (mounted && isLogout) {
                   SharedPrefs.saveCandidateToken('');
                   context.read<SavedJobCubit>().clearAllSavedJobs();
                   context.read<AppliedJobCubit>().clearAllAppliedJobs();
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text(TextConstants.youAreLogout)));
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(TextConstants.youAreLogout)));
                 }
               },
             ),
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 10),
+              height: ValueConstants.deviceHeightValue(uiValue: 15),
             ),
           ],
         ),
@@ -321,14 +326,20 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
+  Widget _buildDefaultCandidateAvatar() {
+    return Icon(Icons.image_outlined,
+        color: _theme.primaryColor, size: ValueConstants.screenWidth * 0.1);
+  }
+
   List<Widget> _buildPersonalInfo() {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            TextConstants.personalInfo,
-            style: WidgetConstants.mainBold16Style,
+          Text(
+            'screen.account.personal_info'.tr(),
+            style: _theme.textTheme.displayMedium
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
           GestureDetector(
             child: SvgPicture.asset(
@@ -358,16 +369,26 @@ class _AccountScreenState extends State<AccountScreen> {
         child: Column(
           children: [
             _buildPersonalInfoItem(
-                AssetConstants.iconMessage, (_candidate.email != null && _candidate.email.isNotEmpty) ? _candidate.email : TextConstants.noData),
+                AssetConstants.iconMessage,
+                (_candidate.email.isNotEmpty)
+                    ? _candidate.email
+                    : 'screen.account.no_data'.tr()),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 10),
             ),
-            _buildPersonalInfoItem(AssetConstants.iconCall, (_candidate.phone != null && _candidate.phone.isNotEmpty) ? _candidate.phone : TextConstants.noData),
+            _buildPersonalInfoItem(
+                AssetConstants.iconCall,
+                (_candidate.phone.isNotEmpty)
+                    ? _candidate.phone
+                    : 'screen.account.no_data'.tr()),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 10),
             ),
-            _buildPersonalInfoItem(AssetConstants.iconLocation,
-                (_candidate.location != null && _candidate.location!.isNotEmpty) ? _candidate.location! : TextConstants.noData),
+            _buildPersonalInfoItem(
+                AssetConstants.iconLocation,
+                (_candidate.location != null && _candidate.location!.isNotEmpty)
+                    ? _candidate.location!
+                    : 'screen.account.no_data'.tr()),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 10),
             ),
@@ -375,18 +396,26 @@ class _AccountScreenState extends State<AccountScreen> {
                 AssetConstants.iconHome,
                 _candidate.university != null
                     ? _candidate.university!.name
+                    : 'screen.account.no_data'.tr()),
+            SizedBox(
+              height: ValueConstants.deviceHeightValue(uiValue: 10),
+            ),
+            _buildPersonalInfoItem(
+                AssetConstants.iconCalendar,
+                (_candidate.birthdate != null &&
+                        _candidate.birthdate!.isNotEmpty)
+                    ? _candidate.birthdate!
                     : TextConstants.noData),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 10),
             ),
-            _buildPersonalInfoItem(AssetConstants.iconCalendar,
-                (_candidate.birthdate != null && _candidate.birthdate!.isNotEmpty) ? _candidate.birthdate! : TextConstants.noData
-            ),
-            SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 10),
-            ),
-            _buildPersonalInfoItem(AssetConstants.iconProfile,
-                _candidate.gender != null ? (_candidate.gender == true ? TextConstants.male : TextConstants.female) : TextConstants.noData)
+            _buildPersonalInfoItem(
+                AssetConstants.iconProfile,
+                _candidate.gender != null
+                    ? (_candidate.gender == true
+                        ? TextConstants.male
+                        : TextConstants.female)
+                    : 'screen.account.no_data'.tr())
           ],
         ),
       )
@@ -405,6 +434,7 @@ class _AccountScreenState extends State<AccountScreen> {
           info,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
+          style: _theme.textTheme.displaySmall?.copyWith(color: Colors.black),
         ))
       ],
     );
@@ -415,25 +445,26 @@ class _AccountScreenState extends State<AccountScreen> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            TextConstants.jobInfo,
-            style: WidgetConstants.mainBold16Style,
+          Text(
+            'screen.account.job_info'.tr(),
+            style: _theme.textTheme.displayMedium
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
           GestureDetector(
               child: SvgPicture.asset(
-            AssetConstants.iconEdit,
-          ), onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const JobInfoEditPage(),
-                  settings: RouteSettings(arguments: {
-                    TextConstants.candidate: _candidate,
-                    TextConstants.token: _token,
-                  })),
-            );
-          }
-          )
+                AssetConstants.iconEdit,
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const JobInfoEditPage(),
+                      settings: RouteSettings(arguments: {
+                        TextConstants.candidate: _candidate,
+                        TextConstants.token: _token,
+                      })),
+                );
+              })
         ],
       ),
       SizedBox(
@@ -446,74 +477,92 @@ class _AccountScreenState extends State<AccountScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              TextConstants.jobWanted,
-              style: WidgetConstants.blackBold16Style,
+            Text(
+              'screen.account.desired_job'.tr(),
+              style: _theme.textTheme.displayMedium
+                  ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 5),
             ),
             Text(
-              _candidate.desiredJob! == ''
-                  ? TextConstants.noData
-                  : _candidate.desiredJob!,
+              _candidate.desiredJob != null ||
+                      _candidate.desiredJob?.isNotEmpty == true
+                  ? _candidate.desiredJob!
+                  : 'screen.account.no_data'.tr(),
+              style:
+                  _theme.textTheme.displaySmall?.copyWith(color: Colors.black),
             ),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 10),
             ),
-            ..._candidate.positionDTOs != null
+            ..._candidate.positionDTOs != null &&
+                    _candidate.positionDTOs?.isNotEmpty == true
+                ? _buildJobInfoItems('screen.account.job_position'.tr(),
+                    _candidate.positionDTOs!)
+                : _buildJobInfoItem('screen.account.job_position'.tr(),
+                    'screen.account.no_data'.tr()),
+            SizedBox(
+              height: ValueConstants.deviceHeightValue(uiValue: 10),
+            ),
+            ..._candidate.majorDTOs != null &&
+                    _candidate.majorDTOs?.isNotEmpty == true
                 ? _buildJobInfoItems(
-                    TextConstants.jobPosition, _candidate.positionDTOs!)
-                : _buildJobInfoItem(
-                    TextConstants.jobPosition, TextConstants.noData),
+                    'screen.account.job_major'.tr(), _candidate.majorDTOs!)
+                : _buildJobInfoItem('screen.account.job_major'.tr(),
+                    'screen.account.no_data'.tr()),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 10),
             ),
-            ..._candidate.majorDTOs != null
-                ? _buildJobInfoItems(TextConstants.major, _candidate.majorDTOs!)
-                : _buildJobInfoItem(TextConstants.major, TextConstants.noData),
+            ..._candidate.scheduleDTOs != null &&
+                    _candidate.scheduleDTOs?.isNotEmpty == true
+                ? _buildJobInfoItems('screen.account.job_schedule'.tr(),
+                    _candidate.scheduleDTOs!)
+                : _buildJobInfoItem('screen.account.job_schedule'.tr(),
+                    'screen.account.no_data'.tr()),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 10),
             ),
-            ..._candidate.scheduleDTOs != null
-                ? _buildJobInfoItems(
-                    TextConstants.jobSchedule, _candidate.scheduleDTOs!)
-                : _buildJobInfoItem(
-                    TextConstants.jobSchedule, TextConstants.noData),
-            SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 10),
+            Text(
+              'screen.account.working_place'.tr(),
+              style: _theme.textTheme.displayMedium
+                  ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
             ),
-
-                 const Text(
-                    TextConstants.jobLocation,
-                    style: WidgetConstants.blackBold16Style,
-                  )
-                ,
             Row(
               children: [
                 SvgPicture.asset(AssetConstants.iconLocation),
                 SizedBox(
                   width: ValueConstants.deviceWidthValue(uiValue: 10),
                 ),
-                Text(_candidate.desiredWorkingProvince ?? TextConstants.noData),
+                Text((_candidate.desiredWorkingProvince != null &&
+                        _candidate.desiredWorkingProvince?.isNotEmpty == true)
+                    ? _candidate.desiredWorkingProvince!
+                    : 'screen.account.no_data'.tr()),
               ],
             ),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 10),
             ),
             ..._buildJobInfoItem(
-                TextConstants.cv, _candidate.cv ?? TextConstants.noData),
+                'screen.account.cv'.tr(),
+                (_candidate.cv != null && _candidate.cv?.isNotEmpty == true)
+                    ? _candidate.cv!
+                    : 'screen.account.no_data'.tr()),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 10),
             ),
-            const Text(
-              TextConstants.coverLetter,
-              style: WidgetConstants.blackBold16Style,
+            Text(
+              'screen.account.reference_letter'.tr(),
+              style: _theme.textTheme.displayMedium
+                  ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 5),
             ),
-            Text(_candidate.referenceLetter ?? TextConstants.noData),
+            Text((_candidate.referenceLetter != null &&
+                    _candidate.referenceLetter?.isNotEmpty == true)
+                ? _candidate.referenceLetter!
+                : 'screen.account.no_data'.tr()),
           ],
         ),
       ),
@@ -524,19 +573,15 @@ class _AccountScreenState extends State<AccountScreen> {
     return [
       Text(
         title,
-        style: WidgetConstants.blackBold16Style,
+        style: _theme.textTheme.displayMedium
+            ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
       ),
       SizedBox(
         height: ValueConstants.deviceHeightValue(uiValue: 5),
       ),
-      Container(
-        padding: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5), color: ColorConstants.main),
-        child: Text(
-          content,
-          style: WidgetConstants.white12Style,
-        ),
+      Text(
+        content,
+        style: _theme.textTheme.displaySmall?.copyWith(color: Colors.black),
       )
     ];
   }
@@ -546,22 +591,24 @@ class _AccountScreenState extends State<AccountScreen> {
     return [
       Text(
         title,
-        style: WidgetConstants.blackBold16Style,
+        style: _theme.textTheme.displayMedium
+            ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
       ),
       SizedBox(height: ValueConstants.deviceHeightValue(uiValue: 5)),
       Wrap(
-        spacing: 8, // Khoảng cách giữa các phần tử
-        runSpacing: 4, // Khoảng cách giữa các dòng
+        spacing: 8,
+        runSpacing: 4,
         children: items.map((item) {
           return Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: ColorConstants.main,
+              color: _theme.primaryColor,
             ),
             child: Text(
-              item[TextConstants.name], // Hiển thị tên của vị trí
-              style: WidgetConstants.white12Style,
+              item['name'],
+              style:
+                  _theme.textTheme.labelMedium?.copyWith(color: Colors.white),
             ),
           );
         }).toList(),

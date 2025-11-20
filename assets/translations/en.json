@@ -13,6 +13,45 @@
     "screen":{
       "job":{
         "search_job": "Search job..."
+      },
+      "login":{
+        "title": "Login",
+        "email": "Email",
+        "password": "Password",
+        "forgot_password": "Forgot password?",
+        "or_login_by": "Or login by",
+        "dont_have_account": "You don't have account?"
+      },
+      "register":{
+        "title": "Register"
+      },
+      "account":{
+        "title": "Account",
+        "applied": "Applied",
+        "saved": "Saved",
+        "allow_searchable": "Allow recruiter search your",
+        "email_notification": "Thông báo email",
+        "personal_info": "Thông tin cá nhân",
+        "job_info": "Thông tin công việc",
+        "desired_job": "Công việc mong muốn",
+        "job_position": "Vị trí công việc",
+        "job_schedule": "Hình thức công việc",
+        "job_major": "Chuyên ngành công việc",
+        "working_place": "Nơi làm việc",
+        "cv": "CV",
+        "reference_letter": "Thư giới thiệu",
+        "change_password": "Thay đổi mật khẩu",
+        "logout": "Đăng xuất",
+        "no_data": "Không có dữ liệu"
+      }
+    },
+    "notification":{
+      "no_job_to_show": "Không tìm thấy việc làm!"
+    },
+    "error":{
+      "something_wrong_please_restart_app": "Có lỗi xảy ra! Vui lòng khởi động lại ứng dụng!",
+      "auth":{
+        "account_not_found": "Tài khoản không tồn tại!"
       }
     }
 }
