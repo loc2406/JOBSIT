@@ -1,57 +1,61 @@
 {
-    "app_name": "JOBSIT",
-    "bottom_nav": {
-        "job": "Việc làm",
-        "applied_job": "Đã ứng tuyển",
-        "saved_job": "Đã lưu",
-        "account": "Tài khoản"
+  "app_name": "JOBSIT",
+  "bottom_nav": {
+    "job": "Việc làm",
+    "applied_job": "Đã ứng tuyển",
+    "saved_job": "Đã lưu",
+    "account": "Tài khoản"
+  },
+  "language": {
+    "vi": "Tiếng Việt",
+    "en": "Tiếng Anh"
+  },
+  "screen": {
+    "job": {
+      "search_job": "Tìm việc làm..."
     },
-    "language":{
-        "vi": "Tiếng Việt",
-        "en": "Tiếng Anh"
+    "login": {
+      "title": "Đăng nhập",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "forgot_password": "Quên mật khẩu?",
+      "or_login_by": "Hoặc đăng nhập bằng",
+      "dont_have_account": "Bạn chưa có tài khoản?"
     },
-    "screen":{
-      "job":{
-        "search_job": "Tìm việc làm..."
-      },
-      "login":{
-        "title": "Đăng nhập",
-        "email": "Email",
-        "password": "Mật khẩu",
-        "forgot_password": "Quên mật khẩu?",
-        "or_login_by": "Hoặc đăng nhập bằng",
-        "dont_have_account": "Bạn chưa có tài khoản?"
-      },
-      "register":{
-        "title": "Đăng ký"
-      },
-      "account":{
-        "title": "Tài khoản",
-        "applied": "Đã ứng tuyển",
-        "saved": "Đã lưu",
-        "allow_searchable": "Cho phép nhà tuyển dụng tìm kiếm thông tin của bạn",
-        "email_notification": "Thông báo email",
-        "personal_info": "Thông tin cá nhân",
-        "job_info": "Thông tin công việc",
-        "desired_job": "Công việc mong muốn",
-        "job_position": "Vị trí công việc",
-        "job_schedule": "Hình thức công việc",
-        "job_major": "Chuyên ngành công việc",
-        "working_place": "Nơi làm việc",
-        "cv": "CV",
-        "reference_letter": "Thư giới thiệu",
-        "change_password": "Thay đổi mật khẩu",
-        "logout": "Đăng xuất",
-        "no_data": "Không có dữ liệu"
-      }
+    "register": {
+      "title": "Đăng ký"
     },
-    "notification":{
-      "no_job_to_show": "Không tìm thấy việc làm!"
-    },
-    "error":{
-      "something_wrong_please_restart_app": "Có lỗi xảy ra! Vui lòng khởi động lại ứng dụng!",
-      "auth":{
-        "account_not_found": "Tài khoản không tồn tại!"
-      }
+    "account": {
+      "title": "Tài khoản",
+      "applied": "Đã ứng tuyển",
+      "saved": "Đã lưu",
+      "allow_searchable": "Cho phép nhà tuyển dụng tìm kiếm thông tin của bạn",
+      "email_notification": "Thông báo email",
+      "personal_info": "Thông tin cá nhân",
+      "job_info": "Thông tin công việc",
+      "desired_job": "Công việc mong muốn",
+      "job_position": "Vị trí công việc",
+      "job_schedule": "Hình thức công việc",
+      "job_major": "Chuyên ngành công việc",
+      "working_place": "Nơi làm việc",
+      "cv": "CV",
+      "reference_letter": "Thư giới thiệu",
+      "change_password": "Thay đổi mật khẩu",
+      "logout": "Đăng xuất",
+      "no_data": "Không có dữ liệu"
     }
+  },
+  "notification": {
+    "login": {
+      "login_successful": "Đăng nhập thành công!",
+      "login_failed": "Đăng nhập thất bại! Vui lòng thử lại!"
+    },
+    "no_job_to_show": "Không tìm thấy việc làm!"
+  },
+  "error": {
+    "something_wrong_please_restart_app": "Có lỗi xảy ra! Vui lòng khởi động lại ứng dụng!",
+    "auth": {
+      "account_not_found": "Tài khoản không tồn tại!"
+    }
+  }
 }

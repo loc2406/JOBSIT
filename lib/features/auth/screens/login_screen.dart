@@ -2,18 +2,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:jobsit_mobile/app/router.dart';
 import 'package:jobsit_mobile/core/constants/asset_constants.dart';
 import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
 import 'package:jobsit_mobile/data/datasources/auth_storage.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
-import 'package:jobsit_mobile/features/auth/screens/register_screen.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
-import 'package:jobsit_mobile/core/constants/convert_constants.dart';
-import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jobsit_mobile/core/constants/validate_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
-import 'package:jobsit_mobile/core/utils/widget_constants.dart';
+import 'package:jobsit_mobile/core/constants/widget_constants.dart';
 import 'package:jobsit_mobile/shared/widgets/input_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -45,10 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     AppLogger.i('_loadSavedCredentials() ----- credentials: $credentials');
 
-    if (credentials['email'] != null) {
+    if (credentials['email'] != null && credentials['password'] != null) {
       setState(() {
         _emailController.text = credentials['email']!;
-        _passwordController.text = credentials['password'] ?? '';
+        _passwordController.text = credentials['password']!;
       });
     }
   }
@@ -56,7 +55,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
         body: Container(
           margin: const EdgeInsets.all(20),
           child: SingleChildScrollView(
@@ -83,17 +81,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InputField(
-                                label: TextConstants.email,
+                                label: 'screen.login.email'.tr(),
                                 controller: _emailController,
                                 keyboardType: TextInputType.emailAddress,
                                 validateMethod:
                                     ValidateConstants.validateEmailLogin),
-                            SizedBox(
-                              height:
-                                  ValueConstants.deviceHeightValue(uiValue: 20),
+                            const SizedBox(
+                              height: 20,
                             ),
                             InputField(
-                              label: TextConstants.password,
+                              label: 'screen.login.password'.tr(),
                               controller: _passwordController,
                               keyboardType: TextInputType.visiblePassword,
                               validateMethod:
@@ -146,83 +143,75 @@ class _LoginScreenState extends State<LoginScreen> {
                           ));
                     }, listener: (context, state) {
                       if (state is AuthLoginSuccessState) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text(TextConstants.loginSuccessful)));
-
-                        Navigator.pop(context);
-                      } else if (state is AuthErrorState) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(
-                                ConvertConstants.getMessageFromException(
-                                    state.errMessage))));
+                                'notification.login.login_successful'.tr())));
+
+                        context.pop();
+                      } else if (state is AuthErrorState) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content:
+                                Text('notification.login.login_failed'.tr())));
                       }
                     }),
                     SizedBox(
                       height: ValueConstants.deviceHeightValue(uiValue: 20),
                     ),
-                    const Text(
-                      TextConstants.orLoginWith,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: ColorConstants.grey,
-                      ),
+                    Text(
+                      'screen.login.or_login_with'.tr(),
+                      style: _theme.textTheme.labelSmall
+                          ?.copyWith(color: Colors.grey),
                     ),
-                    SizedBox(
-                      height: ValueConstants.deviceHeightValue(uiValue: 14),
+                    const SizedBox(
+                      height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: ValueConstants.deviceWidthValue(uiValue: 60),
-                          height: ValueConstants.deviceHeightValue(uiValue: 60),
+                          width: 60,
+                          height: 60,
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: ColorConstants.btnLoginGoogle,
-                              borderRadius: BorderRadius.circular(200),
-                              border: const Border.fromBorderSide(
-                                  BorderSide(color: ColorConstants.main))),
+                              shape: BoxShape.circle,
+                              border: Border.all(color: _theme.primaryColor)),
                           child: SvgPicture.asset(AssetConstants.iconGgLogin),
                         ),
-                        SizedBox(
-                          width: ValueConstants.deviceHeightValue(uiValue: 26),
+                        const SizedBox(
+                          width: 25,
                         ),
                         Container(
-                          width: ValueConstants.deviceWidthValue(uiValue: 60),
-                          height: ValueConstants.deviceHeightValue(uiValue: 60),
+                          width: 60,
+                          height: 60,
                           padding: const EdgeInsets.all(15),
                           decoration: BoxDecoration(
                               color: ColorConstants.btnLoginFb,
-                              borderRadius: BorderRadius.circular(200),
-                              border: const Border.fromBorderSide(
-                                  BorderSide(color: ColorConstants.main))),
+                              shape: BoxShape.circle,
+                              border: Border.all(color: _theme.primaryColor)),
                           child: SvgPicture.asset(AssetConstants.iconFbLogin),
                         )
                       ],
                     ),
-                    SizedBox(
-                      height: ValueConstants.deviceHeightValue(uiValue: 30),
+                    const SizedBox(
+                      height: 30,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(TextConstants.dontHaveAccount,
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black)),
-                        SizedBox(
-                          width: ValueConstants.deviceHeightValue(uiValue: 8),
+                        Text('screen.login_dont_have_account'.tr(),
+                            style: _theme.textTheme.labelLarge?.copyWith(
+                                color: Colors.black,
+                                fontWeight: FontWeight.normal)),
+                        const SizedBox(
+                          width: 8,
                         ),
                         GestureDetector(
                           onTap: _navigateRegisterScreen,
-                          child: const Text(
-                            TextConstants.register,
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                color: ColorConstants.main),
+                          child: Text(
+                            'screen.register.title'.tr(),
+                            style: _theme.textTheme.labelLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                         )
                       ],
@@ -243,7 +232,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _navigateRegisterScreen() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const RegisterScreen()));
+    context.pushNamed(AppRouter.registerName);
   }
 }
