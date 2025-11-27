@@ -67,47 +67,37 @@
 ```
 jobsit_mobile/
 │
-├── lib/                           # Source code Flutter
-│   ├── main.dart                  # Entry point ứng dụng
+├── lib/
+│   ├── core/                           # Các thành phần dùng chung (Shared Kernel)
+│   │   ├── constants/                  # Hằng số (API Url, Asset path)
+│   │   ├── error/                      # Định nghĩa Failure và Exception chung
+│   │   ├── network/                    # Cấu hình Dio, NetworkInfo
+│   │   ├── usecases/                   # Class UseCase cơ sở (Base UseCase)
+│   │   ├── utils/                      # Helper, Extensions, Validations
+│   │   └── services/                   # Service độc lập (Storage, Firebase...)
 │   │
-│   ├── app/                       # Cấu hình toàn cục
-│   │   ├── router.dart            # Định tuyến ứng dụng
-│   │   └── theme.dart             # Theme và styling
-│   │
-│   ├── core/                      # Tiện ích dùng chung
-│   │   ├── constants/             # Hằng số, enums
-│   │   ├── utils/                 # Hàm helper
-│   │   ├── services/              # Services (API, storage)
-│   │   └── error/                 # Xử lý lỗi
-│   │
-│   ├── data/                      # Lớp dữ liệu
-│   │   ├── models/                # Data models
-│   │   └── datasources/           # Local & remote data sources
-│   │
-│   ├── features/                  # Các tính năng riêng biệt
-│   │   ├── auth/                  # Tính năng đăng nhập/đăng ký
-│   │   │   ├── cubit/             # Business logic
-│   │   │   ├── screens/           # UI screens
-│   │   │   └── widgets/           # Component riêng
+│   ├── features/                       
+│   │   ├── auth/                       # Ví dụ tính năng Auth
+│   │   │   ├── data/                   # LAYER DỮ LIỆU
+│   │   │   │   ├── datasources/        # Gọi API hoặc Local DB (Remote/Local)
+│   │   │   │   ├── models/             # DTO (Data Transfer Object) - extends Entity
+│   │   │   │   └── repositories/       # Triển khai (Implement) Repository của Domain
+│   │   │   │
+│   │   │   ├── domain/                 
+│   │   │   │   ├── entities/           # Object thuần túy (Enterprise Business Rules)
+│   │   │   │   ├── repositories/       # Interface (Hợp đồng) Repository
+│   │   │   │   └── usecases/           # Logic nghiệp vụ cụ thể (Login, Logout...)
+│   │   │   │
+│   │   │   └── presentation/           
+│   │   │       ├── cubit/              # Quản lý State (AuthCubit)
+│   │   │       ├── pages/              # Màn hình (Screen)
+│   │   │       └── widgets/            # Widget con của màn hình này
 │   │   │
-│   │   ├── jobs/                  # Tính năng hiển thị công việc
-│   │   │   ├── cubit/             # Business logic
-│   │   │   ├── screens/           # UI screens
-│   │   │   └── widgets/           # Component riêng
-│   │   │
-│   │   ├── applied_jobs/          # Tính năng quản lý đơn ứng tuyển
-│   │   │   ├── cubit/
-│   │   │   ├── screens/
-│   │   │   └── widgets/
-│   │   │
-│   │   └── saved_jobs/            # Tính năng lưu công việc
-│   │       ├── cubit/
-│   │       ├── screens/
-│   │       └── widgets/
+│   │   └── home/                       # Tính năng Home (Cấu trúc tương tự Auth)
 │   │
-│   └── shared/                    # Widget & extension dùng chung
-│       ├── widgets/               # Reusable widgets
-│       └── extensions/            # Dart extensions
+│   ├── config/                         # Cấu hình App (Theme, Router)
+│   ├── injection_container.dart        # Setup Dependency Injection (GetIt)
+│   └── main.dart                       # Entry point
 │
 ├── server/                        # Backend FastAPI
 │   ├── main.py                    # Entry point backend

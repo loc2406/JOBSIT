@@ -2,22 +2,63 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
+import 'package:jobsit_mobile/core/error/failures.dart';
 import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
 import 'package:jobsit_mobile/data/datasources/auth_storage.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
+import 'package:jobsit_mobile/features/auth/data/models/candidate_model.dart';
+import 'package:jobsit_mobile/features/auth/domain/use_cases/login_use_case.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
-import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-import '../../../data/models/candidate.dart';
-import '../../../data/models/province.dart';
-import '../../../data/models/university.dart';
-import '../../../core/services/candidate_services.dart';
-import '../../../core/services/province_services.dart';
+import '../../domain/entities/candidate.dart';
+import '../../../../data/models/province.dart';
+import '../../domain/entities/university.dart';
+import '../../../../core/services/candidate_services.dart';
+import '../../../../core/services/province_services.dart';
 
+@injectable
 class CandidateCubit extends Cubit<CandidateState> {
-  CandidateCubit() : super(CandidateState.noLoggedIn());
+  final LoginUseCase loginUseCase;
+
+  CandidateCubit({required this.loginUseCase})
+      : super(CandidateState.noLoggedIn());
+
+  Future<void> loginAccount(
+      {required String email, required String password}) async {
+    
+    emit(CandidateState.loading());
+    final result = await loginUseCase.call(email: email, password: password);
+
+    result.fold(
+      (failure) => emit(AuthErrorState(failure.message)),
+      (result) async {
+        final String? token = result['token'];
+        final Candidate? candidate = result['data'] != null
+            ? CandidateModel.fromJson(result['data'])
+            : null;
+
+        if (token == null || token.isEmpty == true || candidate == null) {
+          emit(AuthErrorState(UnknownFailure().message));
+          return;
+        }
+
+        final tokenRemaining = JwtDecoder.getRemainingTime(token);
+
+        AppLogger.i('loginAccount() ----- timeRemainToken: $tokenRemaining');
+
+        final authStorage = AuthStorage();
+        await authStorage.saveCredentials(email, password);
+
+        await SharedPrefs.saveCandidateToken(token);
+        await SharedPrefs.saveCandidateId(candidate.id);
+
+        emit(CandidateState.loginSuccess(token, candidate));
+      },
+    );
+  }
 
   Future<void> createCandidate(
       {required String email,
@@ -54,36 +95,6 @@ class CandidateCubit extends Cubit<CandidateState> {
       emit(CandidateState.loading());
       await CandidateServices.sendOtpToActiveAccount(otp);
       emit(CandidateState.activeSuccess());
-    } catch (e) {
-      emit(CandidateState.error(
-          ConvertConstants.getMessageFromException(e.toString())));
-    }
-  }
-
-  loginAccount({required String email, required String password}) async {
-    try {
-      emit(CandidateState.loading());
-      final result = await CandidateServices.loginAccount(email, password);
-
-      final String? token = (result[CandidateServices.tokenKey])?.toString();
-      final candidateId =
-          int.tryParse(result[CandidateServices.idCandidateKey].toString());
-
-      if (token != null && token.isNotEmpty && candidateId != null) {
-        final candidate = await CandidateServices.getCandidateById(candidateId);
-        final tokenRemaining = JwtDecoder.getRemainingTime(token);
-
-        AppLogger.i('loginAccount() ----- timeRemainToken: $tokenRemaining');
-
-        final authStorage = AuthStorage();
-        await authStorage.saveCredentials(email, password);
-        
-        await SharedPrefs.saveCandidateToken(token);
-        await SharedPrefs.saveCandidateId(candidateId);
-        emit(CandidateState.loginSuccess(token, candidate));
-      }
-    } on SocketException {
-      emit(CandidateState.error(CandidateServices.unexpectedError));
     } catch (e) {
       emit(CandidateState.error(
           ConvertConstants.getMessageFromException(e.toString())));

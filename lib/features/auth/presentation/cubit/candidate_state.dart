@@ -1,6 +1,7 @@
-import 'package:jobsit_mobile/data/models/candidate.dart';
+import 'package:equatable/equatable.dart';
+import 'package:jobsit_mobile/features/auth/domain/entities/candidate.dart';
 
-class CandidateState {
+class CandidateState extends Equatable{
   const CandidateState();
 
   factory CandidateState.loading() => AuthLoadingState();
@@ -20,6 +21,9 @@ class CandidateState {
   factory CandidateState.noLoggedIn() => AuthNoLoggedInState();
 
   factory CandidateState.editSuccess() => AuthEditSuccessState();
+  
+  @override
+  List<Object?> get props => [];
 }
 
 class AuthNoLoggedInState extends CandidateState{}

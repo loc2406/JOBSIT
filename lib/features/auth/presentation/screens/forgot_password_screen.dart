@@ -1,15 +1,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jobsit_mobile/features/auth/screens/register_screen.dart';
+import 'package:jobsit_mobile/features/auth/presentation/screens/register_screen.dart';
 
 import 'package:jobsit_mobile/core/constants/asset_constants.dart';
 import 'package:jobsit_mobile/shared/widgets/input_field_async.dart';
 import '../cubit/candidate_cubit.dart';
 
-import '../../../core/constants/text_constants.dart';
-import '../../../core/constants/validate_constants.dart';
-import '../../../shared/widgets/input_field.dart';
+import '../../../../core/constants/text_constants.dart';
+import '../../../../core/constants/validate_constants.dart';
+import '../../../../shared/widgets/input_field.dart';
 import 'change_password_by_otp_screen.dart';
 import 'login_screen.dart';
 

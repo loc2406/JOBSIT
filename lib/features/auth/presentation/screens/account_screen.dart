@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jobsit_mobile/features/applied_jobs/cubit/applied_job_cubit.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_cubit.dart';
-import 'package:jobsit_mobile/features/auth/screens/edit_account_screen.dart';
-import 'package:jobsit_mobile/features/auth/screens/login_screen.dart';
+import 'package:jobsit_mobile/features/auth/presentation/screens/edit_account_screen.dart';
+import 'package:jobsit_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:jobsit_mobile/core/services/candidate_services.dart';
 import 'package:jobsit_mobile/core/constants/asset_constants.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
-import 'package:jobsit_mobile/core/utils/widget_constants.dart';
+import 'package:jobsit_mobile/core/constants/widget_constants.dart';
 
-import '../../../data/models/candidate.dart';
+import '../../domain/entities/candidate.dart';
 import 'job_info_edit_page_screen.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -409,13 +409,8 @@ class _AccountScreenState extends State<AccountScreen> {
             SizedBox(
               height: ValueConstants.deviceHeightValue(uiValue: 10),
             ),
-            _buildPersonalInfoItem(
-                AssetConstants.iconProfile,
-                _candidate.gender != null
-                    ? (_candidate.gender == true
-                        ? TextConstants.male
-                        : TextConstants.female)
-                    : 'screen.account.no_data'.tr())
+            _buildPersonalInfoItem(AssetConstants.iconProfile,
+                _candidate.isMale ? TextConstants.male : TextConstants.female)
           ],
         ),
       )

@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/core/services/candidate_services.dart';
-import 'package:jobsit_mobile/shared/extensions/only_letters_input_formatter.dart';
+import 'package:jobsit_mobile/shared/extensions/text_input_formatter_exts.dart';
 import 'package:jobsit_mobile/core/constants/validate_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
 
-import '../../../data/models/candidate.dart';
-import '../../../data/models/province.dart';
-import '../../../data/models/university.dart';
-import '../../../core/constants/color_constants.dart';
-import '../../../core/constants/text_constants.dart';
-import '../../../core/utils/widget_constants.dart';
+import '../../domain/entities/candidate.dart';
+import '../../../../data/models/province.dart';
+import '../../domain/entities/university.dart';
+import '../../../../core/constants/color_constants.dart';
+import '../../../../core/constants/text_constants.dart';
+import '../../../../core/constants/widget_constants.dart';
 
 class EditAccountScreen extends StatefulWidget {
   const EditAccountScreen({super.key});
@@ -132,7 +132,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     _birthdateController.text =
         _candidate.birthdate ?? TextConstants.defaultCandidateBirthdate;
     _phoneController.text = _candidate.phone;
-    _selectedGender = _candidate.gender;
+    _selectedGender = _candidate.isMale;
   }
 
 

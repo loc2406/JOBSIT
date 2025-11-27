@@ -54,8 +54,10 @@
   },
   "error": {
     "something_wrong_please_restart_app": "Something went wrong! Please restart app again!",
+    "no_internet": "Can not connect internet!",
     "auth": {
-      "account_not_found": "Can not find account!"
+      "account_not_found": "Can not find account!",
+      "incorrect_password": "Incorrect password!"
     }
   }
 }

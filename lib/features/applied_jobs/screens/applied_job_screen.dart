@@ -5,12 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobsit_mobile/features/applied_jobs/cubit/applied_job_cubit.dart';
 import 'package:jobsit_mobile/features/applied_jobs/cubit/applied_job_state.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/data/models/job.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
-import 'package:jobsit_mobile/core/utils/widget_constants.dart';
+import 'package:jobsit_mobile/core/constants/widget_constants.dart';
 import 'package:jobsit_mobile/shared/widgets/job_item.dart';
 
 class AppliedJobScreen extends StatefulWidget {

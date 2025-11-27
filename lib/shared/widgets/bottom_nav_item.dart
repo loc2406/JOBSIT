@@ -20,7 +20,7 @@ class BottomNavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: isSelected ? Colors.white : Colors.transparent,
         borderRadius: BorderRadius.circular(20),
@@ -35,15 +35,14 @@ class BottomNavItem extends StatelessWidget {
               color: isSelected ? AppTheme.primaryColor : Colors.white,
               size: 20,
             ),
-            const SizedBox(width: 5),
-            if (isSelected)
+            if (isSelected) ...[
+              const SizedBox(width: 5),
               Text(
                 label,
                 style: const TextStyle(
-                  color: AppTheme.primaryColor,
-                  fontWeight: FontWeight.bold
-                ),
+                    color: AppTheme.primaryColor, fontWeight: FontWeight.bold),
               ),
+            ]
           ],
         ),
       ),

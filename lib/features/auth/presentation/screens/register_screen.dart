@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jobsit_mobile/core/constants/asset_constants.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
-import 'package:jobsit_mobile/features/auth/screens/active_account_screen.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
+import 'package:jobsit_mobile/features/auth/presentation/screens/active_account_screen.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 
 import '../cubit/candidate_state.dart';
-import '../../../core/constants/color_constants.dart';
-import '../../../core/constants/text_constants.dart';
-import '../../../core/constants/validate_constants.dart';
-import '../../../core/constants/value_constants.dart';
-import '../../../core/utils/widget_constants.dart';
-import '../../../shared/widgets/input_field.dart';
+import '../../../../core/constants/color_constants.dart';
+import '../../../../core/constants/text_constants.dart';
+import '../../../../core/constants/validate_constants.dart';
+import '../../../../core/constants/value_constants.dart';
+import '../../../../core/constants/widget_constants.dart';
+import '../../../../shared/widgets/input_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -43,12 +44,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: ValueConstants.deviceHeightValue(uiValue: 30),),
+              SizedBox(
+                height: ValueConstants.deviceHeightValue(uiValue: 50),
+              ),
               const Text(TextConstants.register,
                   style: TextStyle(
                       fontSize: 23,
@@ -61,19 +64,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: ValueConstants.deviceHeightValue(uiValue: 50),),
+                          SizedBox(
+                            height:
+                                ValueConstants.deviceHeightValue(uiValue: 50),
+                          ),
                           InputField(
                             label: TextConstants.email,
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
-                            validateMethod: ValidateConstants.validateEmailRegister,
+                            validateMethod:
+                                ValidateConstants.validateEmailRegister,
                           ),
-                          SizedBox(height: ValueConstants.deviceHeightValue(uiValue: 25),),
+                          SizedBox(
+                            height:
+                                ValueConstants.deviceHeightValue(uiValue: 25),
+                          ),
                           InputField(
                             label: TextConstants.password,
                             controller: _passController,
                             keyboardType: TextInputType.visiblePassword,
-                            validateMethod: ValidateConstants.validatePasswordRegister,
+                            validateMethod:
+                                ValidateConstants.validatePasswordRegister,
                             suffixIcon: _isShowPass
                                 ? Icons.visibility
                                 : Icons.visibility_off,
@@ -84,12 +95,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             isObscure: _isShowPass ? false : true,
                           ),
-                          SizedBox(height: ValueConstants.deviceHeightValue(uiValue: 25),),
+                          SizedBox(
+                            height:
+                                ValueConstants.deviceHeightValue(uiValue: 25),
+                          ),
                           InputField(
                             label: TextConstants.confirmPassword,
                             controller: _confirmPassController,
                             keyboardType: TextInputType.visiblePassword,
-                            validateMethod: (confirmPass) => ValidateConstants.validateConfirmPassword(_passController.text, confirmPass),
+                            validateMethod: (confirmPass) =>
+                                ValidateConstants.validateConfirmPassword(
+                                    _passController.text, confirmPass),
                             suffixIcon: _isShowConfirmPass
                                 ? Icons.visibility
                                 : Icons.visibility_off,
@@ -100,21 +116,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             isObscure: _isShowConfirmPass ? false : true,
                           ),
-                          SizedBox(height: ValueConstants.deviceHeightValue(uiValue: 25),),
+                          SizedBox(
+                            height:
+                                ValueConstants.deviceHeightValue(uiValue: 25),
+                          ),
                           InputField(
                             label: TextConstants.firstName,
                             controller: _firstNameController,
                             keyboardType: TextInputType.text,
                             validateMethod: ValidateConstants.validateFirstName,
                           ),
-                          SizedBox(height: ValueConstants.deviceHeightValue(uiValue: 25),),
+                          SizedBox(
+                            height:
+                                ValueConstants.deviceHeightValue(uiValue: 25),
+                          ),
                           InputField(
                             label: TextConstants.lastName,
                             controller: _lastNameController,
                             keyboardType: TextInputType.name,
                             validateMethod: ValidateConstants.validateLastName,
                           ),
-                          SizedBox(height: ValueConstants.deviceHeightValue(uiValue: 25),),
+                          SizedBox(
+                            height:
+                                ValueConstants.deviceHeightValue(uiValue: 25),
+                          ),
                           InputField(
                             label: TextConstants.phone,
                             controller: _phoneController,
@@ -123,7 +148,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ],
                       )),
-                  SizedBox(height: ValueConstants.deviceHeightValue(uiValue: 25),),
+                  SizedBox(
+                    height: ValueConstants.deviceHeightValue(uiValue: 25),
+                  ),
                   const Text(
                     TextConstants.registerNote,
                     style: TextStyle(
@@ -133,10 +160,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                      height: ValueConstants.deviceHeightValue(uiValue: 32)
-                  ),
-                  BlocConsumer<CandidateCubit, CandidateState>(builder: (context, state){
-                    if (state is AuthLoadingState){
+                      height: ValueConstants.deviceHeightValue(uiValue: 32)),
+                  BlocConsumer<CandidateCubit, CandidateState>(
+                      builder: (context, state) {
+                    if (state is AuthLoadingState) {
                       return WidgetConstants.circularProgress;
                     }
 
@@ -148,7 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 32)),
                                 backgroundColor:
-                                WidgetStatePropertyAll(ColorConstants.main),
+                                    WidgetStatePropertyAll(ColorConstants.main),
                                 shape: WidgetStatePropertyAll(
                                     RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
@@ -161,16 +188,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   fontSize: 13,
                                   fontWeight: FontWeight.w700),
                             )));
-                  }, listener: (context, state){
-                    if (state is AuthRegisterSuccessState){
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text(TextConstants.registerSuccessful)));
+                  }, listener: (context, state) {
+                    if (state is AuthRegisterSuccessState) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(TextConstants.registerSuccessful)));
 
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const ActiveAccountScreen(), settings: RouteSettings(arguments: state.email)),
+                        MaterialPageRoute(
+                            builder: (context) => const ActiveAccountScreen(),
+                            settings: RouteSettings(arguments: state.email)),
                       );
-                    }else if (state is AuthErrorState){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(ConvertConstants.getMessageFromException(state.errMessage))));
+                    } else if (state is AuthErrorState) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              ConvertConstants.getMessageFromException(
+                                  state.errMessage))));
                     }
                   }),
                   SizedBox(
@@ -227,17 +260,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               fontSize: 13,
                               fontWeight: FontWeight.w400,
                               color: Colors.black)),
-                      GestureDetector(onTap: navigateLoginScreen,child: const Text(
-                        TextConstants.login,
-                        style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            color: ColorConstants.main),
-                      ),)
+                      GestureDetector(
+                        onTap: navigateLoginScreen,
+                        child: const Text(
+                          TextConstants.login,
+                          style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              color: ColorConstants.main),
+                        ),
+                      )
                     ],
                   ),
                 ],
-              )
+              ),
+              SizedBox(
+                height: ValueConstants.deviceHeightValue(uiValue: 20),
+              ),
             ],
           ),
         ),
@@ -246,7 +285,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> handleBtnRegisterClicked() async {
-    if ((_formKey.currentState as FormState).validate()){
+    if ((_formKey.currentState as FormState).validate()) {
       await _cubit.createCandidate(
         email: _emailController.text,
         password: _passController.text,
@@ -258,6 +297,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void navigateLoginScreen() {
-    Navigator.pop(context);
+    context.pop();
   }
 }

@@ -4,19 +4,19 @@ import 'package:file_picker/file_picker.dart';
 import 'package:open_file/open_file.dart';
 import 'dart:io';
 import '../cubit/candidate_cubit.dart';
-import '../../jobs/cubit/job_cubit.dart';
-import '../../../data/models/candidate.dart';
-import '../../../data/models/province.dart';
-import '../../../core/services/candidate_services.dart';
-import '../../../core/constants/color_constants.dart';
-import '../../../core/constants/text_constants.dart';
-import '../../../core/constants/validate_constants.dart';
-import '../../../core/constants/value_constants.dart';
-import '../../../shared/widgets/input_field.dart';
+import '../../../jobs/cubit/job_cubit.dart';
+import '../../domain/entities/candidate.dart';
+import '../../../../data/models/province.dart';
+import '../../../../core/services/candidate_services.dart';
+import '../../../../core/constants/color_constants.dart';
+import '../../../../core/constants/text_constants.dart';
+import '../../../../core/constants/validate_constants.dart';
+import '../../../../core/constants/value_constants.dart';
+import '../../../../shared/widgets/input_field.dart';
 
-import '../../jobs/screens/cv_viewer_screen.dart';
-import '../../../shared/widgets/multi_select_drop_down_screen1.dart';
-import '../../../shared/widgets/single_select_drop_down_screen.dart';
+import '../../../jobs/screens/cv_viewer_screen.dart';
+import '../../../../shared/widgets/multi_select_drop_down_screen1.dart';
+import '../../../../shared/widgets/single_select_drop_down_screen.dart';
 
 class JobInfoEditPage extends StatefulWidget {
   const JobInfoEditPage({super.key});

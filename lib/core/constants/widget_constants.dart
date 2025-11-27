@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
 
-import '../constants/color_constants.dart';
+import 'color_constants.dart';
 
 class WidgetConstants {
   static const inputFieldBorder = OutlineInputBorder(borderSide: BorderSide(color: ColorConstants.main), borderRadius: BorderRadius.all(Radius.circular(10)));

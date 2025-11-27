@@ -2,19 +2,19 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_state.dart';
-import 'package:jobsit_mobile/features/auth/screens/reset_password.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
+import 'package:jobsit_mobile/features/auth/presentation/screens/reset_password.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jobsit_mobile/core/constants/validate_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
-import 'package:jobsit_mobile/core/utils/widget_constants.dart';
+import 'package:jobsit_mobile/core/constants/widget_constants.dart';
 import 'package:jobsit_mobile/shared/widgets/input_field_async.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../core/services/base_services.dart';
-import '../../../core/services/candidate_services.dart';
+import '../../../../core/services/base_services.dart';
+import '../../../../core/services/candidate_services.dart';
 
 class ChangePasswordByOtpScreen extends StatefulWidget {
   final String email;

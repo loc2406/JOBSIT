@@ -54,8 +54,10 @@
   },
   "error": {
     "something_wrong_please_restart_app": "Có lỗi xảy ra! Vui lòng khởi động lại ứng dụng!",
+    "no_internet": "Không có kết nối mạng!",
     "auth": {
-      "account_not_found": "Tài khoản không tồn tại!"
+      "account_not_found": "Tài khoản không tồn tại!",
+      "incorrect_password": "Sai mật khẩu!"
     }
   }
 }

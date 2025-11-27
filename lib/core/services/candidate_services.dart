@@ -7,9 +7,11 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
+import 'package:jobsit_mobile/features/auth/data/models/candidate_model.dart';
+import 'package:jobsit_mobile/features/auth/data/models/university_model.dart';
 
-import '../../data/models/candidate.dart';
-import '../../data/models/university.dart';
+import '../../features/auth/domain/entities/candidate.dart';
+import '../../features/auth/domain/entities/university.dart';
 
 class CandidateServices {
   static const createCandidateUrl = '${BaseServices.url}/candidate';
@@ -234,7 +236,7 @@ class CandidateServices {
     final result =
         jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
 
-    return Candidate.fromMap(result);
+    return CandidateModel.fromJson(result);
   }
 
   static sendEmailForgotPassWord(String email) async {
@@ -319,7 +321,7 @@ class CandidateServices {
         // final List<dynamic> data = dataObject[contentsKey];
 
         return data
-            .map((university) => University.fromMap(university))
+            .map((university) => UniversityModel.fromJson(university))
             .toList();
       } else {
         throw Exception(TextConstants.loadUniversitiesFailedError);

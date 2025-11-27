@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:jobsit_mobile/core/services/base_services.dart';
 import 'package:http/http.dart' as http;
 import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
-import 'package:jobsit_mobile/core/error/AppliedJobBeforeException.dart';
+import 'package:jobsit_mobile/core/error/job/job_failures.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 
 class JobServices {

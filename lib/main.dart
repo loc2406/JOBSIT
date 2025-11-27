@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsit_mobile/app/router.dart';
 import 'package:jobsit_mobile/app/theme.dart';
-import 'package:jobsit_mobile/features/auth/cubit/candidate_cubit.dart';
+import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/jobs/cubit/job_cubit.dart';
 import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_cubit.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';

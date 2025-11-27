@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
-import 'package:jobsit_mobile/core/utils/widget_constants.dart';
+import 'package:jobsit_mobile/core/constants/widget_constants.dart';
 
 class InputField extends StatelessWidget {
   final String? label;

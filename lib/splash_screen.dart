@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jobsit_mobile/features/auth/screens/active_account_screen.dart';
-import 'package:jobsit_mobile/features/auth/screens/login_screen.dart';
-import 'package:jobsit_mobile/features/auth/screens/register_screen.dart';
+import 'package:jobsit_mobile/features/auth/presentation/screens/active_account_screen.dart';
+import 'package:jobsit_mobile/features/auth/presentation/screens/login_screen.dart';
+import 'package:jobsit_mobile/features/auth/presentation/screens/register_screen.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 

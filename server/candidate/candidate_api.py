@@ -46,10 +46,8 @@ class Candidate(BaseModel):
     
 # --- RESPONSE ---
 class LoginResponse(BaseModel):
-    statusCode: int
-    message: str
-    idCandidate: Optional[int] = None # Có thể null nếu đăng nhập lỗi
-    token: Optional[str] = None
+    token: str
+    data: Candidate
 
 # --- REQUEST ---
 
@@ -97,7 +95,7 @@ def get_all_candidates():
 
 @router.post("/auth/login", response_model=LoginResponse)
 def login(data: LoginRequest, response: Response): # Thêm tham số response để set HTTP status
-    candidates = load_candidates_from_json()
+    candidates = get_all_candidates()
     candidate = next((c for c in candidates if c["email"] == data.email), None)
 
     # 1. Check User tồn tại
@@ -122,16 +120,14 @@ def login(data: LoginRequest, response: Response): # Thêm tham số response đ
     )
     
     return LoginResponse(
-        statusCode=200,
-        message="Đăng nhập thành công!",
-        idCandidate=candidate["id"],
-        token=access_token
+        token=access_token,
+        data=candidate 
     )
 
 @router.get("/candidates/{candidate_id}", response_model=Candidate)
 def get_candidate_detail(candidate_id: int):
     # 1. Load danh sách
-    candidates = load_candidates_from_json()
+    candidates = get_all_candidates()
     
     # 2. Tìm candidate có id trùng khớp
     # Hàm next() sẽ trả về phần tử đầu tiên thỏa điều kiện
