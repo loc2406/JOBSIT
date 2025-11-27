@@ -27,7 +27,7 @@ class Candidate(BaseModel):
     password: str
     firstName: str
     lastName: str
-    gender: bool = False
+    isMale: bool = False
     birthDay: Optional[str] = None
     phone: str
     avatar: Optional[str] = None
