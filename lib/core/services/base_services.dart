@@ -1,5 +1,5 @@
 class BaseServices{
-  static const url = 'http://192.168.101.209:8000';
+  static const url = 'https://jobsit.onrender.com';
   static const headers = {
     'Content-Type': 'application/json; charset=UTF-8'
   };
