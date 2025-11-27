@@ -50,7 +50,9 @@
       "login_successful": "Login successful!",
       "login_failed": "Login failed! Please try again!"
     },
-    "no_job_to_show": "Can not find any jobs!"
+    "job":{
+      "no_job_to_show": "Can not find any job!"
+    }
   },
   "error": {
     "something_wrong_please_restart_app": "Something went wrong! Please restart app again!",

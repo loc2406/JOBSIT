@@ -8,6 +8,7 @@ import 'package:jobsit_mobile/features/jobs/cubit/job_cubit.dart';
 import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_cubit.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
+import 'package:jobsit_mobile/injection_container.dart';
 
 import 'features/applied_jobs/cubit/applied_job_cubit.dart';
 
@@ -18,6 +19,8 @@ Future<void> main() async {
 
   final localeCode = SharedPrefs.getLanguageCode();
   final locale = Locale(localeCode);
+
+  configureDependencies();
 
   runApp(
     EasyLocalization(
@@ -39,7 +42,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => CandidateCubit()),
+          BlocProvider(create: (context) => getIt<CandidateCubit>()),
           BlocProvider(create: (context) => JobCubit()),
           BlocProvider(create: (context) => SavedJobCubit()),
           BlocProvider(create: (context) => AppliedJobCubit()),

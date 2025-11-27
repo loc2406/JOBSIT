@@ -26,9 +26,7 @@ class CandidateCubit extends Cubit<CandidateState> {
   CandidateCubit({required this.loginUseCase})
       : super(CandidateState.noLoggedIn());
 
-  Future<void> loginAccount(
-      {required String email, required String password}) async {
-    
+  Future<void> login({required String email, required String password}) async {
     emit(CandidateState.loading());
     final result = await loginUseCase.call(email: email, password: password);
 
@@ -58,6 +56,18 @@ class CandidateCubit extends Cubit<CandidateState> {
         emit(CandidateState.loginSuccess(token, candidate));
       },
     );
+  }
+
+  Future<void> logout(String token) async {
+    try {
+      emit(CandidateState.loading());
+      await SharedPrefs.removeCandidateId();
+      await SharedPrefs.removeCandidateToken();
+      emit(CandidateState.logout());
+      emit(CandidateState.noLoggedIn());
+    } catch (e) {
+      // debugPrint(e.toString());
+    }
   }
 
   Future<void> createCandidate(
@@ -244,18 +254,6 @@ class CandidateCubit extends Cubit<CandidateState> {
       emit(CandidateState.loginSuccess(token, candidate));
     } catch (e) {
       debugPrint(e.toString());
-    }
-  }
-
-  Future<bool> logout(String token) async {
-    try {
-      emit(CandidateState.loading());
-      await CandidateServices.logout(token);
-      emit(CandidateState.noLoggedIn());
-      return true;
-    } catch (e) {
-      debugPrint(e.toString());
-      return false;
     }
   }
 

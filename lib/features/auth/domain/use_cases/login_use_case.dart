@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:jobsit_mobile/core/error/failures.dart';
 import 'package:jobsit_mobile/features/auth/domain/repositories/auth_repository.dart';
 
-@LazySingleton()
+@lazySingleton
 class LoginUseCase {
   final AuthRepository repository;
   LoginUseCase(this.repository);

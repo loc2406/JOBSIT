@@ -148,8 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     context.pop();
                   } else if (state is AuthErrorState) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('notification.login.login_failed'.tr())));
+                    context.showNotification(state.errMessage, isError: true);
                   }
                 }),
                 SizedBox(
@@ -224,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _handleLogin() async {
     if ((_formKey.currentState as FormState).validate()) {
-      await _cubit.loginAccount(
+      await _cubit.login(
           email: _emailController.text, password: _passwordController.text);
     }
   }

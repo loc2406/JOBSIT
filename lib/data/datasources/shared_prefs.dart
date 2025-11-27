@@ -20,6 +20,10 @@ class SharedPrefs{
     return _instance.getInt(candidateIdKey);
   }
 
+  static Future<void> removeCandidateId() async {
+    await _instance.remove(candidateIdKey);
+  }
+
   static saveCandidateToken(String token) async {
     await _instance.setString(candidateTokenKey, token);
   }
@@ -28,11 +32,19 @@ class SharedPrefs{
     return _instance.getString(candidateTokenKey);
   }
 
+  static Future<void> removeCandidateToken() async {
+    await _instance.remove(candidateTokenKey);
+  }
+
   static setLanguageCode(String code) async {
     await _instance.setString(languageKey, code);
   }
 
   static String getLanguageCode() {
     return _instance.getString(languageKey) ?? 'vi';
+  }
+
+  static Future<void> removeLanguageCode() async {
+    await _instance.remove(languageKey);
   }
 }

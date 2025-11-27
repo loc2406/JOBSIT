@@ -50,7 +50,12 @@
       "login_successful": "Đăng nhập thành công!",
       "login_failed": "Đăng nhập thất bại! Vui lòng thử lại!"
     },
-    "no_job_to_show": "Không tìm thấy việc làm!"
+    "account": {
+      "logout": "Bạn đã đăng xuất!"
+    },
+    "job":{
+      "no_job_to_show": "Không tìm thấy việc làm!"
+    }
   },
   "error": {
     "something_wrong_please_restart_app": "Có lỗi xảy ra! Vui lòng khởi động lại ứng dụng!",

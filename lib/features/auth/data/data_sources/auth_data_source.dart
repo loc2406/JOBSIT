@@ -1,8 +1,6 @@
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jobsit_mobile/core/network/dio_client.dart';
-import 'package:jobsit_mobile/features/auth/data/models/candidate_model.dart';
 
 abstract class AuthDataSource {
   Future<Map<String, dynamic>> login(

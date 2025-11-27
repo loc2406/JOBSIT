@@ -15,6 +15,7 @@ import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
 import 'package:jobsit_mobile/core/constants/widget_constants.dart';
+import 'package:jobsit_mobile/shared/extensions/context_exts.dart';
 
 import '../../domain/entities/candidate.dart';
 import 'job_info_edit_page_screen.dart';
@@ -53,24 +54,30 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<CandidateCubit, CandidateState>(
-          builder: (context, state) {
-        if (state is AuthNoLoggedInState) {
-          return _buildNoLoggedInWidget();
-        } else if (state is AuthLoadingState) {
-          return const Center(
-            child: WidgetConstants.circularProgress,
-          );
-        } else if (state is AuthLoginSuccessState) {
-          _candidate = state.candidate;
-          _token = state.token;
-          _isAllowedSearch = state.candidate.searchable;
-          _onReceiveEmail = state.candidate.mailReceive;
-          return _buildProfile();
-        } else {
-          return const SizedBox();
-        }
-      }),
+      body: BlocConsumer<CandidateCubit, CandidateState>(
+        builder: (context, state) {
+          if (state is AuthNoLoggedInState) {
+            return _buildNoLoggedInWidget();
+          } else if (state is AuthLoadingState) {
+            return const Center(
+              child: WidgetConstants.circularProgress,
+            );
+          } else if (state is AuthLoginSuccessState) {
+            _candidate = state.candidate;
+            _token = state.token;
+            _isAllowedSearch = state.candidate.searchable;
+            _onReceiveEmail = state.candidate.mailReceive;
+            return _buildProfile();
+          } else {
+            return const SizedBox();
+          }
+        },
+        listener: (context, state) {
+          if (state is AuthLogoutState) {
+            context.showNotification('notification.account.logout'.tr());
+          }
+        },
+      ),
     );
   }
 
@@ -306,14 +313,10 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
               onTap: () async {
-                final isLogout = await _cubit.logout(_token);
-
-                if (mounted && isLogout) {
-                  SharedPrefs.saveCandidateToken('');
+                await _cubit.logout(_token);
+                if (mounted) {
                   context.read<SavedJobCubit>().clearAllSavedJobs();
                   context.read<AppliedJobCubit>().clearAllAppliedJobs();
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(TextConstants.youAreLogout)));
                 }
               },
             ),
