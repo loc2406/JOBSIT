@@ -2,7 +2,7 @@
   {
     "id": 1,
     "email": "test1@gmail.com",
-    "password": "123456",
+    "password": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj4hA1vC.Ndy",
     "firstName": "Admin",
     "lastName": "System",
     "isMale": true,
@@ -22,12 +22,13 @@
     "scheduleDTOs": [],
     "desiredJob": null,
     "referenceLetter": "",
-    "desiredWorkingProvince": ""
+    "desiredWorkingProvince": "",
+    "isActive": true
   },
   {
     "id": 2,
     "email": "test2@gmail.com",
-    "password": "456789",
+    "password": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj4hA1vC.Ndy",
     "firstName": "Admin",
     "lastName": "System",
     "isMale": false,
@@ -47,6 +48,7 @@
     "scheduleDTOs": [],
     "desiredJob": null,
     "referenceLetter": "",
-    "desiredWorkingProvince": ""
+    "desiredWorkingProvince": "",
+    "isActive": true
   }
 ]
