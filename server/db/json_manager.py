@@ -2,7 +2,7 @@ import json
 import os
 
 CANDIDATE_FILE = "candidates.json"
-CANDIDATE_PATH = os.path.join("server", "candidate", CANDIDATE_FILE)
+CANDIDATE_PATH = os.path.join("server", "data", CANDIDATE_FILE)
 
 def read_candidates():
     """Đọc danh sách user từ file JSON"""

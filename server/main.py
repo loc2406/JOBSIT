@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from server.candidate import candidate_api
-from server.job import job_api
+from server.api import candidate_api
+from server.api import job_api
 
 app = FastAPI()
 

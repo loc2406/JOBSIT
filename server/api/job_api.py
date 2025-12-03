@@ -35,7 +35,7 @@ class Job(BaseModel):
 
 # Load data từ file JSON
 try:
-    file_path = os.path.join("server", "job", "jobs.json")
+    file_path = os.path.join("server", "data", "jobs.json")
 
     with open(file_path, "r", encoding="utf-8") as f:
         jobs_data = json.load(f)

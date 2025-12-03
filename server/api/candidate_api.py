@@ -165,7 +165,7 @@ def get_candidate_detail(candidate_id: int):
     return candidate
 
 @router.post("/auth/login", response_model=LoginResponse)
-def login(data: LoginRequest, response: Response): # Thêm tham số response để set HTTP status
+def login(data: LoginRequest): # Thêm tham số response để set HTTP status
     candidates = read_candidates()
     candidate = next((c for c in candidates if c["email"] == data.email), None)
 
@@ -177,10 +177,17 @@ def login(data: LoginRequest, response: Response): # Thêm tham số response đ
         )
 
     # 2. Check Password
-    if verify_password(data.password, candidate["password"]):
+    try:
+        if not verify_password(data.password, candidate["password"]):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED, 
+                detail="Mật khẩu không chính xác!"
+            )
+    except Exception as e:
+        # Bắt lỗi nếu thư viện mã hóa bị thiếu hoặc hash lỗi
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, 
-            detail="Mật khẩu không chính xác!"
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Lỗi server khi kiểm tra mật khẩu (Thiếu thư viện bcrypt?)"
         )
 
     # 3. Thành công
