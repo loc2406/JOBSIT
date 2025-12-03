@@ -176,18 +176,25 @@ def login(data: LoginRequest): # Thêm tham số response để set HTTP status
             detail="Tài khoản không tồn tại!"
         )
 
-    # 2. Check Password
+    is_password_correct = False
+
+    print(f"Pass gửi lên:  '{data.password}' (Độ dài: {len(data.password)})")
+    print(f"Hash trong DB: '{candidate['password']}'")
+
     try:
-        if not verify_password(data.password, candidate["password"]):
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, 
-                detail="Mật khẩu không chính xác!"
-            )
+        is_password_correct = verify_password(data.password, candidate["password"])
+        print(f"Kết quả verify_password: {is_password_correct}")
     except Exception as e:
-        print(f"Server Error Log: {str(e)}")
+        print(f"Lỗi thư viện mã hóa: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Lỗi server khi kiểm tra mật khẩu."
+            detail="Lỗi server khi mã hóa mật khẩu"
+        )
+
+    if not is_password_correct:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Mật khẩu không chính xác!"
         )
 
     # 3. Thành công
