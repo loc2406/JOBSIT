@@ -184,10 +184,10 @@ def login(data: LoginRequest): # Thêm tham số response để set HTTP status
                 detail="Mật khẩu không chính xác!"
             )
     except Exception as e:
-        # Bắt lỗi nếu thư viện mã hóa bị thiếu hoặc hash lỗi
+        print(f"Server Error Log: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Lỗi server khi kiểm tra mật khẩu (Thiếu thư viện bcrypt?)"
+            detail="Lỗi server khi kiểm tra mật khẩu."
         )
 
     # 3. Thành công
