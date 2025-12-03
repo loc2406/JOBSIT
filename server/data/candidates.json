@@ -2,7 +2,7 @@
   {
     "id": 1,
     "email": "test1@gmail.com",
-    "password": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj4hA1vC.Ndy",
+    "password": "$2b$12$bMgUgyApS4LCjSy.EBf/6.udZfUBQyFiTn1OKOhz3U8vYVLqhcm8O",
     "firstName": "Admin",
     "lastName": "System",
     "isMale": true,
@@ -28,7 +28,7 @@
   {
     "id": 2,
     "email": "test2@gmail.com",
-    "password": "$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPj4hA1vC.Ndy",
+    "password": "$2b$12$bMgUgyApS4LCjSy.EBf/6.udZfUBQyFiTn1OKOhz3U8vYVLqhcm8O",
     "firstName": "Admin",
     "lastName": "System",
     "isMale": false,
