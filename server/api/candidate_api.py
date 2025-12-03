@@ -89,7 +89,7 @@ class RegisterRequest(BaseModel):
 
     # 4. LAST NAME
     # Validate: Min 2, Max 32
-    last_name: str = Field(..., min_length=2, max_length=32)
+    lastName: str = Field(..., min_length=2, max_length=32)
 
     # 5. PHONE
     # Validate: Min 8, Max 13, Regex VN Phone
