@@ -8,7 +8,7 @@ from typing import List, Optional, Dict, Any
 from jose import jwt
 
 from server.core.security import get_password_hash, verify_password
-from server.db.json_manager import read_candidates, save_candidates
+from server.db.database import candidate_collection, candidate_helper
 
 router = APIRouter()
 
@@ -138,19 +138,9 @@ def create_access_token(data: dict, expires_delta: timedelta):
 # CÁC API ENDPOINTS
 # ==========================================
 
-@router.get("/candidates", response_model=List[Candidate])
-def get_all_candidates():
-    candidates = read_candidates()
-    return candidates
-
 @router.get("/candidates/{candidate_id}", response_model=Candidate)
 def get_candidate_detail(candidate_id: int):
-    # 1. Load danh sách
-    candidates = read_candidates()
-    
-    # 2. Tìm candidate có id trùng khớp
-    # Hàm next() sẽ trả về phần tử đầu tiên thỏa điều kiện
-    candidate = next((c for c in candidates if c["id"] == candidate_id), None)
+    candidate = candidate_collection.find_one({"id": candidate_id})
     
     # 3. Nếu không tìm thấy -> Trả về lỗi 404
     if not candidate:
@@ -159,12 +149,11 @@ def get_candidate_detail(candidate_id: int):
             detail="Không tìm thấy ứng viên có ID: {candidate_id}!"
         )
     
-    return candidate
+    return candidate_helper(candidate)
 
 @router.post("/auth/login", response_model=LoginResponse)
 def login(data: LoginRequest): # Thêm tham số response để set HTTP status
-    candidates = read_candidates()
-    candidate = next((c for c in candidates if c["email"] == data.email), None)
+    candidate = candidate_collection.find_one({"email": data.email})
 
     # 1. Check User tồn tại
     if not candidate:
@@ -205,40 +194,40 @@ def login(data: LoginRequest): # Thêm tham số response để set HTTP status
     
     return LoginResponse(
         token=access_token,
-        data=candidate 
+        data=candidate_helper(candidate)
     )
 
 @router.post("/auth/register", response_model=RegisterResponse, status_code=201)
 def register(candidate: RegisterRequest):
-    candidates = read_candidates()
 
     # Duyệt qua list users xem có email nào trùng không
-    for c in candidates:
-        if c['email'] == candidate.email:
+    if candidate_collection.find_one({"email": candidate.email}):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Email này đã được sử dụng!"
+        )
+    
+    # Nếu muốn check phone trùng thì thêm if ở đây
+    if candidate_collection.find_one({"phone": candidate.phone}):
             raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="Email này đã được sử dụng!"
-            )
-        
-        # Nếu muốn check phone trùng thì thêm if ở đây
-        if c['phone'] == candidate.phone:
-             raise HTTPException(
-                status_code=status.HTTP_409_CONFLICT,
-                detail="Số điện thoại này đã được sử dụng!"
-            )
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Số điện thoại này đã được sử dụng!"
+        )
 
     # 3. Hash Password
     hashed_password = get_password_hash(candidate.password)
 
-    # 4. Tạo User mới (Dạng Dictionary vì JSON lưu dict)
-    new_candidate_id = len(candidates) + 1 # Tự tăng ID đơn giản
+    last_candidate = candidate_collection.find_one(sort=[("id", -1)])
+    new_id = 1
+    if last_candidate:
+        new_id = last_candidate["id"] + 1
     
     # Dùng by_alias=True để key trong dict là 'firstName' thay vì 'first_name'
     # Điều này giúp đồng bộ với Candidate Model và Flutter
     new_candidate_dict = candidate.model_dump(by_alias=True)
     
     # Ghi đè các trường cần xử lý server-side
-    new_candidate_dict['id'] = new_candidate_id
+    new_candidate_dict['id'] = new_id
     new_candidate_dict['password'] = hashed_password # Lưu pass đã hash, không lưu pass gốc
     new_candidate_dict['isActive'] = False
 
@@ -261,8 +250,7 @@ def register(candidate: RegisterRequest):
     new_candidate_dict['scheduleDTOs'] = []
 
     # 5. Lưu vào file
-    candidates.append(new_candidate_dict)
-    save_candidates(candidates)
+    candidate_collection.insert_one(new_candidate_dict)
 
     # 6. Trả về kết quả
     return RegisterResponse(

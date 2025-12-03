@@ -25,6 +25,8 @@ import 'package:jobsit_mobile/features/auth/domain/repositories/auth_repository.
     as _i409;
 import 'package:jobsit_mobile/features/auth/domain/use_cases/login_use_case.dart'
     as _i428;
+import 'package:jobsit_mobile/features/auth/domain/use_cases/register_use_case.dart'
+    as _i252;
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart'
     as _i451;
 
@@ -55,8 +57,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i642.AuthRepositoryImpl(dataSource: gh<_i314.AuthDataSource>()));
     gh.lazySingleton<_i428.LoginUseCase>(
         () => _i428.LoginUseCase(gh<_i409.AuthRepository>()));
-    gh.factory<_i451.CandidateCubit>(
-        () => _i451.CandidateCubit(loginUseCase: gh<_i428.LoginUseCase>()));
+    gh.lazySingleton<_i252.RegisterUseCase>(
+        () => _i252.RegisterUseCase(gh<_i409.AuthRepository>()));
+    gh.factory<_i451.CandidateCubit>(() => _i451.CandidateCubit(
+          loginUseCase: gh<_i428.LoginUseCase>(),
+          registerUseCase: gh<_i252.RegisterUseCase>(),
+        ));
     return this;
   }
 }
