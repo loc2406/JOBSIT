@@ -198,8 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Text('screen.login.dont_have_account'.tr(),
                         style: _theme.textTheme.labelLarge?.copyWith(
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal)),
+                            color: Colors.black)),
                     const SizedBox(
                       width: 8,
                     ),
@@ -230,5 +229,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _navigateRegisterScreen() {
     context.pushNamed(AppRouter.registerName);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
   }
 }

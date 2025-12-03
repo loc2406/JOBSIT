@@ -20,6 +20,8 @@ class Candidate {
   final String? desiredJob;
   final String? referenceLetter;
   final String? desiredWorkingProvince;
+  final bool isActive;
+
   const Candidate(
       {required this.id,
       required this.email,
@@ -30,8 +32,8 @@ class Candidate {
       required this.phone,
       this.avatar,
       this.location,
-      required this.mailReceive,
-      required this.searchable,
+      this.mailReceive = false,
+      this.searchable = false,
       this.university,
       this.cv,
       this.majorDTOs,
@@ -39,5 +41,7 @@ class Candidate {
       this.scheduleDTOs,
       this.desiredJob,
       this.referenceLetter,
-      this.desiredWorkingProvince});
+      this.desiredWorkingProvince,
+      this.isActive = false
+      });
 }

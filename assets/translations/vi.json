@@ -77,7 +77,10 @@
     "auth": {
       "account_not_found": "Tài khoản không tồn tại!",
       "incorrect_password": "Sai mật khẩu!",
-      "account_not_active": "Tài khoản chưa được kích hoạt! Vui lòng kích hoạt tài khoản trước khi đăng nhập!"
+      "account_not_active": "Tài khoản chưa kích hoạt! Vui lòng kích hoạt trước khi đăng nhập!",
+      "invalid_info": "Thông tin đăng ký không hợp lệ!",
+      "email_is_used": "Email này đã được sử dụng!",
+      "phone_is_used": "Số điện thoại này đã được sử dụng!"
     }
   }
 }

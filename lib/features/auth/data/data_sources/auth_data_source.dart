@@ -1,10 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jobsit_mobile/core/error/auth/auth_exceptions.dart';
 import 'package:jobsit_mobile/core/network/dio_client.dart';
+import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
+import 'package:jobsit_mobile/features/auth/data/models/register_request_model.dart';
+import 'package:jobsit_mobile/features/auth/data/models/register_response_model.dart';
 
 abstract class AuthDataSource {
   Future<Map<String, dynamic>> login(
       {required String email, required String password});
+
+  Future<RegisterResponseModel> register(
+      {required RegisterRequestModel request});
 }
 
 @LazySingleton(as: AuthDataSource)
@@ -26,8 +33,65 @@ class AuthDataSourceImpl extends AuthDataSource {
       );
 
       return response.data;
-    } on DioException {
-      rethrow;
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final serverMess = (e.response?.data is Map<String, dynamic> &&
+              e.response?.data['detail'] != null)
+          ? e.response?.data['detail']
+          : "Đã có lỗi xảy ra!";
+
+      AppLogger.e('API Error: $statusCode === $serverMess');
+
+      if (statusCode == 404) {
+        throw AccountNotFoundException();
+      }
+
+      if (statusCode == 401) {
+        throw IncorrectPasswordException();
+      }
+
+      if (statusCode == 403) {
+        throw AccountNotActiveException();
+      }
+
+      throw ServerException(serverMess.toString());
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<RegisterResponseModel> register(
+      {required RegisterRequestModel request}) async {
+    try {
+      final response = await dio.post(
+        '/auth/register',
+        data: request.toJson(),
+      );
+
+      return RegisterResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final data = e.response?.data;
+      final serverMess = data?['detail'] ?? "Đã có lỗi xảy ra!";
+
+      AppLogger.e('API Error: $statusCode === $serverMess');
+
+      if (statusCode == 422 && serverMess is List) {
+        throw InvalidInfoException();
+      }
+
+      if (statusCode == 409 && serverMess is String) {
+        if (serverMess.compareTo("Email này đã được sử dụng!") == 0) {
+          throw EmailIsUsedException();
+        }else if (serverMess.compareTo("Số điện thoại này đã được sử dụng!") == 0) {
+          throw PhoneIsUsedException();
+        }
+      }
+
+      throw ServerException(serverMess.toString());
+    } catch (e) {
+      throw ServerException(e.toString());
     }
   }
 }

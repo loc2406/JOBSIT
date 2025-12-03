@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,6 +7,7 @@ import 'package:jobsit_mobile/core/constants/asset_constants.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/auth/presentation/screens/active_account_screen.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
+import 'package:jobsit_mobile/shared/extensions/context_exts.dart';
 
 import '../cubit/candidate_state.dart';
 import '../../../../core/constants/color_constants.dart';
@@ -34,9 +36,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _lastNameController = TextEditingController();
   final _phoneController = TextEditingController();
 
+  ThemeData get _theme => Theme.of(context);
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     _cubit = context.read<CandidateCubit>();
   }
 
@@ -49,14 +53,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                height: ValueConstants.deviceHeightValue(uiValue: 50),
+              const SizedBox(
+                height: 50,
               ),
-              const Text(TextConstants.register,
-                  style: TextStyle(
-                      fontSize: 23,
-                      fontWeight: FontWeight.w700,
-                      color: ColorConstants.main)),
+              Text('screen.register.create_new_account'.tr(),
+                  style: _theme.textTheme.titleMedium),
               Column(
                 children: [
                   Form(
@@ -64,23 +65,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            height:
-                                ValueConstants.deviceHeightValue(uiValue: 50),
+                          const SizedBox(
+                            height: 50,
                           ),
                           InputField(
-                            label: TextConstants.email,
+                            label: 'screen.register.email'.tr(),
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             validateMethod:
                                 ValidateConstants.validateEmailRegister,
                           ),
-                          SizedBox(
-                            height:
-                                ValueConstants.deviceHeightValue(uiValue: 25),
-                          ),
+                          _distanceBetweenField(),
                           InputField(
-                            label: TextConstants.password,
+                            label: 'screen.register.password'.tr(),
                             controller: _passController,
                             keyboardType: TextInputType.visiblePassword,
                             validateMethod:
@@ -95,12 +92,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             isObscure: _isShowPass ? false : true,
                           ),
-                          SizedBox(
-                            height:
-                                ValueConstants.deviceHeightValue(uiValue: 25),
-                          ),
+                          _distanceBetweenField(),
                           InputField(
-                            label: TextConstants.confirmPassword,
+                            label: 'screen.register.confirm_password'.tr(),
                             controller: _confirmPassController,
                             keyboardType: TextInputType.visiblePassword,
                             validateMethod: (confirmPass) =>
@@ -116,51 +110,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             isObscure: _isShowConfirmPass ? false : true,
                           ),
-                          SizedBox(
-                            height:
-                                ValueConstants.deviceHeightValue(uiValue: 25),
-                          ),
+                          _distanceBetweenField(),
                           InputField(
-                            label: TextConstants.firstName,
+                            label: 'screen.register.first_name'.tr(),
                             controller: _firstNameController,
                             keyboardType: TextInputType.text,
                             validateMethod: ValidateConstants.validateFirstName,
                           ),
-                          SizedBox(
-                            height:
-                                ValueConstants.deviceHeightValue(uiValue: 25),
-                          ),
+                          _distanceBetweenField(),
                           InputField(
-                            label: TextConstants.lastName,
+                            label: 'screen.register.last_name'.tr(),
                             controller: _lastNameController,
                             keyboardType: TextInputType.name,
                             validateMethod: ValidateConstants.validateLastName,
                           ),
-                          SizedBox(
-                            height:
-                                ValueConstants.deviceHeightValue(uiValue: 25),
-                          ),
+                          _distanceBetweenField(),
                           InputField(
-                            label: TextConstants.phone,
+                            label: 'screen.register.phone'.tr(),
                             controller: _phoneController,
                             keyboardType: TextInputType.phone,
                             validateMethod: ValidateConstants.validatePhone,
                           ),
                         ],
                       )),
-                  SizedBox(
-                    height: ValueConstants.deviceHeightValue(uiValue: 25),
-                  ),
-                  const Text(
-                    TextConstants.registerNote,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400),
+                  _distanceBetweenField(),
+                  Text(
+                    'screen.register.rule'.tr(),
+                    style: _theme.textTheme.labelLarge,
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(
-                      height: ValueConstants.deviceHeightValue(uiValue: 32)),
+                  _distanceBetweenField(),
                   BlocConsumer<CandidateCubit, CandidateState>(
                       builder: (context, state) {
                     if (state is AuthLoadingState) {
@@ -180,18 +159,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(16))))),
-                            onPressed: handleBtnRegisterClicked,
-                            child: const Text(
-                              TextConstants.register,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700),
-                            )));
+                            onPressed: _handleBtnRegisterClicked,
+                            child: Text('screen.register.title'.tr(),
+                                style: _theme.textTheme.labelLarge?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold))));
                   }, listener: (context, state) {
                     if (state is AuthRegisterSuccessState) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text(TextConstants.registerSuccessful)));
+                      context.showNotification(
+                          'notification.register.register.successful'.tr());
 
                       Navigator.pushReplacement(
                         context,
@@ -200,82 +176,72 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             settings: RouteSettings(arguments: state.email)),
                       );
                     } else if (state is AuthErrorState) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              ConvertConstants.getMessageFromException(
-                                  state.errMessage))));
+                      context.showNotification(state.errMessage);
                     }
                   }),
-                  SizedBox(
-                    height: ValueConstants.deviceHeightValue(uiValue: 20),
+                  _distanceBetweenField(),
+                  Text(
+                    'screen.register.or_register_by'.tr(),
+                    style: _theme.textTheme.labelSmall
+                        ?.copyWith(color: Colors.grey),
                   ),
-                  const Text(
-                    TextConstants.orContinueWith,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      color: ColorConstants.grey,
-                    ),
-                  ),
-                  SizedBox(
-                    height: ValueConstants.deviceHeightValue(uiValue: 14),
+                  const SizedBox(
+                    height: 15,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: ValueConstants.deviceWidthValue(uiValue: 60),
-                        height: ValueConstants.deviceHeightValue(uiValue: 60),
+                        width: 60,
+                        height: 60,
                         padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
                             color: ColorConstants.btnLoginGoogle,
-                            borderRadius: BorderRadius.circular(200),
-                            border: const Border.fromBorderSide(
-                                BorderSide(color: ColorConstants.main))),
+                            shape: BoxShape.circle,
+                            border: Border.all(color: ColorConstants.main)),
                         child: SvgPicture.asset(AssetConstants.iconGgLogin),
                       ),
-                      SizedBox(
-                        width: ValueConstants.deviceHeightValue(uiValue: 26),
+                      const SizedBox(
+                        width: 25,
                       ),
                       Container(
-                        width: ValueConstants.deviceWidthValue(uiValue: 60),
-                        height: ValueConstants.deviceHeightValue(uiValue: 60),
+                        width: 60,
+                        height: 60,
                         padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
                             color: ColorConstants.btnLoginFb,
-                            borderRadius: BorderRadius.circular(200),
-                            border: const Border.fromBorderSide(
-                                BorderSide(color: ColorConstants.main))),
+                            shape: BoxShape.circle,
+                            border: Border.all(color: ColorConstants.main)),
                         child: SvgPicture.asset(AssetConstants.iconFbLogin),
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: ValueConstants.deviceHeightValue(uiValue: 30),
+                  const SizedBox(
+                    height: 30,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(TextConstants.alreadyHaveAccount,
-                          style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black)),
+                      Text('screen.register.have_account_before'.tr(),
+                          style: _theme.textTheme.labelLarge
+                              ?.copyWith(color: Colors.black)),
+                      const SizedBox(
+                        width: 8,
+                      ),
                       GestureDetector(
-                        onTap: navigateLoginScreen,
-                        child: const Text(
-                          TextConstants.login,
-                          style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: ColorConstants.main),
+                        onTap: _navigateLoginScreen,
+                        child: Text(
+                          'screen.login.title'.tr(),
+                          style: _theme.textTheme.labelLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       )
                     ],
                   ),
                 ],
               ),
-              SizedBox(
-                height: ValueConstants.deviceHeightValue(uiValue: 20),
+              const SizedBox(
+                height: 20,
               ),
             ],
           ),
@@ -284,9 +250,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Future<void> handleBtnRegisterClicked() async {
+  SizedBox _distanceBetweenField() => const SizedBox(
+        height: 25,
+      );
+
+  Future<void> _handleBtnRegisterClicked() async {
     if ((_formKey.currentState as FormState).validate()) {
-      await _cubit.createCandidate(
+      await _cubit.register(
         email: _emailController.text,
         password: _passController.text,
         firstName: _firstNameController.text,
@@ -296,7 +266,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  void navigateLoginScreen() {
+  void _navigateLoginScreen() {
     context.pop();
   }
 }

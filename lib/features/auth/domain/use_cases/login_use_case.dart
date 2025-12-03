@@ -5,10 +5,10 @@ import 'package:jobsit_mobile/features/auth/domain/repositories/auth_repository.
 
 @lazySingleton
 class LoginUseCase {
-  final AuthRepository repository;
-  LoginUseCase(this.repository);
+  final AuthRepository repo;
+  LoginUseCase(this.repo);
 
   Future<Either<Failure, Map<String, dynamic>>> call({required String email, required String password}) {
-    return repository.login(email: email, password: password);
+    return repo.login(email: email, password: password);
   }
 }

@@ -8,6 +8,7 @@ import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
 import 'package:jobsit_mobile/data/datasources/auth_storage.dart';
 import 'package:jobsit_mobile/features/auth/data/models/candidate_model.dart';
 import 'package:jobsit_mobile/features/auth/domain/use_cases/login_use_case.dart';
+import 'package:jobsit_mobile/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
@@ -22,8 +23,9 @@ import '../../../../core/services/province_services.dart';
 @injectable
 class CandidateCubit extends Cubit<CandidateState> {
   final LoginUseCase loginUseCase;
+  final RegisterUseCase registerUseCase;
 
-  CandidateCubit({required this.loginUseCase})
+  CandidateCubit({required this.loginUseCase, required this.registerUseCase})
       : super(CandidateState.noLoggedIn());
 
   Future<void> login({required String email, required String password}) async {
@@ -31,7 +33,7 @@ class CandidateCubit extends Cubit<CandidateState> {
     final result = await loginUseCase.call(email: email, password: password);
 
     result.fold(
-      (failure) => emit(AuthErrorState(failure.message)),
+      (failure) => emit(CandidateState.error(failure.message)),
       (result) async {
         final String? token = result['token'];
         final Candidate? candidate = result['data'] != null
@@ -63,32 +65,34 @@ class CandidateCubit extends Cubit<CandidateState> {
       emit(CandidateState.loading());
       await SharedPrefs.removeCandidateId();
       await SharedPrefs.removeCandidateToken();
-      emit(CandidateState.logout());
       emit(CandidateState.noLoggedIn());
     } catch (e) {
-      // debugPrint(e.toString());
+      debugPrint(e.toString());
     }
   }
 
-  Future<void> createCandidate(
+  Future<void> register(
       {required String email,
       required String password,
       required String firstName,
       required String lastName,
       required String phone}) async {
     emit(CandidateState.loading());
-    try {
-      await CandidateServices.createCandidate(
-          email: email,
-          password: password,
-          firstName: firstName,
-          lastName: lastName,
-          phone: phone);
-      emit(CandidateState.registerSuccess(email));
-      sendActiveEmail(email);
-    } catch (e) {
-      emit(CandidateState.error(e.toString()));
-    }
+
+    final result = await registerUseCase.call(
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone);
+
+    result.fold(
+      (failure) => emit(CandidateState.error(failure.message)),
+      (result) async {
+        emit(CandidateState.registerSuccess(result.email));
+        await sendActiveEmail(email);
+      },
+    );
   }
 
   sendActiveEmail(String email) async {

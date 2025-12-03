@@ -21,8 +21,6 @@ class CandidateState extends Equatable{
   factory CandidateState.noLoggedIn() => AuthNoLoggedInState();
 
   factory CandidateState.editSuccess() => AuthEditSuccessState();
-
-  factory CandidateState.logout() => AuthLogoutState();
   
   @override
   List<Object?> get props => [];
@@ -60,5 +58,3 @@ class AuthErrorState extends CandidateState{
 }
 
 class AuthEditSuccessState extends CandidateState{}
-
-class AuthLogoutState extends CandidateState{}

@@ -57,8 +57,10 @@ class LoginResponse(BaseModel):
 class RegisterResponse(BaseModel):
     id: int
     email: str
-    full_name: str
-    is_active: bool
+    firstName: str
+    lastName: str
+    phone: str
+    isActive: bool
 
 # --- REQUEST ---
 
@@ -83,11 +85,11 @@ class RegisterRequest(BaseModel):
 
     # 3. FIRST NAME
     # Validate: Min 2, Max 32
-    first_name: str = Field(..., alias="firstName", min_length=2, max_length=32)
+    firstName: str = Field(..., min_length=2, max_length=32)
 
     # 4. LAST NAME
     # Validate: Min 2, Max 32
-    last_name: str = Field(..., alias="lastName", min_length=2, max_length=32)
+    last_name: str = Field(..., min_length=2, max_length=32)
 
     # 5. PHONE
     # Validate: Min 8, Max 13, Regex VN Phone
@@ -99,30 +101,25 @@ class RegisterRequest(BaseModel):
         pattern=r"^(84|0[35789])\d{6,11}$"
     )
 
-    # Cấu hình để nhận JSON từ Flutter gửi lên dạng camelCase (firstName) 
-    # nhưng trong Python vẫn dùng snake_case (first_name)
-    class Config:
-        populate_by_name = True
-
     @field_validator('password')
     @classmethod
     def validate_password_complexity(cls, v: str) -> str:
         # Check chữ in hoa (A-Z)
         if not re.search(r'[A-Z]', v):
-            raise ValueError('Mật khẩu nên chứa ít nhất 1 ký tự in hoa.')
+            raise ValueError('Mật khẩu nên chứa ít nhất 1 ký tự in hoa!')
         
         # Check số (0-9)
         if not re.search(r'[0-9]', v):
-            raise ValueError('Mật khẩu nên chứa ít nhất 1 chữ số.')
+            raise ValueError('Mật khẩu nên chứa ít nhất 1 chữ số!')
         
         return v
 
-    @field_validator('first_name', 'last_name')
+    @field_validator('firstName', 'lastName')
     @classmethod
     def validate_no_trailing_space(cls, v: str) -> str:
         # Check không được kết thúc bằng khoảng trắng
         if v.endswith(' '):
-                raise ValueError('Tên không được kết thúc bằng dấu cách.')
+                raise ValueError('Tên không được kết thúc bằng dấu cách!')
         return v
 
 # ==========================================
@@ -220,14 +217,14 @@ def register(candidate: RegisterRequest):
         if c['email'] == candidate.email:
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,
-                detail="Email này đã được sử dụng."
+                detail="Email này đã được sử dụng!"
             )
         
         # Nếu muốn check phone trùng thì thêm if ở đây
         if c['phone'] == candidate.phone:
              raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,
-                detail="Số điện thoại này đã được sử dụng."
+                detail="Số điện thoại này đã được sử dụng!"
             )
 
     # 3. Hash Password
@@ -256,24 +253,23 @@ def register(candidate: RegisterRequest):
     new_candidate_dict['university'] = None
     new_candidate_dict['cv'] = None
     new_candidate_dict['desiredJob'] = None
+    new_candidate_dict['referenceLetter'] = None
+    new_candidate_dict['desiredWorkingProvince'] = None
 
     new_candidate_dict['positionDTOs'] = []
     new_candidate_dict['majorDTOs'] = []
     new_candidate_dict['scheduleDTOs'] = []
 
-    new_candidate_dict['referenceLetter'] = ""
-    new_candidate_dict['desiredWorkingProvince'] = ""
-
     # 5. Lưu vào file
     candidates.append(new_candidate_dict)
     save_candidates(candidates)
-
-    full_name = f"{candidate.last_name} {candidate.first_name}"
 
     # 6. Trả về kết quả
     return RegisterResponse(
         id= new_candidate_dict['id'],
         email=new_candidate_dict['email'],
-        full_name=full_name,
-        is_active=new_candidate_dict['isActive']
+        firstName=new_candidate_dict['firstName'],
+        lastName=new_candidate_dict['lastName'],
+        phone=new_candidate_dict['phone'],
+        isActive=new_candidate_dict['isActive']
     )

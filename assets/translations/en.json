@@ -77,7 +77,10 @@
     "auth": {
       "account_not_found": "Can not find account!",
       "incorrect_password": "Incorrect password!",
-      "account_not_active": "Account is not active! Please active account before login!"
+      "account_not_active": "Account is not active! Please active account before login!",
+      "invalid_info": "Register info is invalid!",
+      "email_is_used": "Email is already used!",
+      "phone_is_used": "Phone is already used!"
     }
   }
 }

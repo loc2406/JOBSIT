@@ -21,7 +21,9 @@ class CandidateModel extends Candidate{
       super.scheduleDTOs,
       super.desiredJob,
       super.referenceLetter,
-      super.desiredWorkingProvince});
+      super.desiredWorkingProvince,
+      required super.isActive
+      });
 
   factory CandidateModel.fromJson(Map<String, dynamic> json) {
     return CandidateModel(
@@ -51,7 +53,9 @@ class CandidateModel extends Candidate{
             : null,
         desiredJob: json[desiredJobField],
         referenceLetter: json[referenceLetterField],
-        desiredWorkingProvince: json[desiredWorkingProvinceField]);
+        desiredWorkingProvince: json[desiredWorkingProvinceField],
+        isActive: json[isActiveField],
+        );
   }
 
   static const idField = 'id';
@@ -73,4 +77,5 @@ class CandidateModel extends Candidate{
   static const desiredJobField = 'desiredJob';
   static const referenceLetterField = 'referenceLetter';
   static const desiredWorkingProvinceField = 'desiredWorkingProvince';
+  static const isActiveField = 'isActive';
 }

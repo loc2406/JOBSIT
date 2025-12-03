@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:jobsit_mobile/core/error/auth/auth_exceptions.dart';
 import 'package:jobsit_mobile/core/error/auth/auth_failures.dart';
 import 'package:jobsit_mobile/core/error/network/network_failures.dart';
-import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
 import 'package:jobsit_mobile/features/auth/data/data_sources/auth_data_source.dart';
-import 'package:jobsit_mobile/features/auth/domain/entities/candidate.dart';
+import 'package:jobsit_mobile/features/auth/data/models/register_request_model.dart';
+import 'package:jobsit_mobile/features/auth/data/models/register_response_model.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -30,32 +30,50 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(result);
     } on Failure catch (failure) {
       return Left(failure);
-    } on DioException catch (e) {
-      final statusCode = e.response?.statusCode;
-      final serverMess = (e.response?.data is Map<String, dynamic> &&
-              e.response?.data['detail'] != null)
-          ? e.response?.data['detail']
-          : "Đã có lỗi xảy ra!";
-
-      if (e.type == DioExceptionType.badResponse) {
-        AppLogger.i('API Error: $statusCode === $serverMess');
-
-        if (statusCode == 404) {
-          return Left(AccountNotFoundFailure());
-        }
-
-        if (statusCode == 401) {
-          return Left(IncorrectPasswordFailure());
-        }
-
-        if (statusCode == 403) {
-          return Left(AccountNotActiveFailure());
-        }
-      }
-
-      return Left(ServerFailure(serverMess.toString()));
+    } on AccountNotFoundException {
+      return Left(AccountNotFoundFailure());
+    } on IncorrectPasswordException {
+      return Left(IncorrectPasswordFailure());
+    } on AccountNotActiveException {
+      return Left(AccountNotActiveFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     } catch (e) {
-      return Left(UnknownFailure());
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, RegisterResponseModel>> register(
+      {required String email,
+      required String password,
+      required String firstName,
+      required String lastName,
+      required String phone}) async {
+    try {
+      final request = RegisterRequestModel(
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone);
+
+      final responseModel =
+          await dataSource.register(request: request);
+
+      return Right(responseModel);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } on InvalidInfoException {
+      return Left(InvalidInfoFailure());
+    } on EmailIsUsedException {
+      return Left(EmailIsUsedFailure());
+    } on PhoneIsUsedException {
+      return Left(PhoneIsUsedFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
     }
   }
 }
