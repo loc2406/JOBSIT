@@ -2,9 +2,16 @@
 from pymongo import MongoClient
 import os
 
-MONGO_URI = "mongodb+srv://admin:Nguyen24062003..@cluster0.xxxxx.mongodb.net/?retryWrites=true&w=majority"
+MONGO_URI = "mongodb+srv://loc24062003:Nguyen24062003..@cluster0.hmir5fn.mongodb.net/?appName=Cluster0"
 
 client = MongoClient(MONGO_URI)
+
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
 
 # Tạo database tên là "jobsit_db"
 db = client.jobsit_db
