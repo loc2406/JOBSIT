@@ -23,7 +23,17 @@
       "dont_have_account": "You don't have account?"
     },
     "register": {
-      "title": "Register"
+      "title": "Register",
+      "create_new_account": "Create new account",
+      "email": "Email",
+      "password": "Password",
+      "confirm_password": "Confirm password",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "phone": "Phone",
+      "rule": "By clicking the \"Register\" button, I agree to JOBSIT's Terms of Use and Privacy Policy",
+      "or_register_by": "Or register by",
+      "have_account_before": "Have account before?"
     },
     "account": {
       "title": "Account",
@@ -45,12 +55,19 @@
       "no_data": "No data"
     }
   },
-   "notification": {
+  "notification": {
     "login": {
       "login_successful": "Login successful!",
       "login_failed": "Login failed! Please try again!"
     },
-    "job":{
+    "register": {
+      "register_successful": "Register successful!",
+      "register_failed": "Register failed! Please try again!"
+    },
+    "account": {
+      "logout": "You are log out!"
+    },
+    "job": {
       "no_job_to_show": "Can not find any job!"
     }
   },
@@ -59,7 +76,8 @@
     "no_internet": "Can not connect internet!",
     "auth": {
       "account_not_found": "Can not find account!",
-      "incorrect_password": "Incorrect password!"
+      "incorrect_password": "Incorrect password!",
+      "account_not_active": "Account is not active! Please active account before login!"
     }
   }
 }

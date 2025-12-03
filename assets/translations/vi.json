@@ -23,7 +23,17 @@
       "dont_have_account": "Bạn chưa có tài khoản?"
     },
     "register": {
-      "title": "Đăng ký"
+      "title": "Đăng ký",
+      "create_new_account": "Tạo tài khoản mới",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "confirm_password": "Xác nhận mật khẩu",
+      "first_name": "Họ và tên lót",
+      "last_name": "Tên",
+      "phone": "Số điện thoại",
+      "rule": "Bằng việc ấn vào nút \"Đăng ký\", tôi đồng ý với Thoả thuận sử dụng và Quy định bảo mật của JOBSIT",
+      "or_register_by": "Hoặc đăng ký với",
+      "have_account_before": "Bạn đã có tài khoản?"
     },
     "account": {
       "title": "Tài khoản",
@@ -50,6 +60,10 @@
       "login_successful": "Đăng nhập thành công!",
       "login_failed": "Đăng nhập thất bại! Vui lòng thử lại!"
     },
+    "register": {
+      "register_successful": "Đăng ký tài khoản thành công!",
+      "register_failed": "Đăng ký thất bại! Vui lòng thử lại!"
+    },
     "account": {
       "logout": "Bạn đã đăng xuất!"
     },
@@ -62,7 +76,8 @@
     "no_internet": "Không có kết nối mạng!",
     "auth": {
       "account_not_found": "Tài khoản không tồn tại!",
-      "incorrect_password": "Sai mật khẩu!"
+      "incorrect_password": "Sai mật khẩu!",
+      "account_not_active": "Tài khoản chưa được kích hoạt! Vui lòng kích hoạt tài khoản trước khi đăng nhập!"
     }
   }
 }

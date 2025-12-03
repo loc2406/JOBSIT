@@ -19,11 +19,12 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, Map<String, dynamic>>> login(
       {required String email, required String password}) async {
     try {
-      final responseData = await dataSource.login(email: email, password: password);
+      final responseData =
+          await dataSource.login(email: email, password: password);
 
       final result = {
         'token': responseData['token'],
-        'data': responseData['data'] 
+        'data': responseData['data']
       };
 
       return Right(result);
@@ -31,7 +32,10 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(failure);
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
-      final serverMess = e.response?.data['message'] ?? "Lỗi máy chủ";
+      final serverMess = (e.response?.data is Map<String, dynamic> &&
+              e.response?.data['detail'] != null)
+          ? e.response?.data['detail']
+          : "Đã có lỗi xảy ra!";
 
       if (e.type == DioExceptionType.badResponse) {
         AppLogger.i('API Error: $statusCode === $serverMess');
@@ -42,6 +46,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
         if (statusCode == 401) {
           return Left(IncorrectPasswordFailure());
+        }
+
+        if (statusCode == 403) {
+          return Left(AccountNotActiveFailure());
         }
       }
 

@@ -178,12 +178,8 @@ def login(data: LoginRequest): # Thêm tham số response để set HTTP status
 
     is_password_correct = False
 
-    print(f"Pass gửi lên:  '{data.password}' (Độ dài: {len(data.password)})")
-    print(f"Hash trong DB: '{candidate['password']}'")
-
     try:
         is_password_correct = verify_password(data.password, candidate["password"])
-        print(f"Kết quả verify_password: {is_password_correct}")
     except Exception as e:
         print(f"Lỗi thư viện mã hóa: {str(e)}")
         raise HTTPException(
@@ -195,6 +191,12 @@ def login(data: LoginRequest): # Thêm tham số response để set HTTP status
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Mật khẩu không chính xác!"
+        )
+    
+    if candidate.get("isActive") is False:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Tài khoản chưa được kích hoạt. Vui lòng kiểm tra email!"
         )
 
     # 3. Thành công
