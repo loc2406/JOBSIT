@@ -40,7 +40,6 @@ class Candidate(BaseModel):
     searchable: bool = False
     university: Optional[University] = None
     cv: Optional[str] = None
-    # Dùng List[Dict] vì trong Flutter là List<Map<String, dynamic>>
     positionDTOs: Optional[List[Dict[str, Any]]] = [] 
     majorDTOs: Optional[List[Dict[str, Any]]] = []
     scheduleDTOs: Optional[List[Dict[str, Any]]] = []
