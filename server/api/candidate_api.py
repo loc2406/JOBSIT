@@ -9,6 +9,9 @@ from jose import jwt
 
 from server.core.security import get_password_hash, verify_password
 from server.db.database import candidate_collection, candidate_helper
+from dotenv import load_dotenv
+
+load_dotenv()
 
 router = APIRouter()
 
@@ -17,9 +20,9 @@ router = APIRouter()
 # ==========================================
 
 # --- CẤU HÌNH TOKEN ---
-SECRET_KEY = "0691e8f1cdc9001f3b200fd7628480ac000169dfaa61d9b2e46ac3780405c53d"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
 
 class University(BaseModel):
     id: int
@@ -28,11 +31,10 @@ class University(BaseModel):
 class Candidate(BaseModel):
     id: int
     email: str
-    password: str
     firstName: str
     lastName: str
     isMale: bool = False
-    birthDay: Optional[str] = None
+    birthdate: Optional[str] = None
     phone: str
     avatar: Optional[str] = None
     location: Optional[str] = None
@@ -68,8 +70,6 @@ class LoginRequest(BaseModel):
     password: str
 
 class RegisterRequest(BaseModel):
-    # 1. EMAIL
-    # Validate: Min 6, Max 256, Regex Email chuẩn
     email: str = Field(
         ..., 
         min_length=6, 
@@ -78,21 +78,12 @@ class RegisterRequest(BaseModel):
         description="Email người dùng"
     )
 
-    # 2. PASSWORD
-    # Validate: Min 6, Max 32. Logic phức tạp (UpperCase, Number) sẽ dùng validator riêng
     password: str = Field(..., min_length=6, max_length=32)
 
-    # 3. FIRST NAME
-    # Validate: Min 2, Max 32
     firstName: str = Field(..., min_length=2, max_length=32)
 
-    # 4. LAST NAME
-    # Validate: Min 2, Max 32
     lastName: str = Field(..., min_length=2, max_length=32)
 
-    # 5. PHONE
-    # Validate: Min 8, Max 13, Regex VN Phone
-    # Regex: Bắt đầu bằng 84 hoặc 03,05,07,08,09. Sau đó là 6-11 số.
     phone: str = Field(
         ..., 
         min_length=8, 
@@ -141,7 +132,6 @@ def create_access_token(data: dict, expires_delta: timedelta):
 def get_candidate_detail(candidate_id: int):
     candidate = candidate_collection.find_one({"id": candidate_id})
     
-    # 3. Nếu không tìm thấy -> Trả về lỗi 404
     if not candidate:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 

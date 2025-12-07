@@ -1,8 +1,11 @@
 # server/db/database.py
 from pymongo import MongoClient
 import os
+from dotenv import load_dotenv
 
-MONGO_URI = "mongodb+srv://loc24062003:Nguyen24062003..@cluster0.hmir5fn.mongodb.net/?appName=Cluster0"
+load_dotenv()
+
+MONGO_URI = os.getenv("MONGO_URI")
 
 client = MongoClient(MONGO_URI)
 
@@ -14,7 +17,6 @@ def candidate_helper(candidate) -> dict:
     return {
         "id": candidate["id"],
         "email": candidate["email"],
-        "password": candidate["password"],
         "firstName": candidate["firstName"],
         "lastName": candidate["lastName"],
         "isMale": candidate.get("isMale", False),
@@ -22,9 +24,9 @@ def candidate_helper(candidate) -> dict:
         "phone": candidate["phone"],
         "avatar": candidate["avatar"],
         "location": candidate["location"],
-        "mailReceive": candidate["mailReceive"],
-        "searchable": candidate.get("mailReceive", False),
+        "mailReceive": candidate.get("mailReceive", False),
         "searchable": candidate.get("searchable", True),
+        "university": candidate["university"],
         "cv": candidate["cv"],
         "positionDTOs": candidate["positionDTOs"],
         "majorDTOs": candidate["majorDTOs"],

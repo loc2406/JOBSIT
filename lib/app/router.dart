@@ -48,7 +48,7 @@ class AppRouter {
         path: editCandidatePath,
         name: editCandidateName,
         builder: (context, state) {
-          final candidateId = state.pathParameters['id'];
+          final candidateId = state.pathParameters['id']!;
           return EditAccountScreen(candidateId: candidateId);
         },
       );
