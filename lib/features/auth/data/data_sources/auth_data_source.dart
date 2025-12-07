@@ -52,9 +52,10 @@ class AuthDataSourceImpl extends AuthDataSource {
         throw AccountNotActiveException();
       }
 
-      throw ServerException(serverMess.toString());
+      throw ServerException(_defaultErr);
     } catch (e) {
-      throw ServerException(e.toString());
+      AppLogger.e('API Login Candidate Error: $e');
+      throw ServerException(_defaultErr);
     }
   }
 
@@ -88,9 +89,10 @@ class AuthDataSourceImpl extends AuthDataSource {
         }
       }
 
-      throw ServerException(serverMess.toString());
+      throw ServerException(_defaultErr);
     } catch (e) {
-      throw ServerException(e.toString());
+      AppLogger.e('API Resgister Candidate Error: $e');
+      throw ServerException(_defaultErr);
     }
   }
 }
