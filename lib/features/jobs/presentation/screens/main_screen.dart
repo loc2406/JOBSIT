@@ -5,13 +5,13 @@ import 'package:go_router/go_router.dart';
 import 'package:jobsit_mobile/app/router.dart';
 import 'package:jobsit_mobile/app/theme.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
-import 'package:jobsit_mobile/features/applied_jobs/screens/applied_job_screen.dart';
+import 'package:jobsit_mobile/features/applied_jobs/presentation/screens/applied_job_screen.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
-import 'package:jobsit_mobile/features/jobs/screens/jobs_screen.dart';
-import 'package:jobsit_mobile/features/saved_jobs/screens/saved_job_screen.dart';
+import 'package:jobsit_mobile/features/jobs/presentation/screens/jobs_screen.dart';
+import 'package:jobsit_mobile/features/saved_jobs/presentation/screens/saved_job_screen.dart';
 import 'package:jobsit_mobile/shared/widgets/bottom_nav_item.dart';
 
-import '../../auth/presentation/screens/account_screen.dart';
+import '../../../auth/presentation/screens/account_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

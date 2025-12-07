@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_debouncer/flutter_debouncer.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
-import 'package:jobsit_mobile/features/jobs/cubit/job_cubit.dart';
-import 'package:jobsit_mobile/features/jobs/cubit/job_state.dart';
-import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_state.dart';
+import 'package:jobsit_mobile/features/jobs/presentation/cubit/job_cubit.dart';
+import 'package:jobsit_mobile/features/jobs/presentation/cubit/job_state.dart';
+import 'package:jobsit_mobile/features/saved_jobs/presentation/cubit/saved_job_state.dart';
 import 'package:jobsit_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
 import 'package:jobsit_mobile/core/constants/convert_constants.dart';
@@ -16,10 +16,10 @@ import 'package:jobsit_mobile/shared/widgets/filter_bottom_sheet.dart';
 import 'package:jobsit_mobile/shared/widgets/job_item.dart';
 import 'package:jobsit_mobile/shared/widgets/number_paginator.dart';
 
-import '../../auth/presentation/cubit/candidate_cubit.dart';
-import '../../saved_jobs/cubit/saved_job_cubit.dart';
-import '../../../data/models/job.dart';
-import '../../../core/constants/asset_constants.dart';
+import '../../../auth/presentation/cubit/candidate_cubit.dart';
+import '../../../saved_jobs/presentation/cubit/saved_job_cubit.dart';
+import '../../../../data/models/job.dart';
+import '../../../../core/constants/asset_constants.dart';
 
 class JobsScreen extends StatefulWidget {
   const JobsScreen({super.key});

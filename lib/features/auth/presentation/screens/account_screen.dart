@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jobsit_mobile/features/applied_jobs/cubit/applied_job_cubit.dart';
+import 'package:jobsit_mobile/features/applied_jobs/presentation/cubit/applied_job_cubit.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
-import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_cubit.dart';
+import 'package:jobsit_mobile/features/saved_jobs/presentation/cubit/saved_job_cubit.dart';
 import 'package:jobsit_mobile/features/auth/presentation/screens/edit_account_screen.dart';
 import 'package:jobsit_mobile/features/auth/presentation/screens/login_screen.dart';
 import 'package:jobsit_mobile/core/services/candidate_services.dart';
@@ -69,13 +69,14 @@ class _AccountScreenState extends State<AccountScreen> {
             _onReceiveEmail = state.candidate.mailReceive;
             return _buildProfile();
           } else {
-            return const SizedBox();
+            return _buildNoLoggedInWidget();
           }
         },
+        listenWhen: (previous, current) {
+          return previous is AuthLoadingState && current is AuthNoLoggedInState;
+        },
         listener: (context, state) {
-          if (state is AuthLogoutState) {
-            context.showNotification('notification.account.logout'.tr());
-          }
+          context.showNotification('notification.account.logout'.tr());
         },
       ),
     );
@@ -297,9 +298,9 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             GestureDetector(
               child: Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: ValueConstants.deviceHeightValue(uiValue: 16),
-                    horizontal: ValueConstants.deviceWidthValue(uiValue: 20)),
+                alignment: Alignment.center,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: ColorConstants.main,
@@ -309,15 +310,14 @@ class _AccountScreenState extends State<AccountScreen> {
                   'screen.account.logout'.tr(),
                   style: _theme.textTheme.displayMedium?.copyWith(
                       color: Colors.white, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
                 ),
               ),
               onTap: () async {
+                debugPrint('ON TAP');
+                context.read<SavedJobCubit>().clearAllSavedJobs();
+                context.read<AppliedJobCubit>().clearAllAppliedJobs();
+
                 await _cubit.logout(_token);
-                if (mounted) {
-                  context.read<SavedJobCubit>().clearAllSavedJobs();
-                  context.read<AppliedJobCubit>().clearAllAppliedJobs();
-                }
               },
             ),
             SizedBox(

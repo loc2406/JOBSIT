@@ -1,4 +1,4 @@
-import '../../../data/models/job.dart';
+import '../../../../data/models/job.dart';
 
 class AppliedJobState {
   const AppliedJobState();

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_cubit.dart';
-import 'package:jobsit_mobile/features/jobs/screens/job_detail_screen.dart';
+import 'package:jobsit_mobile/features/saved_jobs/presentation/cubit/saved_job_cubit.dart';
+import 'package:jobsit_mobile/features/jobs/presentation/screens/job_detail_screen.dart';
 import 'package:jobsit_mobile/core/services/job_services.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
-import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_state.dart';
+import 'package:jobsit_mobile/features/saved_jobs/presentation/cubit/saved_job_state.dart';
 
 import '../../data/models/job.dart';
 import '../../core/constants/value_constants.dart';

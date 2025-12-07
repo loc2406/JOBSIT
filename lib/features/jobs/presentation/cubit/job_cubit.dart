@@ -3,9 +3,9 @@ import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
 import 'package:jobsit_mobile/data/models/province.dart';
 
-import '../../../data/models/job.dart';
-import '../../../core/services/job_services.dart';
-import '../../../core/services/province_services.dart';
+import '../../../../data/models/job.dart';
+import '../../../../core/services/job_services.dart';
+import '../../../../core/services/province_services.dart';
 import 'job_state.dart';
 
 class JobCubit extends Cubit<JobState> {

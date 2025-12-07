@@ -29,31 +29,18 @@ class AppTheme {
       ),
     ),
     textTheme: const TextTheme(
-      displayLarge: TextStyle(
-        color: primaryColor,
-        fontSize: 20
-      ),
-      displayMedium: TextStyle(
-        color: primaryColor,
-        fontSize: 16
-      ),
-      displaySmall: TextStyle(
-        color: primaryColor,
-        fontSize: 14
-      ),
-      labelLarge: TextStyle(
-        color: primaryColor,
-        fontSize: 13
-      ),
-      labelMedium: TextStyle(
-        color: primaryColor,
-        fontSize: 12
-      ),
-      labelSmall: TextStyle(
-        color: primaryColor,
-        fontSize: 11
-      )
-    ),
+        titleLarge: TextStyle(
+            color: primaryColor, fontSize: 26, fontWeight: FontWeight.bold),
+        titleMedium: TextStyle(
+            color: primaryColor, fontSize: 24, fontWeight: FontWeight.bold),
+        titleSmall: TextStyle(
+            color: primaryColor, fontSize: 22, fontWeight: FontWeight.bold),
+        displayLarge: TextStyle(color: primaryColor, fontSize: 20),
+        displayMedium: TextStyle(color: primaryColor, fontSize: 16),
+        displaySmall: TextStyle(color: primaryColor, fontSize: 14),
+        labelLarge: TextStyle(color: primaryColor, fontSize: 13),
+        labelMedium: TextStyle(color: primaryColor, fontSize: 12),
+        labelSmall: TextStyle(color: primaryColor, fontSize: 11)),
     inputDecorationTheme: InputDecorationTheme(
       isDense: true, // Giảm khoảng cách từ nội dung đến viền top và bottom
       filled: true,

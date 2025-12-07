@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jobsit_mobile/app/router.dart';
 import 'package:jobsit_mobile/app/theme.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
-import 'package:jobsit_mobile/features/jobs/cubit/job_cubit.dart';
-import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_cubit.dart';
+import 'package:jobsit_mobile/features/jobs/presentation/cubit/job_cubit.dart';
+import 'package:jobsit_mobile/features/saved_jobs/presentation/cubit/saved_job_cubit.dart';
 import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
 import 'package:jobsit_mobile/injection_container.dart';
 
-import 'features/applied_jobs/cubit/applied_job_cubit.dart';
+import 'features/applied_jobs/presentation/cubit/applied_job_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

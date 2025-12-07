@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
-import 'package:jobsit_mobile/features/saved_jobs/cubit/saved_job_state.dart';
+import 'package:jobsit_mobile/features/saved_jobs/presentation/cubit/saved_job_state.dart';
 
 import '../cubit/saved_job_cubit.dart';
-import '../../../data/models/job.dart';
-import '../../../core/constants/text_constants.dart';
-import '../../../core/constants/value_constants.dart';
-import '../../../core/constants/widget_constants.dart';
-import '../../../shared/widgets/job_item.dart';
+import '../../../../data/models/job.dart';
+import '../../../../core/constants/text_constants.dart';
+import '../../../../core/constants/value_constants.dart';
+import '../../../../core/constants/widget_constants.dart';
+import '../../../../shared/widgets/job_item.dart';
 
 class SavedJobScreen extends StatefulWidget {
   const SavedJobScreen({super.key});

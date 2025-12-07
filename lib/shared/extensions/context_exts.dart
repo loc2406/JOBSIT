@@ -6,6 +6,7 @@ extension UIHelperExtension on BuildContext {
   void showNotification(String message, {bool isError = false}) {
     showTopSnackBar(
         Overlay.of(this),
+        displayDuration: const Duration(seconds: 2),
         isError
             ? CustomSnackBar.error(message: message)
             : CustomSnackBar.success(message: message));

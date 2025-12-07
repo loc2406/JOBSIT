@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jobsit_mobile/features/applied_jobs/cubit/applied_job_cubit.dart';
+import 'package:jobsit_mobile/features/applied_jobs/presentation/cubit/applied_job_cubit.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
@@ -11,7 +11,7 @@ import 'package:jobsit_mobile/core/constants/widget_constants.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
 import 'package:path/path.dart' as path;
 
-import '../../features/jobs/screens/cv_viewer_screen.dart';
+import '../../features/jobs/presentation/screens/cv_viewer_screen.dart';
 
 class ApplyBottomSheet extends StatefulWidget {
   const ApplyBottomSheet({super.key, required this.jobId});

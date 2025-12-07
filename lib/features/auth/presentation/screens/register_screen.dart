@@ -6,14 +6,11 @@ import 'package:go_router/go_router.dart';
 import 'package:jobsit_mobile/core/constants/asset_constants.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/auth/presentation/screens/active_account_screen.dart';
-import 'package:jobsit_mobile/core/constants/convert_constants.dart';
 import 'package:jobsit_mobile/shared/extensions/context_exts.dart';
 
 import '../cubit/candidate_state.dart';
 import '../../../../core/constants/color_constants.dart';
-import '../../../../core/constants/text_constants.dart';
 import '../../../../core/constants/validate_constants.dart';
-import '../../../../core/constants/value_constants.dart';
 import '../../../../core/constants/widget_constants.dart';
 import '../../../../shared/widgets/input_field.dart';
 
@@ -167,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   }, listener: (context, state) {
                     if (state is AuthRegisterSuccessState) {
                       context.showNotification(
-                          'notification.register.register.successful'.tr());
+                          'notification.register.register_successful'.tr());
 
                       Navigator.pushReplacement(
                         context,

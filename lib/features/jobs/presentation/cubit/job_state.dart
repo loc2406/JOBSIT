@@ -1,6 +1,6 @@
 import 'package:jobsit_mobile/data/models/province.dart';
 
-import '../../../data/models/job.dart';
+import '../../../../data/models/job.dart';
 
 class JobState {
   const JobState();

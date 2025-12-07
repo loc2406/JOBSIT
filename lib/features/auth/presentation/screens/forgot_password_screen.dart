@@ -125,7 +125,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 label: TextConstants.email,
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                validateMethod: ValidateConstants.validateEmail,
+                validateMethod: (email) async => ValidateConstants.validateEmailRegister(email),
               )),
 
               const SizedBox(height: 20),
@@ -169,7 +169,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   Future<void> handleBtnForgotPasswordClicked() async {
      // Nếu đang xử lý, không cho bấm tiếp
-    final error = await ValidateConstants.validateEmail(_emailController.text);
+    final error = ValidateConstants.validateEmailRegister(_emailController.text);
     if (((_formKey.currentState as FormState).validate())
         && (error  == null)
     ) {

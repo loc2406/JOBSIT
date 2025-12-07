@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/models/job.dart';
-import '../../../core/services/job_services.dart';
-import '../../../core/constants/convert_constants.dart';
-import '../../../core/error/job/job_failures.dart';
-import '../../../core/constants/text_constants.dart';
+import '../../../../data/models/job.dart';
+import '../../../../core/services/job_services.dart';
+import '../../../../core/constants/convert_constants.dart';
+import '../../../../core/error/job/job_failures.dart';
+import '../../../../core/constants/text_constants.dart';
 import 'applied_job_state.dart';
 
 class AppliedJobCubit extends Cubit<AppliedJobState> {
