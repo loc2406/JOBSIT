@@ -152,10 +152,9 @@ def get_candidate_detail(candidate_id: int):
     return candidate_helper(candidate)
 
 @router.post("/auth/login", response_model=LoginResponse)
-def login(data: LoginRequest): # Thêm tham số response để set HTTP status
+def login(data: LoginRequest):
     candidate = candidate_collection.find_one({"email": data.email})
 
-    # 1. Check User tồn tại
     if not candidate:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
@@ -185,7 +184,6 @@ def login(data: LoginRequest): # Thêm tham số response để set HTTP status
             detail="Tài khoản chưa được kích hoạt. Vui lòng kiểm tra email!"
         )
 
-    # 3. Thành công
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": candidate["email"], "id": candidate["id"]},

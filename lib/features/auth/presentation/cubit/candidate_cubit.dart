@@ -35,15 +35,8 @@ class CandidateCubit extends Cubit<CandidateState> {
     result.fold(
       (failure) => emit(CandidateState.error(failure.message)),
       (result) async {
-        final String? token = result['token'];
-        final Candidate? candidate = result['data'] != null
-            ? CandidateModel.fromJson(result['data'])
-            : null;
-
-        if (token == null || token.isEmpty == true || candidate == null) {
-          emit(AuthErrorState(UnknownFailure().message));
-          return;
-        }
+        final String token = result.token;
+        final Candidate candidate = result.data;
 
         final tokenRemaining = JwtDecoder.getRemainingTime(token);
 

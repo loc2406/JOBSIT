@@ -3,12 +3,13 @@ import 'package:injectable/injectable.dart';
 import 'package:jobsit_mobile/core/error/auth/auth_exceptions.dart';
 import 'package:jobsit_mobile/core/network/dio_client.dart';
 import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
+import 'package:jobsit_mobile/features/auth/data/models/login_request_model.dart';
+import 'package:jobsit_mobile/features/auth/data/models/login_response_model.dart';
 import 'package:jobsit_mobile/features/auth/data/models/register_request_model.dart';
 import 'package:jobsit_mobile/features/auth/data/models/register_response_model.dart';
 
 abstract class AuthDataSource {
-  Future<Map<String, dynamic>> login(
-      {required String email, required String password});
+  Future<LoginResponseModel> login({required LoginRequestModel request});
 
   Future<RegisterResponseModel> register(
       {required RegisterRequestModel request});
@@ -16,23 +17,20 @@ abstract class AuthDataSource {
 
 @LazySingleton(as: AuthDataSource)
 class AuthDataSourceImpl extends AuthDataSource {
-  final DioClient dio;
+  final DioClient _dio;
+  final String _defaultErr = "Đã có lỗi xảy ra!";
 
-  AuthDataSourceImpl(this.dio);
+  AuthDataSourceImpl(this._dio);
 
   @override
-  Future<Map<String, dynamic>> login(
-      {required String email, required String password}) async {
+  Future<LoginResponseModel> login({required LoginRequestModel request}) async {
     try {
-      final response = await dio.post(
+      final response = await _dio.post(
         '/auth/login',
-        data: {
-          'email': email,
-          'password': password,
-        },
+        data: request.toJson(),
       );
 
-      return response.data;
+      return LoginResponseModel.fromJson(response.data);
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
       final serverMess = (e.response?.data is Map<String, dynamic> &&
@@ -64,7 +62,7 @@ class AuthDataSourceImpl extends AuthDataSource {
   Future<RegisterResponseModel> register(
       {required RegisterRequestModel request}) async {
     try {
-      final response = await dio.post(
+      final response = await _dio.post(
         '/auth/register',
         data: request.toJson(),
       );
@@ -73,7 +71,7 @@ class AuthDataSourceImpl extends AuthDataSource {
     } on DioException catch (e) {
       final statusCode = e.response?.statusCode;
       final data = e.response?.data;
-      final serverMess = data?['detail'] ?? "Đã có lỗi xảy ra!";
+      final serverMess = data?['detail'] ?? _defaultErr;
 
       AppLogger.e('API Error: $statusCode === $serverMess');
 
@@ -84,7 +82,8 @@ class AuthDataSourceImpl extends AuthDataSource {
       if (statusCode == 409 && serverMess is String) {
         if (serverMess.compareTo("Email này đã được sử dụng!") == 0) {
           throw EmailIsUsedException();
-        }else if (serverMess.compareTo("Số điện thoại này đã được sử dụng!") == 0) {
+        } else if (serverMess.compareTo("Số điện thoại này đã được sử dụng!") ==
+            0) {
           throw PhoneIsUsedException();
         }
       }
