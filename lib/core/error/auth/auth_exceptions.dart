@@ -20,3 +20,7 @@ class InvalidInfoException implements Exception {}
 class EmailIsUsedException implements Exception {}
 
 class PhoneIsUsedException implements Exception {}
+
+// GET DETAIL
+
+class CandidateNotFoundException implements Exception{}

@@ -4,6 +4,8 @@ import 'package:jobsit_mobile/core/error/auth/auth_exceptions.dart';
 import 'package:jobsit_mobile/core/error/auth/auth_failures.dart';
 import 'package:jobsit_mobile/core/error/network/network_failures.dart';
 import 'package:jobsit_mobile/features/auth/data/data_sources/auth_data_source.dart';
+import 'package:jobsit_mobile/features/auth/data/models/candidate_model.dart';
+import 'package:jobsit_mobile/features/auth/data/models/get_candidate_detail_request_model.dart';
 import 'package:jobsit_mobile/features/auth/data/models/login_request_model.dart';
 import 'package:jobsit_mobile/features/auth/data/models/login_response_model.dart';
 import 'package:jobsit_mobile/features/auth/data/models/register_request_model.dart';
@@ -67,6 +69,26 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(EmailIsUsedFailure());
     } on PhoneIsUsedException {
       return Left(PhoneIsUsedFailure());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, CandidateModel>> getDetail({required int candidateId}) async {
+    try {
+      final request = GetCandidateDetailRequestModel(
+          candidateId: candidateId);
+
+      final responseModel = await dataSource.getDetail(request: request);
+
+      return Right(responseModel);
+    } on Failure catch (failure) {
+      return Left(failure);
+    } on CandidateNotFoundException {
+      return Left(CandidateNotFoundFailure());
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } catch (e) {

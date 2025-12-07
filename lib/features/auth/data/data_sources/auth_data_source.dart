@@ -3,6 +3,8 @@ import 'package:injectable/injectable.dart';
 import 'package:jobsit_mobile/core/error/auth/auth_exceptions.dart';
 import 'package:jobsit_mobile/core/network/dio_client.dart';
 import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
+import 'package:jobsit_mobile/features/auth/data/models/candidate_model.dart';
+import 'package:jobsit_mobile/features/auth/data/models/get_candidate_detail_request_model.dart';
 import 'package:jobsit_mobile/features/auth/data/models/login_request_model.dart';
 import 'package:jobsit_mobile/features/auth/data/models/login_response_model.dart';
 import 'package:jobsit_mobile/features/auth/data/models/register_request_model.dart';
@@ -13,10 +15,17 @@ abstract class AuthDataSource {
 
   Future<RegisterResponseModel> register(
       {required RegisterRequestModel request});
+
+  Future<CandidateModel> getDetail(
+      {required GetCandidateDetailRequestModel request});
 }
 
 @LazySingleton(as: AuthDataSource)
 class AuthDataSourceImpl extends AuthDataSource {
+  final _loginApi = '/auth/login';
+  final _registerApi = '/auth/register';
+  final _getDetail = '/candidates/';
+
   final DioClient _dio;
   final String _defaultErr = "Đã có lỗi xảy ra!";
 
@@ -26,7 +35,7 @@ class AuthDataSourceImpl extends AuthDataSource {
   Future<LoginResponseModel> login({required LoginRequestModel request}) async {
     try {
       final response = await _dio.post(
-        '/auth/login',
+        _loginApi,
         data: request.toJson(),
       );
 
@@ -64,7 +73,7 @@ class AuthDataSourceImpl extends AuthDataSource {
       {required RegisterRequestModel request}) async {
     try {
       final response = await _dio.post(
-        '/auth/register',
+        _registerApi,
         data: request.toJson(),
       );
 
@@ -92,6 +101,32 @@ class AuthDataSourceImpl extends AuthDataSource {
       throw ServerException(_defaultErr);
     } catch (e) {
       AppLogger.e('API Resgister Candidate Error: $e');
+      throw ServerException(_defaultErr);
+    }
+  }
+  
+  @override
+  Future<CandidateModel> getDetail({required GetCandidateDetailRequestModel request}) async {
+    try {
+      final response = await _dio.get(
+        '$_getDetail${request.candidateId}',
+      );
+
+      return CandidateModel.fromJson(response.data);
+    } on DioException catch (e) {
+      final statusCode = e.response?.statusCode;
+      final data = e.response?.data;
+      final serverMess = data?['detail'] ?? _defaultErr;
+
+      AppLogger.e('API Error: $statusCode === $serverMess');
+
+      if (statusCode == 404) {
+        throw CandidateNotFoundException();
+      }
+
+      throw ServerException(_defaultErr);
+    } catch (e) {
+      AppLogger.e('API Get Detail Candidate Error: $e');
       throw ServerException(_defaultErr);
     }
   }

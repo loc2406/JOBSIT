@@ -2,12 +2,12 @@ from datetime import datetime, timedelta
 import json
 import os
 import re
-from fastapi import APIRouter, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from pydantic import BaseModel, Field, field_validator
 from typing import List, Optional, Dict, Any
 from jose import jwt
 
-from server.core.security import get_password_hash, verify_password
+from server.core.security import get_current_user, get_password_hash, verify_password
 from server.db.database import candidate_collection, candidate_helper
 from dotenv import load_dotenv
 
@@ -128,9 +128,12 @@ def create_access_token(data: dict, expires_delta: timedelta):
 # CÁC API ENDPOINTS
 # ==========================================
 
-@router.get("/candidates/{candidate_id}", response_model=Candidate)
-def get_candidate_detail(candidate_id: int):
-    candidate = candidate_collection.find_one({"id": candidate_id})
+@router.get("/candidates/{candidateId}", response_model=Candidate)
+def get_candidate_detail(candidateId: int, current_user: dict = Depends(get_current_user)):
+    if current_user["id"] != candidateId:
+        raise HTTPException(status_code=403, detail="Bạn không có quyền xem hồ sơ người khác")
+    
+    candidate = candidate_collection.find_one({"id": candidateId})
     
     if not candidate:
         raise HTTPException(

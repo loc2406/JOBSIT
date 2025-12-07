@@ -7,6 +7,7 @@ import 'package:jobsit_mobile/core/error/failures.dart';
 import 'package:jobsit_mobile/core/utils/logger/app_logger.dart';
 import 'package:jobsit_mobile/data/datasources/auth_storage.dart';
 import 'package:jobsit_mobile/features/auth/data/models/candidate_model.dart';
+import 'package:jobsit_mobile/features/auth/domain/use_cases/get_detail_use_case.dart';
 import 'package:jobsit_mobile/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:jobsit_mobile/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
@@ -24,8 +25,9 @@ import '../../../../core/services/province_services.dart';
 class CandidateCubit extends Cubit<CandidateState> {
   final LoginUseCase loginUseCase;
   final RegisterUseCase registerUseCase;
+  final GetDetailUseCase getDetailUseCase;
 
-  CandidateCubit({required this.loginUseCase, required this.registerUseCase})
+  CandidateCubit({required this.loginUseCase, required this.registerUseCase, required this.getDetailUseCase})
       : super(CandidateState.noLoggedIn());
 
   Future<void> login({required String email, required String password}) async {
@@ -84,6 +86,20 @@ class CandidateCubit extends Cubit<CandidateState> {
       (result) async {
         emit(CandidateState.registerSuccess(result.email));
         await sendActiveEmail(email);
+      },
+    );
+  }
+
+  Future<void> getDetail({required int candidateId}) async {
+    emit(CandidateState.loading());
+
+    final result = await getDetailUseCase.call(
+        candidateId: candidateId);
+
+    result.fold(
+      (failure) => emit(CandidateState.error(failure.message)),
+      (result) async {
+        emit(CandidateState.getDetailSuccess(result));
       },
     );
   }

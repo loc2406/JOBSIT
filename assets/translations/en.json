@@ -81,7 +81,8 @@
       "account_not_active": "Account is not active! Please active account before login!",
       "invalid_info": "Register info is invalid!",
       "email_is_used": "Email is already used!",
-      "phone_is_used": "Phone is already used!"
+      "phone_is_used": "Phone is already used!",
+      "candidate_not_found": "Candidate information not found!"
     }
   }
 }

@@ -58,6 +58,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   }
 
   Future<void> _loadInitialData() async {
+    await _cubit.getDetail(candidateId: _candidateId);
     await _getProvinces();
     await _getUniversities();
   }
@@ -86,10 +87,6 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isSetData) {
-      final candidateInfo =
-          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      _candidate = candidateInfo[TextConstants.candidate];
-      _token = candidateInfo[TextConstants.token];
       _loadInitialData().whenComplete(() => _setCandidateData());
       _isSetData = true;
     }

@@ -28,3 +28,9 @@ class EmailIsUsedFailure extends Failure {
 class PhoneIsUsedFailure extends Failure {
   PhoneIsUsedFailure() : super('error.auth.phone_is_used'.tr());
 }
+
+// GET DETAIL
+
+class CandidateNotFoundFailure extends Failure {
+  CandidateNotFoundFailure() : super('error.auth.candidate_not_found'.tr());
+}
