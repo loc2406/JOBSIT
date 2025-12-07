@@ -52,7 +52,8 @@
       "reference_letter": "Reference letter",
       "change_password": "Change password",
       "logout": "Logout",
-      "no_data": "No data"
+      "no_data": "No data",
+      "no_logged_in": "You are no logged in!"
     }
   },
   "notification": {

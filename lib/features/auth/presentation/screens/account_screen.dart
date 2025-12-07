@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:jobsit_mobile/app/router.dart';
 import 'package:jobsit_mobile/features/applied_jobs/presentation/cubit/applied_job_cubit.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_state.dart';
@@ -11,7 +14,6 @@ import 'package:jobsit_mobile/features/auth/presentation/screens/login_screen.da
 import 'package:jobsit_mobile/core/services/candidate_services.dart';
 import 'package:jobsit_mobile/core/constants/asset_constants.dart';
 import 'package:jobsit_mobile/core/constants/color_constants.dart';
-import 'package:jobsit_mobile/data/datasources/shared_prefs.dart';
 import 'package:jobsit_mobile/core/constants/text_constants.dart';
 import 'package:jobsit_mobile/core/constants/value_constants.dart';
 import 'package:jobsit_mobile/core/constants/widget_constants.dart';
@@ -83,56 +85,53 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Widget _buildNoLoggedInWidget() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(
-          width: double.infinity,
-          child: Text(
-            TextConstants.dontLoggedIn,
-            style: WidgetConstants.blackBold16Style,
-            textAlign: TextAlign.center,
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'screen.account.no_logged_in'.tr(),
+            style: _theme.textTheme.displayMedium
+                ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
           ),
-        ),
-        SizedBox(
-          height: ValueConstants.deviceHeightValue(uiValue: 10),
-        ),
-        GestureDetector(
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: ColorConstants.main),
-            child: const Text(
-              TextConstants.login,
-              style: WidgetConstants.whiteBold16Style,
-              textAlign: TextAlign.center,
+          SizedBox(
+            height: 15.h,
+          ),
+          GestureDetector(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.r),
+                  color: _theme.primaryColor),
+              child: Text(
+                'screen.login.title'.tr(),
+                style: _theme.textTheme.displayMedium?.copyWith(
+                    color: Colors.white, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()));
-          },
-        )
-      ],
+            onTap: () {
+              context.pushNamed(AppRouter.loginName);
+            },
+          )
+        ],
+      ),
     );
   }
 
   Widget _buildProfile() {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: ValueConstants.deviceWidthValue(uiValue: 25),
+        horizontal: 25.w,
       ),
       child: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 15),
+              height: 15.h,
             ),
             Container(
-              width: ValueConstants.screenWidth * 0.25,
-              height: ValueConstants.screenWidth * 0.25,
+              width: context.screenWidth() * 0.25,
+              height: context.screenWidth() * 0.25,
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.circle,
@@ -143,8 +142,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     ? Image.network(
                         CandidateServices.getCandidateAvatarLink(
                             _candidate.avatar!),
-                        width: ValueConstants.screenWidth * 0.25,
-                        height: ValueConstants.screenWidth * 0.25,
+                        width: context.screenWidth() * 0.25,
+                        height: context.screenWidth() * 0.25,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) =>
+                            CircularProgressIndicator(
+                          color: _theme.primaryColor,
+                        ),
                         errorBuilder: (context, object, stacktrace) =>
                             _buildDefaultCandidateAvatar(),
                       )
@@ -152,7 +156,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 15),
+              height: 15.h,
             ),
             Text(
               '${_candidate.firstName} ${_candidate.lastName}',
@@ -160,10 +164,10 @@ class _AccountScreenState extends State<AccountScreen> {
                   ?.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 15),
+              height: 15.h,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
@@ -179,14 +183,14 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: ValueConstants.deviceHeightValue(uiValue: 5),
+                      height: 5.h,
                     ),
                     Text(
                       'screen.account.applied'.tr(),
                       style: _theme.textTheme.labelSmall,
                     ),
                     SizedBox(
-                      height: ValueConstants.deviceHeightValue(uiValue: 5),
+                      height: 5.h,
                     ),
                     Text(
                       '0',
@@ -194,9 +198,6 @@ class _AccountScreenState extends State<AccountScreen> {
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                   ],
-                ),
-                SizedBox(
-                  width: ValueConstants.deviceWidthValue(uiValue: 50),
                 ),
                 Column(
                   children: [
@@ -212,14 +213,14 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: ValueConstants.deviceHeightValue(uiValue: 5),
+                      height: 5.h,
                     ),
                     Text(
                       'screen.account.saved'.tr(),
                       style: _theme.textTheme.labelSmall,
                     ),
                     SizedBox(
-                      height: ValueConstants.deviceHeightValue(uiValue: 5),
+                      height: 5.h,
                     ),
                     Text('0',
                         style: _theme.textTheme.labelSmall?.copyWith(
@@ -229,7 +230,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ],
             ),
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 10),
+              height: 10.h,
             ),
             SwitchListTile(
               value: _isAllowedSearch,
@@ -244,7 +245,7 @@ class _AccountScreenState extends State<AccountScreen> {
               controlAffinity: ListTileControlAffinity.leading,
               thumbColor: const WidgetStatePropertyAll(Colors.white),
               trackColor: WidgetStatePropertyAll(
-                  _isAllowedSearch ? ColorConstants.main : ColorConstants.grey),
+                  _isAllowedSearch ? _theme.primaryColor : ColorConstants.grey),
               contentPadding: const EdgeInsets.all(0),
             ),
             SwitchListTile(
@@ -260,29 +261,27 @@ class _AccountScreenState extends State<AccountScreen> {
               controlAffinity: ListTileControlAffinity.leading,
               thumbColor: const WidgetStatePropertyAll(Colors.white),
               trackColor: WidgetStatePropertyAll(
-                  _onReceiveEmail ? ColorConstants.main : ColorConstants.grey),
+                  _onReceiveEmail ? _theme.primaryColor : ColorConstants.grey),
               contentPadding: const EdgeInsets.all(0),
             ),
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 20),
+              height: 20.h,
             ),
             ..._buildPersonalInfo(),
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 20),
+              height: 20.h,
             ),
             ..._buildJobInfo(),
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 20),
+              height: 20.h,
             ),
             GestureDetector(
               child: Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: ValueConstants.deviceHeightValue(uiValue: 16),
-                    horizontal: ValueConstants.deviceWidthValue(uiValue: 20)),
+                padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   border: Border.all(color: _theme.primaryColor),
                 ),
                 child: Text(
@@ -294,17 +293,16 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 10),
+              height: 10.h,
             ),
             GestureDetector(
               child: Container(
                 alignment: Alignment.center,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: ColorConstants.main,
-                  borderRadius: BorderRadius.circular(16),
+                  color: _theme.primaryColor,
+                  borderRadius: BorderRadius.circular(16.r),
                 ),
                 child: Text(
                   'screen.account.logout'.tr(),
@@ -313,7 +311,6 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
               onTap: () async {
-                debugPrint('ON TAP');
                 context.read<SavedJobCubit>().clearAllSavedJobs();
                 context.read<AppliedJobCubit>().clearAllAppliedJobs();
 
@@ -321,7 +318,7 @@ class _AccountScreenState extends State<AccountScreen> {
               },
             ),
             SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 15),
+              height: 15.h,
             ),
           ],
         ),
@@ -330,8 +327,8 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Widget _buildDefaultCandidateAvatar() {
-    return Icon(Icons.image_outlined,
-        color: _theme.primaryColor, size: ValueConstants.screenWidth * 0.1);
+    return Icon(Icons.person,
+        color: _theme.primaryColor, size: context.screenWidth() * 0.1);
   }
 
   List<Widget> _buildPersonalInfo() {
@@ -349,14 +346,9 @@ class _AccountScreenState extends State<AccountScreen> {
               AssetConstants.iconEdit,
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const EditAccountScreen(),
-                    settings: RouteSettings(arguments: {
-                      TextConstants.candidate: _candidate,
-                      TextConstants.token: _token,
-                    })),
+              context.pushNamed(
+                AppRouter.editCandidateName,
+                pathParameters: {'id': _candidate.id.toString()},
               );
             },
           )

@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jobsit_mobile/app/router.dart';
 import 'package:jobsit_mobile/app/theme.dart';
 import 'package:jobsit_mobile/features/auth/presentation/cubit/candidate_cubit.dart';
@@ -21,6 +23,8 @@ Future<void> main() async {
   final locale = Locale(localeCode);
 
   configureDependencies();
+
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
     EasyLocalization(
@@ -47,14 +51,30 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => SavedJobCubit()),
           BlocProvider(create: (context) => AppliedJobCubit()),
         ],
-        child: MaterialApp.router(
-          routerConfig: AppRouter.router,
-          title: 'app_name'.tr(),
-          theme: AppTheme.lightTheme,
-          themeMode: ThemeMode.light,
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
+        child: ScreenUtilInit(
+          designSize: const Size(414, 896),
+          minTextAdapt: true,
+          splitScreenMode: true,
+          child: MaterialApp.router(
+            builder: (context, child) {
+              final mediaQueryData = MediaQuery.of(context);
+
+              final scale = mediaQueryData.textScaler
+                  .clamp(minScaleFactor: 1.0, maxScaleFactor: 1.1);
+
+              return MediaQuery(
+                data: mediaQueryData.copyWith(textScaler: scale),
+                child: child!,
+              );
+            },
+            routerConfig: AppRouter.router,
+            title: 'app_name'.tr(),
+            theme: AppTheme.lightTheme,
+            themeMode: ThemeMode.light,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+          ),
         ));
   }
 }

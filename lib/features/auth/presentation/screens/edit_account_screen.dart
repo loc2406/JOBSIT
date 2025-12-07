@@ -19,13 +19,15 @@ import '../../../../core/constants/text_constants.dart';
 import '../../../../core/constants/widget_constants.dart';
 
 class EditAccountScreen extends StatefulWidget {
-  const EditAccountScreen({super.key});
+  final String candidateId;
+  const EditAccountScreen({super.key, required this.candidateId});
 
   @override
   State<EditAccountScreen> createState() => _EditAccountScreenState();
 }
 
 class _EditAccountScreenState extends State<EditAccountScreen> {
+  late int _candidateId;
   late Candidate _candidate;
   late CandidateCubit _cubit;
   bool _isSetData = false;
@@ -40,7 +42,6 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   bool? _selectedGender;
   String? _candidateCity;
   String? _candidateDistrict;
-  String? _candidateUniversity;
   Province? _selectedCity;
   String? _selectedDistrict;
   University? _selectedUniversity;
@@ -53,6 +54,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   void initState() {
     super.initState();
     _cubit = context.read<CandidateCubit>();
+    _candidateId = int.parse(widget.candidateId);
   }
 
   Future<void> _loadInitialData() async {
@@ -71,9 +73,10 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     final universities = await _cubit.getUniversities();
     setState(() {
       _universities = universities;
-      try{
-        _selectedUniversity =   _universities.firstWhere((uni) => uni.id == _candidate.university?.id);
-      }catch(e){
+      try {
+        _selectedUniversity = _universities
+            .firstWhere((uni) => uni.id == _candidate.university?.id);
+      } catch (e) {
         _selectedUniversity = null;
       }
     });
@@ -96,13 +99,16 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     final location = _candidate.location;
 
     if (location != null) {
-      RegExp regex = RegExp(r"^(.*?),\s*(Huyện|Quận|Thành phố|thị xã)?\s*([^,]+),\s*(Tỉnh|Thành phố)?\s*(.+)$");
+      RegExp regex = RegExp(
+          r"^(.*?),\s*(Huyện|Quận|Thành phố|thị xã)?\s*([^,]+),\s*(Tỉnh|Thành phố)?\s*(.+)$");
       Match? match = regex.firstMatch(location);
 
       if (match != null) {
         String address = match.group(1)?.trim() ?? "";
-        _candidateDistrict = "${match.group(2) ?? ''} ${match.group(3) ?? ''}".trim();
-        _candidateCity = "${match.group(4) ?? ''} ${match.group(5) ?? ''}".trim();
+        _candidateDistrict =
+            "${match.group(2) ?? ''} ${match.group(3) ?? ''}".trim();
+        _candidateCity =
+            "${match.group(4) ?? ''} ${match.group(5) ?? ''}".trim();
 
         debugPrint("Địa chỉ: $address");
         debugPrint("Quận/Huyện: $_candidateDistrict");
@@ -113,8 +119,8 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
 
         setState(() {
           try {
-            _selectedCity = _cities.firstWhere(
-                    (province) => province.name.toLowerCase() == _candidateCity?.toLowerCase());
+            _selectedCity = _cities.firstWhere((province) =>
+                province.name.toLowerCase() == _candidateCity?.toLowerCase());
           } catch (e) {
             _selectedCity = null;
           }
@@ -135,16 +141,15 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     _selectedGender = _candidate.isMale;
   }
 
-
   Future<void> _getDistrictsAndSetSelected() async {
-    final List<String> districts = await _cubit.getDistricts(_selectedCity!.code);
+    final List<String> districts =
+        await _cubit.getDistricts(_selectedCity!.code);
     setState(() {
       _districts = districts;
 
       try {
-        _selectedDistrict =
-            _districts.firstWhere((district) => district.toLowerCase() ==
-                _candidateDistrict?.toLowerCase());
+        _selectedDistrict = _districts.firstWhere((district) =>
+            district.toLowerCase() == _candidateDistrict?.toLowerCase());
       } catch (e) {
         _selectedDistrict = null;
       }
@@ -168,8 +173,8 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       body: BlocListener<CandidateCubit, CandidateState>(
         listener: (context, state) {
           if (state is AuthEditSuccessState) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(const SnackBar(content: Text(TextConstants.editSuccessful)));
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text(TextConstants.editSuccessful)));
             Navigator.pop(context);
           }
         },
@@ -242,8 +247,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                         title: TextConstants.phone,
                         label: TextConstants.phone,
                         controller: _phoneController,
-                        validateMethod:
-                            ValidateConstants.validatePhone,
+                        validateMethod: ValidateConstants.validatePhone,
                         keyboardType: TextInputType.phone,
                         inputFormatters: [
                           FilteringTextInputFormatter.digitsOnly,
@@ -258,7 +262,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                       validateMethod: ValidateConstants.validateAddress,
                       keyboardType: TextInputType.text,
                     ),
-                   ..._buildSelectSchoolField(),
+                    ..._buildSelectSchoolField(),
                     SizedBox(
                       height: ValueConstants.deviceHeightValue(uiValue: 20),
                     ),
@@ -336,7 +340,9 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         readOnly: isReadOnly,
         decoration: InputDecoration(
           filled: true,
-          fillColor: title == TextConstants.email ? ColorConstants.grayBackground : Colors.white,
+          fillColor: title == TextConstants.email
+              ? ColorConstants.grayBackground
+              : Colors.white,
           hintText: label,
           hintStyle: const TextStyle(color: ColorConstants.grey),
           contentPadding:
@@ -367,7 +373,10 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           hintText: TextConstants.defaultCandidateBirthdate,
           contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           hintStyle: TextStyle(color: ColorConstants.grey),
-          suffixIcon: Icon(Icons.arrow_drop_down, color: ColorConstants.main,),
+          suffixIcon: Icon(
+            Icons.arrow_drop_down,
+            color: ColorConstants.main,
+          ),
           enabledBorder: WidgetConstants.inputFieldBorder,
           focusedBorder: WidgetConstants.inputFieldBorder,
           errorBorder: WidgetConstants.inputFieldBorder,
@@ -393,7 +402,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         _birthdateController.text =
             "${pickedDate.day}-${pickedDate.month}-${pickedDate.year}";
       });
-    }else{
+    } else {
       setState(() {
         _birthdateController.text = TextConstants.defaultCandidateBirthdate;
       });
@@ -485,7 +494,8 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           )
         ],
         onChanged: (value) async {
-          final List<String> districts = (value != null) ? await _cubit.getDistricts(value.code) : [];
+          final List<String> districts =
+              (value != null) ? await _cubit.getDistricts(value.code) : [];
           setState(() {
             _selectedCity = value;
             _districts = districts;
@@ -553,7 +563,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     return [
       ..._buildTitle(TextConstants.university),
       DropdownButtonFormField<University?>(
-        isExpanded: true ,
+        isExpanded: true,
         style: WidgetConstants.black16Style,
         value: _selectedUniversity,
         decoration: const InputDecoration(
@@ -575,7 +585,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             ),
           ),
           ..._universities.map(
-                (university) => DropdownMenuItem(
+            (university) => DropdownMenuItem(
               value: university,
               child: Tooltip(
                 message: university.name,
@@ -589,7 +599,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             ),
           )
         ],
-        onChanged: (value){
+        onChanged: (value) {
           setState(() {
             _selectedUniversity = value;
           });
@@ -616,8 +626,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           gender: _selectedGender,
           location:
               '${_addressController.text}, $_selectedDistrict, ${_selectedCity!.name}',
-          university: _selectedUniversity
-      );
+          university: _selectedUniversity);
     }
   }
 
@@ -625,13 +634,13 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     final validateMessage =
         ValidateConstants.validateCandidateAvatar(_selectedImg);
     return [
-            SizedBox(
-              height: ValueConstants.deviceHeightValue(uiValue: 20),
-            ),
-            Text(
-              validateMessage!,
-              style: WidgetConstants.redItalic16Style,
-            )
-          ];
+      SizedBox(
+        height: ValueConstants.deviceHeightValue(uiValue: 20),
+      ),
+      Text(
+        validateMessage!,
+        style: WidgetConstants.redItalic16Style,
+      )
+    ];
   }
 }

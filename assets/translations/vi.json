@@ -52,7 +52,8 @@
       "reference_letter": "Thư giới thiệu",
       "change_password": "Thay đổi mật khẩu",
       "logout": "Đăng xuất",
-      "no_data": "Không có dữ liệu"
+      "no_data": "Không có dữ liệu",
+      "no_logged_in": "Bạn chưa đăng nhập!"
     }
   },
   "notification": {

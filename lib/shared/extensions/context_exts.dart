@@ -12,5 +12,6 @@ extension UIHelperExtension on BuildContext {
             : CustomSnackBar.success(message: message));
   }
 
-  void showLoading({String? message = null}) {}
+  double screenWidth() => MediaQuery.sizeOf(this).width;
+  double screenHeight() => MediaQuery.sizeOf(this).height;
 }
