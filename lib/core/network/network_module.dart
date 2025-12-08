@@ -12,8 +12,8 @@ abstract class NetworkModule {
     final dio = Dio();
     
     dio.options.baseUrl = 'https://jobsit.onrender.com/';
-    dio.options.connectTimeout = const Duration(seconds: 5);
-    dio.options.receiveTimeout = const Duration(seconds: 3);
+    dio.options.connectTimeout = const Duration(seconds: 10);
+    dio.options.receiveTimeout = const Duration(seconds: 10);
     dio.options.headers = {'Content-Type': 'application/json'};
 
     dio.interceptors.add(InterceptorsWrapper(

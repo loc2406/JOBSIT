@@ -21,8 +21,8 @@ router = APIRouter()
 
 # --- CẤU HÌNH TOKEN ---
 SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("HS256")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 class University(BaseModel):
     id: int
