@@ -248,8 +248,8 @@ def register(candidate: RegisterRequest):
     )
 
 @router.get("/universities", response_model=List[University])
-async def get_universities(current_user: dict = Depends(get_current_user)):
-    cursor = university_collection.find({})
-    universities = await cursor.to_list(length=100)
-        
+def get_universities(current_user: dict = Depends(get_current_user)):
+    universities = list(
+        university_collection.find({}, {"_id": 0}).limit(100)
+    )
     return universities
