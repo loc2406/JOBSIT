@@ -11,7 +11,8 @@ client = MongoClient(MONGO_URI)
 
 db = client.jobsit_db
 
-candidate_collection = db.candidates
+candidate_collection = db.get_collection("candidates")
+university_collection = db.get_collection("universities")
 
 def candidate_helper(candidate) -> dict:
     return {

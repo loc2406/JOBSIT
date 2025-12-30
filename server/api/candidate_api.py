@@ -8,7 +8,7 @@ from typing import List, Optional, Dict, Any
 from jose import jwt
 
 from server.core.security import get_current_user, get_password_hash, verify_password
-from server.db.database import candidate_collection, candidate_helper
+from server.db.database import candidate_collection, university_collection,candidate_helper
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -25,8 +25,14 @@ ALGORITHM = os.getenv("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 class University(BaseModel):
-    id: int
+    id: str
     name: str
+    code: str
+    city: str
+
+    class Config:
+        # Cho phép Pydantic làm việc với kiểu dữ liệu không phải dict (như Object từ MongoDB)
+        populate_by_name = True
 
 class Candidate(BaseModel):
     id: int
@@ -94,11 +100,10 @@ class RegisterRequest(BaseModel):
     @field_validator('password')
     @classmethod
     def validate_password_complexity(cls, v: str) -> str:
-        # Check chữ in hoa (A-Z)
+        
         if not re.search(r'[A-Z]', v):
             raise ValueError('Mật khẩu nên chứa ít nhất 1 ký tự in hoa!')
         
-        # Check số (0-9)
         if not re.search(r'[0-9]', v):
             raise ValueError('Mật khẩu nên chứa ít nhất 1 chữ số!')
         
@@ -107,7 +112,6 @@ class RegisterRequest(BaseModel):
     @field_validator('firstName', 'lastName')
     @classmethod
     def validate_no_trailing_space(cls, v: str) -> str:
-        # Check không được kết thúc bằng khoảng trắng
         if v.endswith(' '):
                 raise ValueError('Tên không được kết thúc bằng dấu cách!')
         return v
@@ -190,21 +194,18 @@ def login(data: LoginRequest):
 @router.post("/auth/register", response_model=RegisterResponse, status_code=201)
 def register(candidate: RegisterRequest):
 
-    # Duyệt qua list users xem có email nào trùng không
     if candidate_collection.find_one({"email": candidate.email}):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="Email này đã được sử dụng!"
         )
     
-    # Nếu muốn check phone trùng thì thêm if ở đây
     if candidate_collection.find_one({"phone": candidate.phone}):
             raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="Số điện thoại này đã được sử dụng!"
         )
 
-    # 3. Hash Password
     hashed_password = get_password_hash(candidate.password)
 
     last_candidate = candidate_collection.find_one(sort=[("id", -1)])
@@ -212,16 +213,12 @@ def register(candidate: RegisterRequest):
     if last_candidate:
         new_id = last_candidate["id"] + 1
     
-    # Dùng by_alias=True để key trong dict là 'firstName' thay vì 'first_name'
-    # Điều này giúp đồng bộ với Candidate Model và Flutter
     new_candidate_dict = candidate.model_dump(by_alias=True)
     
-    # Ghi đè các trường cần xử lý server-side
     new_candidate_dict['id'] = new_id
-    new_candidate_dict['password'] = hashed_password # Lưu pass đã hash, không lưu pass gốc
+    new_candidate_dict['password'] = hashed_password
     new_candidate_dict['isActive'] = False
 
-    # Các trường mặc định khác của Candidate nếu chưa có
     new_candidate_dict['isMale'] = False
     new_candidate_dict['mailReceive'] = False
     new_candidate_dict['searchable'] = False
@@ -239,10 +236,8 @@ def register(candidate: RegisterRequest):
     new_candidate_dict['majorDTOs'] = []
     new_candidate_dict['scheduleDTOs'] = []
 
-    # 5. Lưu vào file
     candidate_collection.insert_one(new_candidate_dict)
 
-    # 6. Trả về kết quả
     return RegisterResponse(
         id= new_candidate_dict['id'],
         email=new_candidate_dict['email'],
@@ -251,3 +246,10 @@ def register(candidate: RegisterRequest):
         phone=new_candidate_dict['phone'],
         isActive=new_candidate_dict['isActive']
     )
+
+@router.get("/universities", response_model=List[University])
+async def get_universities(current_user: dict = Depends(get_current_user)):
+    cursor = university_collection.find({})
+    universities = await cursor.to_list(length=100)
+        
+    return universities
